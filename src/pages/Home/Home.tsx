@@ -1,13 +1,8 @@
 import React from 'react';
-import { ErrorBoundary } from '@components/ErrorBoundary';
+import { NavbarComponent } from '@components/navbar/NavbarComponent';
 
 const Home = () => {
-    return (
-        <ErrorBoundary>
-            <h1>React Redux Boilerplate</h1>
-            <p>You can put the components of your app here</p>
-        </ErrorBoundary>
-    );
+    return <NavbarComponent />;
 };
 
 export default Home;
