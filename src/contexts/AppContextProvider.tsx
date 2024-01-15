@@ -17,16 +17,16 @@ const AppContextProvider: React.FC<AppContextProviderProps> = ({
         darkMode: false,
     });
 
-    const init = async () => {
-        // const contextValue: AppContextValue = {
-        //     darkMode: false
-        // };
-        // setValue(contextValue);
-    };
-
-    React.useEffect(() => {
-        init();
-    }, []);
+    // const init = async () => {
+    //     // const contextValue: AppContextValue = {
+    //     //     darkMode: false
+    //     // };
+    //     // setValue(contextValue);
+    // };
+    //
+    // React.useEffect(() => {
+    //     init();
+    // }, []);
 
     return (
         <AppContext.Provider value={value}>
