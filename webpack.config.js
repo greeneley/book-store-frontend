@@ -1,15 +1,14 @@
 const path = require('path');
 const package = require('./package.json');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-module.exports =  (env, options)=> {
-
+module.exports = (env, options) => {
     const devMode = options.mode === 'development' ? true : false;
 
     process.env.NODE_ENV = options.mode;
@@ -24,6 +23,9 @@ module.exports =  (env, options)=> {
             clean: true
         },
         devtool: 'source-map',
+        devServer: {
+            historyApiFallback: true
+        },
         resolve: {
             extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
             alias: {
@@ -33,8 +35,8 @@ module.exports =  (env, options)=> {
                 '@services': path.resolve(__dirname, 'src/services/'),
                 '@store': path.resolve(__dirname, 'src/store/'),
                 '@styles': path.resolve(__dirname, 'src/styles/'),
-                '@utils': path.resolve(__dirname, 'src/utils/'),
-            },
+                '@utils': path.resolve(__dirname, 'src/utils/')
+            }
         },
         module: {
             rules: [
@@ -48,30 +50,41 @@ module.exports =  (env, options)=> {
                     use: [
                         devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
                         {
-                            loader: "css-loader", 
+                            loader: 'css-loader',
                             options: {
                                 sourceMap: true
                             }
-                        }, 
+                        },
                         {
                             loader: 'postcss-loader'
                         }
-                    ],
+                    ]
                 },
-                { 
-                    test: /\.(woff|woff2|ttf|eot)$/,  
-                    loader: "file-loader",
+                {
+                    test: /\.(woff|woff2|ttf|eot)$/,
+                    loader: 'file-loader',
                     options: {
-                        name: '[name].[contenthash].[ext]',
+                        name: '[name].[contenthash].[ext]'
                     }
                 },
-                { 
-                    test: /\.(png|jpg|gif|svg)$/,  
-                    loader: "file-loader",
+                {
+                    test: /\.(png|jpg|gif|svg)$/,
+                    loader: 'file-loader',
                     options: {
-                        name: '[name].[contenthash].[ext]',
+                        name: '[name].[contenthash].[ext]'
                     }
                 },
+                {
+                    test: /\.s[ac]ss$/i,
+                    use: [
+                        // Creates `style` nodes from JS strings
+                        'style-loader',
+                        // Translates CSS into CommonJS
+                        'css-loader',
+                        // Compiles Sass to CSS
+                        'sass-loader'
+                    ]
+                }
             ]
         },
         plugins: [
@@ -81,18 +94,20 @@ module.exports =  (env, options)=> {
                 // Options similar to the same options in webpackOptions.output
                 // both options are optional
                 filename: devMode ? '[name].css' : '[name].[contenthash].css',
-                chunkFilename: devMode ? '[name].css' : '[name].[contenthash].css',
+                chunkFilename: devMode
+                    ? '[name].css'
+                    : '[name].[contenthash].css'
             }),
             // copy static files from public folder to build directory
             new CopyPlugin({
                 patterns: [
-                    { 
-                        from: "public/**/*", 
+                    {
+                        from: 'public/**/*',
                         globOptions: {
-                            ignore: ["**/index.html"],
-                        },
+                            ignore: ['**/index.html']
+                        }
                     }
-                ],
+                ]
             }),
             new HtmlWebpackPlugin({
                 template: './public/index.html',
@@ -102,28 +117,28 @@ module.exports =  (env, options)=> {
                     title: package.name,
                     description: package.description,
                     author: package.author,
-                    keywords: Array.isArray(package.keywords) 
-                        ? package.keywords.join(',') 
+                    keywords: Array.isArray(package.keywords)
+                        ? package.keywords.join(',')
                         : undefined,
                     'og:title': package.name,
                     'og:description': package.description,
-                    'og:url': package.homepage,
+                    'og:url': package.homepage
                 },
                 minify: {
-                    html5                          : true,
-                    collapseWhitespace             : true,
-                    minifyCSS                      : true,
-                    minifyJS                       : true,
-                    minifyURLs                     : false,
-                    removeComments                 : true,
-                    removeEmptyAttributes          : true,
-                    removeOptionalTags             : true,
-                    removeRedundantAttributes      : true,
-                    removeScriptTypeAttributes     : true,
-                    removeStyleLinkTypeAttributese : true,
-                    useShortDoctype                : true
+                    html5: true,
+                    collapseWhitespace: true,
+                    minifyCSS: true,
+                    minifyJS: true,
+                    minifyURLs: false,
+                    removeComments: true,
+                    removeEmptyAttributes: true,
+                    removeOptionalTags: true,
+                    removeRedundantAttributes: true,
+                    removeScriptTypeAttributes: true,
+                    removeStyleLinkTypeAttributese: true,
+                    useShortDoctype: true
                 }
-            }),
+            })
             // !devMode ? new CleanWebpackPlugin() : false,
             // !devMode ? new BundleAnalyzerPlugin() : false
         ].filter(Boolean),
@@ -145,13 +160,12 @@ module.exports =  (env, options)=> {
                     extractComments: true,
                     terserOptions: {
                         compress: {
-                            drop_console: true,
+                            drop_console: true
                         }
                     }
-                }), 
+                }),
                 new CssMinimizerPlugin()
             ]
-        },
-    }
-
+        }
+    };
 };
