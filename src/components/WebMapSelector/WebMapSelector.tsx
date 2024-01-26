@@ -7,7 +7,7 @@ import { updateWebmapId } from '@store/Map/thunks';
 
 const WebMapOptions = [
     { name: 'Topo', id: '67372ff42cd145319639a99152b15bc3' },
-    { name: 'Imagery', id: '86265e5a4bbb4187a59719cf134e0018' },
+    { name: 'Imagery', id: '86265e5a4bbb4187a59719cf134e0018' }
 ];
 
 /**
@@ -33,7 +33,7 @@ const WebMapSelector = () => {
                                 'border-blue-300': isSelected,
                                 'border-transparent': !isSelected,
                                 'text-white': isSelected,
-                                'text-gray-300': !isSelected,
+                                'text-gray-300': !isSelected
                             }
                         )}
                         onClick={() => {

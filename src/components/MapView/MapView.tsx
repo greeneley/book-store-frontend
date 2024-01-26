@@ -25,7 +25,7 @@ const ArcGISMapView: React.FC<Props> = ({
     webmapId,
     center,
     zoom,
-    children,
+    children
 }: Props) => {
     const mapDivRef = useRef<HTMLDivElement>();
 
@@ -36,11 +36,11 @@ const ArcGISMapView: React.FC<Props> = ({
             container: mapDivRef.current,
             map: new WebMap({
                 portalItem: {
-                    id: webmapId,
-                },
+                    id: webmapId
+                }
             }),
             center,
-            zoom,
+            zoom
         });
 
         view.when(() => {
@@ -51,8 +51,8 @@ const ArcGISMapView: React.FC<Props> = ({
     const updateWebmapId = () => {
         mapView.map = new WebMap({
             portalItem: {
-                id: webmapId,
-            },
+                id: webmapId
+            }
         });
     };
 
@@ -74,7 +74,7 @@ const ArcGISMapView: React.FC<Props> = ({
                     top: 0,
                     left: 0,
                     width: '100%',
-                    height: '100%',
+                    height: '100%'
                 }}
                 ref={mapDivRef}
             ></div>
@@ -83,7 +83,7 @@ const ArcGISMapView: React.FC<Props> = ({
                       return React.cloneElement(
                           child as React.ReactElement<any>,
                           {
-                              mapView,
+                              mapView
                           }
                       );
                   })

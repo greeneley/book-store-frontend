@@ -1,7 +1,7 @@
 import {
     configureStore,
     DeepPartial,
-    getDefaultMiddleware,
+    getDefaultMiddleware
 } from '@reduxjs/toolkit';
 
 import rootReducer from './rootReducer';
@@ -16,7 +16,7 @@ const configureAppStore = (preloadedState: PartialRootState = {}) => {
     return configureStore({
         reducer: rootReducer,
         middleware: [...getDefaultMiddleware<RootState>()],
-        preloadedState: preloadedState as any,
+        preloadedState: preloadedState as any
     });
 };
 

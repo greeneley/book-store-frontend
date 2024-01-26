@@ -15,7 +15,7 @@ export default class ErrorBoundary extends PureComponent<Props, State> {
 
         this.state = {
             error: null,
-            errorInfo: null,
+            errorInfo: null
         };
     }
 

@@ -4,13 +4,13 @@ import { initialMapState, MapState } from './Map/reducer';
 
 const getPreloadedMapState = (): MapState => {
     return {
-        ...initialMapState,
+        ...initialMapState
     };
 };
 
 const getPreloadedState = (): PartialRootState => {
     return {
-        Map: getPreloadedMapState(),
+        Map: getPreloadedMapState()
     };
 };
 

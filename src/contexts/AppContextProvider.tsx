@@ -11,10 +11,10 @@ type AppContextProviderProps = {
 export const AppContext = createContext<AppContextValue>(null);
 
 const AppContextProvider: React.FC<AppContextProviderProps> = ({
-    children,
+    children
 }: AppContextProviderProps) => {
     const [value, setValue] = useState<AppContextValue>({
-        darkMode: false,
+        darkMode: false
     });
 
     // const init = async () => {
