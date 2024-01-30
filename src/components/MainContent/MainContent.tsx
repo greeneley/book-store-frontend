@@ -9,7 +9,7 @@ export const MainContent: React.FC = () => {
         'public/asset/books/book3.svg'
     ];
     return (
-        <Container>
+        <Container className="mt-20">
             <Row>
                 <Col>
                     <h2 className="mb-4">New Releases This Week</h2>

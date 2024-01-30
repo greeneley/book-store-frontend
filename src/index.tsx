@@ -8,7 +8,6 @@ import { Provider as ReduxProvider } from 'react-redux';
 import configureAppStore, { getPreloadedState } from './store/configureStore';
 
 import AppContextProvider from './contexts/AppContextProvider';
-// import 'bootstrap/dist/css/bootstrap.css';
 import './styles/custom.scss';
 import HomePage from './pages/Home/Home';
 import { library } from '@fortawesome/fontawesome-svg-core';
