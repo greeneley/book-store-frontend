@@ -4,33 +4,16 @@ import { Button, Container, Image } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
 import { Cart2 } from 'react-bootstrap-icons';
 
-export const TopSeller: React.FC = () => {
+export const RecommendBooks: React.FC = () => {
     return (
         <Container className="my-10">
-            <h3 className="font-light">Top Seller</h3>
-            <Dropdown>
-                <Dropdown.Toggle
-                    id="dropdown-basic"
-                    style={{ background: '#EAEAEA', borderColor: 'white' }}
-                >
-                    Choose a genre
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
-                        Another action
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">
-                        Something else
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <h3 className="font-light">Recommend for you</h3>
             <br />
             <Carousel
                 additionalTransfrom={0}
                 arrows
                 autoPlay
-                autoPlaySpeed={3000}
+                autoPlaySpeed={4000}
                 centerMode={false}
                 containerClass="container"
                 dotListClass=""
@@ -82,54 +65,22 @@ export const TopSeller: React.FC = () => {
                 <div className="grid grid-cols-2 gap-0">
                     <div>
                         <Image
-                            src="public/asset/books/TheTimeHasCome.svg"
+                            src="public/asset/books/PrideAndProtest.svg"
                             rounded
                         />
                     </div>
                     <div className="flex flex-column">
                         <div className="content justify-content-center mt-auto p-2">
                             <h3 className="text-base font-normal">
-                                The Time Has Come
+                                Pride and Protest
                             </h3>
                             <p className="text-sm font-light">
-                                Lindbergh&apos;s Pharmacy is an Athens, Georgia,
-                                institution...
+                                A woman goes head-to-head with the CEO of...
                             </p>
                             <div className="price flex gap-3">
-                                <p className="font-medium">$ 27.89</p>
+                                <p className="font-medium">$ 15.50</p>
                                 <p className="font-light text-decoration-line-through">
-                                    $ 30.99
-                                </p>
-                            </div>
-                        </div>
-                        <Button
-                            variant="primary"
-                            className="text-white w-fit mt-auto"
-                        >
-                            <div className="flex align-items-center gap-2">
-                                <Cart2 />
-                                Add to basket
-                            </div>
-                        </Button>
-                    </div>
-                </div>
-                <div className="grid grid-cols-2 gap-0">
-                    <div>
-                        <Image src="public/asset/books/book1.svg" rounded />
-                    </div>
-                    <div className="flex flex-column">
-                        <div className="content justify-content-center mt-auto p-2">
-                            <h3 className="text-base font-normal">
-                                I Want a Better Catastrophe...
-                            </h3>
-                            <p className="text-sm font-light">
-                                With global warming projected to rocket past
-                                the...
-                            </p>
-                            <div className="price flex gap-3">
-                                <p className="font-medium">$ 26.99</p>
-                                <p className="font-light text-decoration-line-through">
-                                    $ 29.99
+                                    $ 18.50
                                 </p>
                             </div>
                         </div>
@@ -147,18 +98,48 @@ export const TopSeller: React.FC = () => {
                 <div className="grid grid-cols-2 gap-0">
                     <div>
                         <Image
-                            src="public/asset/books/MyGovernment.svg"
+                            src="public/asset/books/ForgetAndMentor.svg"
                             rounded
                         />
                     </div>
                     <div className="flex flex-column">
                         <div className="content justify-content-center mt-auto p-2">
                             <h3 className="text-base font-normal">
-                                My Government....
+                                Forget a Mentor, Find...
                             </h3>
                             <p className="text-sm font-light">
-                                In the city, Trey meets up with a cast of
-                                characters....
+                                In this powerful yet practical book, economist
+                                and...
+                            </p>
+                            <div className="price flex gap-3">
+                                <p className="font-medium">$ 29.99</p>
+                                <p className="font-light text-decoration-line-through">
+                                    $ 32.99
+                                </p>
+                            </div>
+                        </div>
+                        <Button
+                            variant="primary"
+                            className="text-white w-fit mt-auto"
+                        >
+                            <div className="flex align-items-center gap-2">
+                                <Cart2 />
+                                Add to basket
+                            </div>
+                        </Button>
+                    </div>
+                </div>
+                <div className="grid grid-cols-2 gap-0">
+                    <div>
+                        <Image src="public/asset/books/Midnight.svg" rounded />
+                    </div>
+                    <div className="flex flex-column">
+                        <div className="content justify-content-center mt-auto p-2">
+                            <h3 className="text-base font-normal">
+                                The Midnight Library
+                            </h3>
+                            <p className="text-sm font-light">
+                                Between life and death there is a library...
                             </p>
                             <div className="price flex gap-3">
                                 <p className="font-medium">$ 25.89</p>

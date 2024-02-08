@@ -19,6 +19,7 @@ import {
     RouterProvider
 } from 'react-router-dom';
 import { PageNotFound } from './pages/PageNotFound/PageNotFound';
+import 'react-multi-carousel/lib/styles.css';
 
 library.add(fas, faTwitter, faFontAwesome);
 
