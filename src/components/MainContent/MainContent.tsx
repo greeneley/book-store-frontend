@@ -2,17 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { ImageSlider } from '@components/ImageSlider/ImageSlider';
 import axios from 'axios';
-interface IBook {
-    bookId: number;
-    name: string;
-    price: number;
-    author: string;
-    publisher: string;
-    publishedOn: string;
-    desc: string;
-    imageUrl: string;
-    favorite: string;
-}
+import { Book } from '../../model';
 
 export const MainContent: React.FC = () => {
     const [urls, setUrls] = useState<Array<string>>([]);
@@ -27,7 +17,7 @@ export const MainContent: React.FC = () => {
         axios
             .request(config)
             .then((response) => {
-                setUrls(response.data.map((data: IBook) => data.imageUrl));
+                setUrls(response.data.map((data: Book) => data.imageUrl));
             })
             .catch((error) => {
                 console.log(error);
