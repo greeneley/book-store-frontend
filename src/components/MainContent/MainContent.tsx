@@ -1,13 +1,39 @@
-import React from 'react';
-import { Button, Carousel, Col, Container, Image, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { ImageSlider } from '@components/ImageSlider/ImageSlider';
+import axios from 'axios';
+interface IBook {
+    bookId: number;
+    name: string;
+    price: number;
+    author: string;
+    publisher: string;
+    publishedOn: string;
+    desc: string;
+    imageUrl: string;
+    favorite: string;
+}
 
 export const MainContent: React.FC = () => {
-    const imageSliders = [
-        'public/asset/books/book1.svg',
-        'public/asset/books/book2.svg',
-        'public/asset/books/book3.svg'
-    ];
+    const [urls, setUrls] = useState<Array<string>>([]);
+
+    useEffect(() => {
+        const config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: process.env.REACT_APP_SERVER_URL + '/book/favorite',
+            headers: {}
+        };
+        axios
+            .request(config)
+            .then((response) => {
+                setUrls(response.data.map((data: IBook) => data.imageUrl));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
     return (
         <Container className="mt-20">
             <Row>
@@ -27,7 +53,7 @@ export const MainContent: React.FC = () => {
                     </div>
                 </Col>
                 <Col>
-                    <ImageSlider sources={imageSliders} />
+                    <ImageSlider urls={urls} />
                 </Col>
             </Row>
         </Container>

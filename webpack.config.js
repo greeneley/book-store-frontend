@@ -1,5 +1,8 @@
 const path = require('path');
 const package = require('./package.json');
+const dotenv = require('dotenv');
+const webpack = require('webpack');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -7,6 +10,8 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+dotenv.config();
 
 module.exports = (env, options) => {
     const devMode = options.mode === 'development' ? true : false;
@@ -138,6 +143,9 @@ module.exports = (env, options) => {
                     removeStyleLinkTypeAttributese: true,
                     useShortDoctype: true
                 }
+            }),
+            new webpack.DefinePlugin({
+                'process.env': JSON.stringify(process.env)
             })
             // !devMode ? new CleanWebpackPlugin() : false,
             // !devMode ? new BundleAnalyzerPlugin() : false
