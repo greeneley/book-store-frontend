@@ -3,6 +3,8 @@ import Dropdown from 'react-bootstrap/esm/Dropdown';
 import { Button, Container, Image } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
 import { Cart2 } from 'react-bootstrap-icons';
+import { BookItem } from '@components/Book/BookItem';
+import { LoremIpsum } from 'lorem-ipsum';
 
 export const TopSeller: React.FC = () => {
     return (
@@ -79,105 +81,61 @@ export const TopSeller: React.FC = () => {
                 slidesToSlide={1}
                 swipeable
             >
-                <div className="grid grid-cols-2 gap-0">
-                    <div>
-                        <Image
-                            src="public/asset/books/TheTimeHasCome.svg"
-                            rounded
-                        />
-                    </div>
-                    <div className="flex flex-column">
-                        <div className="content justify-content-center mt-auto p-2">
-                            <h3 className="text-base font-normal">
-                                The Time Has Come
-                            </h3>
-                            <p className="text-sm font-light">
-                                Lindbergh&apos;s Pharmacy is an Athens, Georgia,
-                                institution...
-                            </p>
-                            <div className="price flex gap-3">
-                                <p className="font-medium">$ 27.89</p>
-                                <p className="font-light text-decoration-line-through">
-                                    $ 30.99
-                                </p>
-                            </div>
-                        </div>
-                        <Button
-                            variant="primary"
-                            className="text-white w-fit mt-auto"
-                        >
-                            <div className="flex align-items-center gap-2">
-                                <Cart2 />
-                                Add to basket
-                            </div>
-                        </Button>
-                    </div>
-                </div>
-                <div className="grid grid-cols-2 gap-0">
-                    <div>
-                        <Image src="public/asset/books/book1.svg" rounded />
-                    </div>
-                    <div className="flex flex-column">
-                        <div className="content justify-content-center mt-auto p-2">
-                            <h3 className="text-base font-normal">
-                                I Want a Better Catastrophe...
-                            </h3>
-                            <p className="text-sm font-light">
-                                With global warming projected to rocket past
-                                the...
-                            </p>
-                            <div className="price flex gap-3">
-                                <p className="font-medium">$ 26.99</p>
-                                <p className="font-light text-decoration-line-through">
-                                    $ 29.99
-                                </p>
-                            </div>
-                        </div>
-                        <Button
-                            variant="primary"
-                            className="text-white w-fit mt-auto"
-                        >
-                            <div className="flex align-items-center gap-2">
-                                <Cart2 />
-                                Add to basket
-                            </div>
-                        </Button>
-                    </div>
-                </div>
-                <div className="grid grid-cols-2 gap-0">
-                    <div>
-                        <Image
-                            src="public/asset/books/MyGovernment.svg"
-                            rounded
-                        />
-                    </div>
-                    <div className="flex flex-column">
-                        <div className="content justify-content-center mt-auto p-2">
-                            <h3 className="text-base font-normal">
-                                My Government....
-                            </h3>
-                            <p className="text-sm font-light">
-                                In the city, Trey meets up with a cast of
-                                characters....
-                            </p>
-                            <div className="price flex gap-3">
-                                <p className="font-medium">$ 25.89</p>
-                                <p className="font-light text-decoration-line-through">
-                                    $ 27.99
-                                </p>
-                            </div>
-                        </div>
-                        <Button
-                            variant="primary"
-                            className="text-white w-fit mt-auto"
-                        >
-                            <div className="flex align-items-center gap-2">
-                                <Cart2 />
-                                Add to basket
-                            </div>
-                        </Button>
-                    </div>
-                </div>
+                <BookItem
+                    url={'public/asset/books/Midnight.svg'}
+                    price={18000}
+                    title={'Forget a Mentor, Find...'}
+                    desc={new LoremIpsum({
+                        sentencesPerParagraph: {
+                            max: 8,
+                            min: 4
+                        }
+                    }).generateSentences(1)}
+                />
+                <BookItem
+                    url={'public/asset/books/Midnight.svg'}
+                    price={18000}
+                    title={'Forget a Mentor, Find...'}
+                    desc={new LoremIpsum({
+                        sentencesPerParagraph: {
+                            max: 8,
+                            min: 4
+                        }
+                    }).generateSentences(1)}
+                />
+                <BookItem
+                    url={'public/asset/books/Midnight.svg'}
+                    price={18000}
+                    title={'Forget a Mentor, Find...'}
+                    desc={new LoremIpsum({
+                        sentencesPerParagraph: {
+                            max: 8,
+                            min: 4
+                        }
+                    }).generateSentences(2)}
+                />
+                <BookItem
+                    url={'public/asset/books/Midnight.svg'}
+                    price={18000}
+                    title={'Forget a Mentor, Find...'}
+                    desc={new LoremIpsum({
+                        sentencesPerParagraph: {
+                            max: 8,
+                            min: 4
+                        }
+                    }).generateSentences(2)}
+                />
+                <BookItem
+                    url={'public/asset/books/Midnight.svg'}
+                    price={18000}
+                    title={'Forget a Mentor, Find...'}
+                    desc={new LoremIpsum({
+                        sentencesPerParagraph: {
+                            max: 8,
+                            min: 4
+                        }
+                    }).generateSentences(2)}
+                />
             </Carousel>
         </Container>
     );
