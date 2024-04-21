@@ -25,7 +25,7 @@ export const MainContent: React.FC = () => {
     }, []);
 
     return (
-        <Container className="mt-20">
+        <Container>
             <Row>
                 <Col>
                     <h2 className="mb-4">New Releases This Week</h2>

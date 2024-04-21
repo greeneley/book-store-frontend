@@ -63,6 +63,7 @@
     "husky": "^8.0.1",
     "jest": "^26.6.3",
     "lint-staged": "^13.0.3",
+    "lorem-ipsum": "^2.0.8",
     "mini-css-extract-plugin": "2.7",
     "postcss": "8.4",
     "postcss-loader": "7.3",
