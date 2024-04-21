@@ -30,7 +30,7 @@ export const BookList: React.FC = () => {
             <Container className="mt-20">
                 <h3 className="font-light">Browser Books</h3>
                 <br />
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <BookItem
                         url={'public/asset/books/Midnight.svg'}
                         price={18000}
