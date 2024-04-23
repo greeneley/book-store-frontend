@@ -13,7 +13,7 @@ export const HeaderComponent: React.FC = () => {
 
     return (
         <Header style={headerStyle}>
-            <Navbar expand="xl">
+            <Navbar>
                 <Container>
                     <Navbar.Brand href="#home">
                         <img

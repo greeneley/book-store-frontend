@@ -25,8 +25,8 @@ export const MainContent: React.FC = () => {
     }, []);
 
     return (
-        <Container>
-            <Row>
+        <Container className="bg-white p-8 rounded-2xl">
+            <Row className="p-8">
                 <Col>
                     <h2 className="mb-4">New Releases This Week</h2>
                     <p>

@@ -8,7 +8,7 @@ import { LoremIpsum } from 'lorem-ipsum';
 
 export const TopSeller: React.FC = () => {
     return (
-        <Container className="my-10">
+        <Container className="my-10 bg-white p-8 rounded-2xl">
             <h3 className="font-light">Top Seller</h3>
             <Dropdown>
                 <Dropdown.Toggle

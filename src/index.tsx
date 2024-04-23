@@ -20,8 +20,12 @@ import {
 } from 'react-router-dom';
 import { PageNotFound } from './pages/PageNotFound/PageNotFound';
 import 'react-multi-carousel/lib/styles.css';
+import { HeaderComponent } from '@components/Header/HeaderComponent';
+import { Footer } from '@components/Footer/Footer';
 
 library.add(fas, faTwitter, faFontAwesome);
+import { register } from 'swiper/element/bundle';
+register();
 
 (async () => {
     const preloadedState = getPreloadedState();
@@ -47,7 +51,11 @@ library.add(fas, faTwitter, faFontAwesome);
         <React.StrictMode>
             <ReduxProvider store={configureAppStore(preloadedState)}>
                 <AppContextProvider>
-                    <RouterProvider router={router} />
+                    <HeaderComponent />
+                    <div className="bg-gray-100">
+                        <RouterProvider router={router} />
+                    </div>
+                    <Footer />
                 </AppContextProvider>
             </ReduxProvider>
         </React.StrictMode>

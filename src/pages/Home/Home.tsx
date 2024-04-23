@@ -1,21 +1,17 @@
 import React from 'react';
-import { HeaderComponent } from '@components/Header/HeaderComponent';
 import { MainContent } from '@components/MainContent/MainContent';
 import { TopSeller } from '@components/TopSeller/TopSeller';
 import { RecommendBooks } from '@components/RecommendBooks/RecommendBooks';
 import { BookList } from '@components/CardList/BookList';
-import { Footer } from '@components/Footer/Footer';
 
 const Home = () => {
     return (
-        <>
-            <HeaderComponent />
+        <div className="p-8">
             <MainContent />
             <TopSeller />
             <RecommendBooks />
             <BookList />
-            <Footer />
-        </>
+        </div>
     );
 };
 

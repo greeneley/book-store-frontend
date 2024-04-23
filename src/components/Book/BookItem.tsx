@@ -18,14 +18,13 @@ export const BookItem: React.FC<BookItemProps> = ({
     price
 }) => {
     return (
-        <div className="grid grid-cols-2 gap-0">
+        <div className="grid grid-cols-2 p-4 border-2 border-[#ebebf0] rounded-2xl mx-1">
             <div>
                 <Image src={url} rounded />
             </div>
             <div className="flex flex-column">
                 <div className="content justify-content-center mt-auto p-2">
                     <h3 className="text-base font-normal">{title}</h3>
-                    <p className="text-sm font-light">{desc}</p>
                     <div className="price flex gap-3">
                         <p className="font-medium">
                             {convertToCurrency(price * 0.8)}
