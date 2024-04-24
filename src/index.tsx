@@ -24,8 +24,9 @@ import { HeaderComponent } from '@components/Header/HeaderComponent';
 import { Footer } from '@components/Footer/Footer';
 
 library.add(fas, faTwitter, faFontAwesome);
-import { register } from 'swiper/element/bundle';
-register();
+import { BookDetail } from './pages/BookDetail/BookDetail';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 (async () => {
     const preloadedState = getPreloadedState();
@@ -40,6 +41,10 @@ register();
         {
             path: '/',
             element: <Navigate to={'/home'} />
+        },
+        {
+            path: 'books',
+            element: <BookDetail />
         },
         {
             path: '*',

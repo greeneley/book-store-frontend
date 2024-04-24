@@ -1,33 +1,12 @@
-import React, { useState } from 'react';
-import { Book } from '../../model';
-import { Button, Col, Container, Image, Row } from 'react-bootstrap';
-import { Cart2 } from 'react-bootstrap-icons';
+import React from 'react';
+import { Container } from 'react-bootstrap';
 import { BookItem } from '@components/Book/BookItem';
 import { LoremIpsum } from 'lorem-ipsum';
 
 export const BookList: React.FC = () => {
-    const [books, setBooks] = useState<Array<Book>>();
-
-    // useEffect(() => {
-    //     const config = {
-    //         method: 'get',
-    //         maxBodyLength: Infinity,
-    //         url: process.env.REACT_APP_SERVER_URL + '/book/favorite',
-    //         headers: {}
-    //     };
-    //     axios
-    //         .request(config)
-    //         .then((response) => {
-    //             setBooks(response.data);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // }, []);
-
     return (
         <>
-            <Container className="mt-20">
+            <Container className="my-10 bg-white p-8 rounded-2xl">
                 <h3 className="font-light">Browser Books</h3>
                 <br />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
