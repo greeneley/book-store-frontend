@@ -26,7 +26,7 @@ export const PageNotFound: React.FC = () => {
                 </h4>
                 <br />
                 <a
-                    href="/home"
+                    href="/src/pages/Home"
                     className="text-decoration-none font-bold text-[22px] text-primary-color"
                 >
                     Go Home

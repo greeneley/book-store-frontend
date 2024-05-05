@@ -84,6 +84,7 @@
     "webpack-dev-server": "^4.9.3"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.6",
     "@arcgis/core": "^4.28.9",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",

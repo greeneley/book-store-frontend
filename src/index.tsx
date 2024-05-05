@@ -8,8 +8,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 import configureAppStore, { getPreloadedState } from './store/configureStore';
 
 import AppContextProvider from './contexts/AppContextProvider';
-import './styles/custom.scss';
-import HomePage from './pages/Home/Home';
+import '@styles/style.scss';
+import HomePage from './pages/Home';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { faFontAwesome, faTwitter } from '@fortawesome/free-brands-svg-icons';
@@ -18,15 +18,16 @@ import {
     Navigate,
     RouterProvider
 } from 'react-router-dom';
-import { PageNotFound } from './pages/PageNotFound/PageNotFound';
+import { PageNotFound } from './pages/PageNotFound';
 import 'react-multi-carousel/lib/styles.css';
 import { HeaderComponent } from '@components/Header/HeaderComponent';
 import { Footer } from '@components/Footer/Footer';
 
 library.add(fas, faTwitter, faFontAwesome);
-import { BookDetail } from './pages/BookDetail/BookDetail';
+import { BookDetail } from './pages/BookDetail';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { Login } from './pages/Login';
 
 (async () => {
     const preloadedState = getPreloadedState();
@@ -43,6 +44,10 @@ import 'slick-carousel/slick/slick-theme.css';
             element: <Navigate to={'/home'} />
         },
         {
+            path: '/login',
+            element: <Login />
+        },
+        {
             path: 'books',
             element: <BookDetail />
         },
@@ -56,11 +61,13 @@ import 'slick-carousel/slick/slick-theme.css';
         <React.StrictMode>
             <ReduxProvider store={configureAppStore(preloadedState)}>
                 <AppContextProvider>
-                    <HeaderComponent />
-                    <div className="bg-gray-100">
-                        <RouterProvider router={router} />
+                    <div className="page-container">
+                        <HeaderComponent />
+                        <div className="bg-gray-100">
+                            <RouterProvider router={router} />
+                        </div>
+                        <Footer />
                     </div>
-                    <Footer />
                 </AppContextProvider>
             </ReduxProvider>
         </React.StrictMode>
