@@ -61,9 +61,9 @@ import { Login } from './pages/Login';
         <React.StrictMode>
             <ReduxProvider store={configureAppStore(preloadedState)}>
                 <AppContextProvider>
-                    <div className="page-container">
+                    <div className="flex flex-col">
                         <HeaderComponent />
-                        <div className="bg-gray-100">
+                        <div className="page-container bg-gray-100">
                             <RouterProvider router={router} />
                         </div>
                         <Footer />
