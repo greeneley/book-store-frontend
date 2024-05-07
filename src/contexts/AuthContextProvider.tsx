@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 
 type AuthContextValue = {
@@ -12,7 +12,7 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext<AuthContextValue>(null);
 
-const AuthProvider: React.FC<AuthProviderProps> = ({
+export const AuthProvider: React.FC<AuthProviderProps> = ({
     children
 }: AuthProviderProps) => {
     const [token, setToken] = useState(localStorage.getItem('token'));
@@ -37,4 +37,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({
             {children}
         </AuthContext.Provider>
     );
+};
+
+export const useAuth = () => {
+    return useContext(AuthContext);
 };
