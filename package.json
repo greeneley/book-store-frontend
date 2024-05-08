@@ -97,6 +97,7 @@
     "@types/react-dom": "^18.0.5",
     "@types/react-slick": "^0.23.13",
     "antd": "^5.16.2",
+    "antd-style": "^3.6.2",
     "axios": "^1.6.8",
     "classnames": "^2.2.6",
     "helper-toolkit-ts": "^1.1.13",
@@ -109,7 +110,8 @@
     "react-slick": "^0.30.2",
     "redux": "^4.1.0",
     "slick-carousel": "^1.8.1",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "stream-browserify": "^3.0.0"
   },
   "browserslist": [
     "defaults"

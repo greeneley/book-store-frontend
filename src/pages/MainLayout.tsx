@@ -1,12 +1,8 @@
 import React from 'react';
 import { Layout, theme } from 'antd';
+import { Header } from '@components/Header/HeaderComponent';
 
-const { Header, Content, Footer } = Layout;
-
-const items = new Array(15).fill(null).map((_, index) => ({
-    key: index + 1,
-    label: `nav ${index + 1}`
-}));
+const { Content, Footer } = Layout;
 
 export const MainLayout: React.FC = () => {
     const {
@@ -17,15 +13,7 @@ export const MainLayout: React.FC = () => {
     return (
         <>
             <Layout>
-                <Header
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        background: '#fff'
-                    }}
-                >
-                    <div className="demo-logo" />
-                </Header>
+                <Header />
                 <Content style={{ padding: '0 48px' }}>
                     <div
                         style={{

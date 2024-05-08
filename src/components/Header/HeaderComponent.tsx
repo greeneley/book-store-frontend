@@ -1,51 +1,70 @@
 import React from 'react';
-import { Header } from 'antd/es/layout/layout';
 
-export const HeaderComponent: React.FC = () => {
-    const headerStyle: React.CSSProperties = {
-        backgroundColor: '#fff',
-        justifyContent: 'center'
-    };
+import { Dropdown, Input, Layout } from 'antd';
+import {
+    LogoutOutlined,
+    SearchOutlined,
+    UserOutlined
+} from '@ant-design/icons';
 
+export const Header = () => {
     return (
-        <Header style={headerStyle}>
-            <div></div>
-            {/*<Navbar>*/}
-            {/*    <Container>*/}
-            {/*        <Navbar.Brand href="#home">*/}
-            {/*            <img*/}
-            {/*                src="/public/asset/logo.svg"*/}
-            {/*                width="30"*/}
-            {/*                height="30"*/}
-            {/*                alt="React Bootstrap logo"*/}
-            {/*            />*/}
-            {/*        </Navbar.Brand>*/}
-            {/*        <Navbar.Collapse id="basic-navbar-nav">*/}
-            {/*            <Nav className="w-full">*/}
-            {/*                <InputGroup>*/}
-            {/*                    <InputGroup.Text>*/}
-            {/*                        <FontAwesomeIcon icon="search" />*/}
-            {/*                    </InputGroup.Text>*/}
-            {/*                    <Form.Control*/}
-            {/*                        type="text"*/}
-            {/*                        placeholder="What are you looking for"*/}
-            {/*                        className=" mr-sm-2"*/}
-            {/*                    />*/}
-            {/*                </InputGroup>*/}
-            {/*            </Nav>*/}
-            {/*        </Navbar.Collapse>*/}
-            {/*        <Navbar.Collapse className="justify-content-end">*/}
-            {/*            <Nav.Item className="d-flex">*/}
-            {/*                <Nav.Link href="#home" className="mr-5">*/}
-            {/*                    <Person size={22} color="#000" />*/}
-            {/*                </Nav.Link>*/}
-            {/*                <Nav.Link href="#home">*/}
-            {/*                    <Heart size={20} />*/}
-            {/*                </Nav.Link>*/}
-            {/*            </Nav.Item>*/}
-            {/*        </Navbar.Collapse>*/}
-            {/*    </Container>*/}
-            {/*</Navbar>*/}
-        </Header>
+        <Layout.Header
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                background: '#fff',
+                gap: '10px'
+            }}
+        >
+            <div>
+                <img
+                    src="/public/asset/logo.svg"
+                    width="30"
+                    height="30"
+                    alt="TH Book Store logo"
+                />
+            </div>
+            <Input
+                placeholder="Bạn cần tìm gì..."
+                prefix={<SearchOutlined />}
+            />
+            <Dropdown
+                menu={{
+                    items: [
+                        {
+                            key: '1',
+                            icon: <UserOutlined />,
+                            label: (
+                                <span onClick={() => {}}>
+                                    <p>Account</p>
+                                </span>
+                            )
+                        },
+                        {
+                            key: '2',
+                            icon: <LogoutOutlined />,
+                            label: (
+                                <span onClick={() => {}}>
+                                    <p>Đăng xuất</p>
+                                </span>
+                            )
+                        }
+                    ]
+                }}
+            >
+                <span className="user-action">
+                    <img
+                        src={
+                            'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'
+                        }
+                        className="user-avator"
+                        alt="avator"
+                        width="30"
+                        height="30"
+                    />
+                </span>
+            </Dropdown>
+        </Layout.Header>
     );
 };

@@ -41,7 +41,8 @@ module.exports = (env, options) => {
                 '@store': path.resolve(__dirname, 'src/store/'),
                 '@styles': path.resolve(__dirname, 'src/styles/'),
                 '@utils': path.resolve(__dirname, 'src/utils/')
-            }
+            },
+            fallback: { stream: false, buffer: false }
         },
         module: {
             rules: [
