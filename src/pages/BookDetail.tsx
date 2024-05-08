@@ -1,6 +1,5 @@
 import React from 'react';
 import Slider from 'react-slick';
-import { Image } from 'react-bootstrap';
 import MinusOutlined from '@ant-design/icons/lib/icons/MinusOutlined';
 import PlusOutlined from '@ant-design/icons/lib/icons/PlusOutlined';
 import Button from 'antd/es/button';
@@ -16,7 +15,7 @@ export const BookDetail = () => {
         customPaging: function () {
             return (
                 <a>
-                    <Image src={'public/asset/books/Midnight.svg'} rounded />
+                    {/*<Image src={'public/asset/books/Midnight.svg'} rounded />*/}
                 </a>
             );
         }
@@ -27,30 +26,30 @@ export const BookDetail = () => {
                 <div className="col-span-2 grid grid-cols-1 lg:grid-cols-3 bg-white p-8 rounded-2xl">
                     <div className="">
                         <Slider {...settings}>
-                            <div>
-                                <Image
-                                    src={'public/asset/books/Midnight.svg'}
-                                    rounded
-                                />
-                            </div>
-                            <div>
-                                <Image
-                                    src={'public/asset/books/Midnight.svg'}
-                                    rounded
-                                />
-                            </div>
-                            <div>
-                                <Image
-                                    src={'public/asset/books/Midnight.svg'}
-                                    rounded
-                                />
-                            </div>
-                            <div>
-                                <Image
-                                    src={'public/asset/books/Midnight.svg'}
-                                    rounded
-                                />
-                            </div>
+                            {/*<div>*/}
+                            {/*    <Image*/}
+                            {/*        src={'public/asset/books/Midnight.svg'}*/}
+                            {/*        rounded*/}
+                            {/*    />*/}
+                            {/*</div>*/}
+                            {/*<div>*/}
+                            {/*    <Image*/}
+                            {/*        src={'public/asset/books/Midnight.svg'}*/}
+                            {/*        rounded*/}
+                            {/*    />*/}
+                            {/*</div>*/}
+                            {/*<div>*/}
+                            {/*    <Image*/}
+                            {/*        src={'public/asset/books/Midnight.svg'}*/}
+                            {/*        rounded*/}
+                            {/*    />*/}
+                            {/*</div>*/}
+                            {/*<div>*/}
+                            {/*    <Image*/}
+                            {/*        src={'public/asset/books/Midnight.svg'}*/}
+                            {/*        rounded*/}
+                            {/*    />*/}
+                            {/*</div>*/}
                         </Slider>
                     </div>
                     <div className="col-span-2">

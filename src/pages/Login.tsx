@@ -1,4 +1,4 @@
-import { Button, ConfigProvider, Form, FormProps, Input } from 'antd';
+import { Button, Form, FormProps, Input } from 'antd';
 import React from 'react';
 
 type FieldType = {
@@ -97,25 +97,13 @@ export const Login: React.FC = () => {
                                         </a>
                                     </Form.Item>
 
-                                    <ConfigProvider
-                                        theme={{
-                                            components: {
-                                                Button: {
-                                                    colorPrimary: '#FFCE1A'
-                                                }
-                                            }
-                                        }}
+                                    <Button
+                                        type="primary"
+                                        htmlType="submit"
+                                        block
                                     >
-                                        <Form.Item>
-                                            <Button
-                                                type="primary"
-                                                htmlType="submit"
-                                                block
-                                            >
-                                                Đăng nhập
-                                            </Button>
-                                        </Form.Item>
-                                    </ConfigProvider>
+                                        Đăng nhập
+                                    </Button>
                                 </Form>
                             </div>
                         </div>
