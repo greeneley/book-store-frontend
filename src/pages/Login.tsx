@@ -1,5 +1,7 @@
-import { Button, Form, FormProps, Input } from 'antd';
+import { Button, Form, FormProps, Input, theme, Typography } from 'antd';
 import React from 'react';
+
+const { Title } = Typography;
 
 type FieldType = {
     email?: string;
@@ -7,6 +9,10 @@ type FieldType = {
     remember?: string;
 };
 export const Login: React.FC = () => {
+    const {
+        token: { colorBgContainer, borderRadiusLG }
+    } = theme.useToken();
+
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
         console.log('Success:', values);
     };
@@ -18,98 +24,73 @@ export const Login: React.FC = () => {
     };
 
     return (
-        <div className="half">
-            <div className="contents">
-                <div className="container">
-                    <div className="row align-items-center justify-content-center">
-                        <div className="col-md-12">
-                            <div className="form-block mx-auto">
-                                <div className="text-center mb-5">
-                                    <h3>Đăng nhập</h3>
-                                </div>
-                                <form
-                                    method="post"
-                                    onSubmit={(e) => {
-                                        console.log(e);
-                                    }}
-                                >
-                                    <input
-                                        type="submit"
-                                        value="Log In"
-                                        className="btn btn-block btn-primary w-100"
-                                    />
-                                </form>
+        <div
+            style={{
+                margin: '32px 0',
+                background: colorBgContainer,
+                minHeight: 750,
+                padding: 52,
+                borderRadius: borderRadiusLG,
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
+            }}
+        >
+            <Title>Đăng nhập</Title>
+            <Form
+                name="basic"
+                layout="vertical"
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 50 }}
+                style={{ width: 600 }}
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="off"
+                size="middle"
+            >
+                <Form.Item<FieldType>
+                    label="Email"
+                    name="email"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Vui lòng nhập email!'
+                        }
+                    ]}
+                >
+                    <Input size={'large'} />
+                </Form.Item>
+                <Form.Item<FieldType>
+                    label="Password"
+                    name="password"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Vui lòng nhập mật khẩu!'
+                        }
+                    ]}
+                >
+                    <Input.Password size={'large'} />
+                </Form.Item>
 
-                                <div className="text-sm text-center mt-[1.6rem]">
-                                    Chưa có tài khoản?{' '}
-                                    <a
-                                        className="text-sm text-[#7747ff]"
-                                        href="#"
-                                    >
-                                        Đăng ký miễn phí!
-                                    </a>
-                                </div>
-                                <Form
-                                    name="basic"
-                                    layout="vertical"
-                                    labelCol={{ span: 4 }}
-                                    wrapperCol={{ span: 50 }}
-                                    style={{ maxWidth: 600 }}
-                                    initialValues={{ remember: true }}
-                                    onFinish={onFinish}
-                                    onFinishFailed={onFinishFailed}
-                                    autoComplete="off"
-                                >
-                                    <Form.Item<FieldType>
-                                        label="Email"
-                                        name="email"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Vui lòng nhập email!'
-                                            }
-                                        ]}
-                                    >
-                                        <Input size={'large'} />
-                                    </Form.Item>
+                <Form.Item<FieldType>
+                    name="remember"
+                    wrapperCol={{ span: 16 }}
+                    className="mb-2"
+                >
+                    <a href="#" className="forgot-pass">
+                        Quên mật khẩu
+                    </a>
+                </Form.Item>
 
-                                    <Form.Item<FieldType>
-                                        label="Password"
-                                        name="password"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message:
-                                                    'Please input your password!'
-                                            }
-                                        ]}
-                                    >
-                                        <Input.Password size={'large'} />
-                                    </Form.Item>
-
-                                    <Form.Item<FieldType>
-                                        name="remember"
-                                        wrapperCol={{ span: 16 }}
-                                        className="mb-2"
-                                    >
-                                        <a href="#" className="forgot-pass">
-                                            Quên mật khẩu
-                                        </a>
-                                    </Form.Item>
-
-                                    <Button
-                                        type="primary"
-                                        htmlType="submit"
-                                        block
-                                    >
-                                        Đăng nhập
-                                    </Button>
-                                </Form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <Button htmlType="submit" block>
+                    Đăng nhập
+                </Button>
+            </Form>
         </div>
     );
 };

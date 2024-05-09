@@ -1,14 +1,15 @@
+import React from 'react';
 import {
     createBrowserRouter,
     Navigate,
     RouterProvider
 } from 'react-router-dom';
-import React from 'react';
+import { useAuth } from '../contexts/AuthContextProvider';
+import { BookDetail } from '../pages/BookDetail';
 import HomePage from '../pages/Home';
 import { Login } from '../pages/Login';
-import { BookDetail } from '../pages/BookDetail';
+import { NoPageFound } from '../pages/NoPageFound';
 import { ProtectedRoute } from './ProtectedRoute';
-import { useAuth } from '../contexts/AuthContextProvider';
 
 export const Routes = () => {
     const { token } = useAuth();
@@ -17,6 +18,10 @@ export const Routes = () => {
         {
             path: 'books',
             element: <BookDetail />
+        },
+        {
+            path: '*',
+            element: <NoPageFound />
         }
     ];
 

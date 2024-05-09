@@ -1,6 +1,6 @@
-import HeaderDropdown from './HeaderDropdown';
-import React from 'react';
 import { LogoutOutlined } from '@ant-design/icons';
+import React from 'react';
+import HeaderDropdown from './HeaderDropdown';
 
 export type GlobalHeaderRightProps = {
     menu?: boolean;

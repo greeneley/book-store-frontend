@@ -1,35 +1,38 @@
-import React from 'react';
-import { Layout, theme } from 'antd';
 import { Header } from '@components/Header/HeaderComponent';
+import { Layout, theme } from 'antd';
+import Footer from 'rc-footer';
+import 'rc-footer/assets/index.css';
+import React from 'react';
+import { Routes } from '../routes';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
-export const MainLayout: React.FC = () => {
+export interface MainLayoutProps {
+    children?: React.ReactNode;
+}
+
+export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     const {
         token: { colorBgContainer, borderRadiusLG }
     } = theme.useToken();
 
-    console.log(colorBgContainer);
     return (
         <>
             <Layout>
                 <Header />
                 <Content style={{ padding: '0 48px' }}>
-                    <div
-                        style={{
-                            margin: '32px 0',
-                            background: colorBgContainer,
-                            minHeight: 280,
-                            padding: 24,
-                            borderRadius: borderRadiusLG
-                        }}
-                    >
-                        Content
-                    </div>
+                    <Routes />
+                    {/*<div*/}
+                    {/*    style={{*/}
+                    {/*        margin: '32px 0',*/}
+                    {/*        background: colorBgContainer,*/}
+                    {/*        minHeight: 750,*/}
+                    {/*        padding: 24,*/}
+                    {/*        borderRadius: borderRadiusLG*/}
+                    {/*    }}*/}
+                    {/*></div>*/}
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>
-                    Ant Design ©{new Date().getFullYear()} Created by Ant UED
-                </Footer>
+                <Footer bottom="2024 Made with ❤️ by Dinh Thanh Hai" />
             </Layout>
         </>
     );
