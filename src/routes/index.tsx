@@ -9,6 +9,7 @@ import { BookDetail } from '../pages/BookDetail';
 import HomePage from '../pages/Home';
 import { Login } from '../pages/Login';
 import { NoPageFound } from '../pages/NoPageFound';
+import { UserProfile } from '../pages/UserProfile';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export const Routes = () => {
@@ -22,6 +23,10 @@ export const Routes = () => {
         {
             path: '*',
             element: <NoPageFound />
+        },
+        {
+            path: '/login',
+            element: <Login />
         }
     ];
 
@@ -32,7 +37,7 @@ export const Routes = () => {
             children: [
                 {
                     path: '/profile',
-                    element: <div>User Profile</div>
+                    element: <UserProfile />
                 },
                 {
                     path: '/logout',
@@ -50,10 +55,6 @@ export const Routes = () => {
         {
             path: '/',
             element: <Navigate to={'/home'} />
-        },
-        {
-            path: '/login',
-            element: <Login />
         }
     ];
 

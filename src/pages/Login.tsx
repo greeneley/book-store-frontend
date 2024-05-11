@@ -1,5 +1,8 @@
 import { Button, Form, FormProps, Input, theme, Typography } from 'antd';
+import axios from 'axios';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContextProvider';
 
 const { Title } = Typography;
 
@@ -9,12 +12,33 @@ type FieldType = {
     remember?: string;
 };
 export const Login: React.FC = () => {
+    const navigate = useNavigate();
+    const { setToken } = useAuth();
+
     const {
         token: { colorBgContainer, borderRadiusLG }
     } = theme.useToken();
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-        console.log('Success:', values);
+        axios
+            .post('http://localhost:8081/api/v1/auth/login', {
+                email: values.email,
+                password: values.password
+            })
+            .then((response) => {
+                if (response) {
+                    setToken(response.data.accessToken);
+                    return axios.get(
+                        'http://localhost:8081/api/v1/user&id=' +
+                            response.data.user_id +
+                            '&token=' +
+                            response.data.accessToken
+                    );
+                }
+            })
+            .then((response) => {
+                console.log('Response 2:::', response);
+            });
     };
 
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (

@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
+import React, { createContext, useContext, useState } from 'react';
 
 type AuthContextValue = {
     token: string;
@@ -16,10 +16,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     children
 }: AuthProviderProps) => {
     const [token, setToken] = useState(localStorage.getItem('token'));
+    const [user, setUser] = useState(null);
 
     React.useEffect(() => {
         if (token) {
-            axios.defaults.headers.common['Authorization'] = 'Bearer' + token;
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
             localStorage.setItem('token', token);
         } else {
             delete axios.defaults.headers.common['Authorization'];
@@ -29,7 +30,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 
     const contextValue = {
         token,
-        setToken
+        setToken,
+        user,
+        setUser
     };
 
     return (
