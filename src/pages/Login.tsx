@@ -3,6 +3,7 @@ import axios from 'axios';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContextProvider';
+import { User } from '../model/internal/user';
 
 const { Title } = Typography;
 
@@ -13,32 +14,34 @@ type FieldType = {
 };
 export const Login: React.FC = () => {
     const navigate = useNavigate();
-    const { setToken } = useAuth();
+    const { setToken, setUser } = useAuth();
 
     const {
         token: { colorBgContainer, borderRadiusLG }
     } = theme.useToken();
 
-    const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-        axios
-            .post('http://localhost:8081/api/v1/auth/login', {
+    const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+        const response = await axios.post(
+            'http://localhost:8081/api/v1/auth/login',
+            {
                 email: values.email,
                 password: values.password
-            })
-            .then((response) => {
-                if (response) {
-                    setToken(response.data.accessToken);
-                    return axios.get(
-                        'http://localhost:8081/api/v1/user&id=' +
-                            response.data.user_id +
-                            '&token=' +
-                            response.data.accessToken
-                    );
+            }
+        );
+
+        if (response) {
+            setToken(response.data.accessToken);
+            const userInfo = await axios.post(
+                'http://localhost:8081/api/v1/user',
+                {
+                    id: response.data.user_id,
+                    token: response.data.accessToken
                 }
-            })
-            .then((response) => {
-                console.log('Response 2:::', response);
-            });
+            );
+
+            setUser(userInfo.data as User);
+            navigate('/');
+        }
     };
 
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (

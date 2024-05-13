@@ -1,9 +1,8 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 import { selectWebmapId } from '@store/Map/selectors';
-import classNames from 'classnames';
 import { updateWebmapId } from '@store/Map/thunks';
+import classNames from 'classnames';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const WebMapOptions = [
     { name: 'Topo', id: '67372ff42cd145319639a99152b15bc3' },

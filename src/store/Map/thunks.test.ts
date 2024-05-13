@@ -1,6 +1,6 @@
-import { updateWebmapId } from './thunks';
 import configureAppStore, { AppStore } from '../configureStore';
 import { selectWebmapId } from './selectors';
+import { updateWebmapId } from './thunks';
 
 describe('Redux Store - test Map thunks', () => {
     let store: AppStore;

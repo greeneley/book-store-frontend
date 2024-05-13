@@ -15,11 +15,12 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module'
     },
-    plugins: ['react', '@typescript-eslint', 'prettier'],
+    plugins: ['react', '@typescript-eslint', 'prettier', 'react-hooks'],
     rules: {
         'prettier/prettier': 'error',
         '@typescript-eslint/interface-name-prefix': 'off',
         '@typescript-eslint/no-unused-vars': 'off',
-        '@typescript-eslint/no-explicit-any': 'off'
+        '@typescript-eslint/no-explicit-any': 'off',
+        'react-hooks/exhaustive-deps': 'error'
     }
 };

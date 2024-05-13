@@ -27,6 +27,14 @@ export const Routes = () => {
         {
             path: '/login',
             element: <Login />
+        },
+        {
+            path: '/home',
+            element: <HomePage />
+        },
+        {
+            path: '/',
+            element: <Navigate to={'/home'} />
         }
     ];
 
@@ -60,7 +68,6 @@ export const Routes = () => {
 
     const router = createBrowserRouter([
         ...publicRoutes,
-        ...(!token ? routesForNotAuthenticatedOnly : []),
         ...routesForAuthenticated
     ]);
 

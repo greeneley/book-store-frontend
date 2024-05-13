@@ -5,9 +5,19 @@ import {
     SearchOutlined,
     UserOutlined
 } from '@ant-design/icons';
+import { useUserInfo } from '@hooks/internal/useUserInfo';
 import { Dropdown, Input, Layout } from 'antd';
 
-export const Header = () => {
+interface HeaderProps {
+    name?: string;
+    avatar?: string;
+    userid?: string;
+    email?: string;
+}
+export const Header: React.FC<HeaderProps> = (props) => {
+    const { name } = props;
+    const user = useUserInfo();
+
     return (
         <Layout.Header
             style={{
@@ -58,12 +68,10 @@ export const Header = () => {
                 >
                     <div className="user-action flex items-center gap-2">
                         <img
-                            src={
-                                'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'
-                            }
+                            src={user?.avatar ?? ''}
                             className="user-avator w-8 h-8"
                         />
-                        <a>Đăng nhập</a>
+                        <a>{user?.lastname ?? 'Đăng nhập'}</a>
                     </div>
                 </Dropdown>
             </div>

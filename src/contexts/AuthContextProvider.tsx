@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react';
+import { User } from '../model/internal/user';
 
 type AuthContextValue = {
     token: string;
     setToken: React.Dispatch<React.SetStateAction<string>>;
+    user: User;
+    setUser: React.Dispatch<React.SetStateAction<User>>;
 };
 
 type AuthProviderProps = {
@@ -16,7 +19,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     children
 }: AuthProviderProps) => {
     const [token, setToken] = useState(localStorage.getItem('token'));
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User>(null);
 
     React.useEffect(() => {
         if (token) {
@@ -27,6 +30,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
             localStorage.removeItem('token');
         }
     }, [token]);
+
+    React.useEffect(() => {
+        if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+        }
+    }, [user]);
 
     const contextValue = {
         token,

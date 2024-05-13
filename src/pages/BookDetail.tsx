@@ -1,8 +1,8 @@
-import React from 'react';
-import Slider from 'react-slick';
 import MinusOutlined from '@ant-design/icons/lib/icons/MinusOutlined';
 import PlusOutlined from '@ant-design/icons/lib/icons/PlusOutlined';
 import Button from 'antd/es/button';
+import React from 'react';
+import Slider from 'react-slick';
 
 export const BookDetail = () => {
     const settings = {
