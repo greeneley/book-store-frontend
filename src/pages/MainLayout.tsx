@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import Footer from 'rc-footer';
 import 'rc-footer/assets/index.css';
 import React from 'react';
-import { Routes } from '../routes';
+import { Outlet } from 'react-router-dom';
 
 const { Content } = Layout;
 
@@ -17,7 +17,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <Layout>
                 <Header />
                 <Content style={{ padding: '0 48px' }}>
-                    <Routes />
+                    <Outlet />
                 </Content>
                 <Footer bottom="2024 Made with ❤️ by Dinh Thanh Hai" />
             </Layout>

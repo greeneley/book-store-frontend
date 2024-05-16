@@ -3,10 +3,12 @@ import React from 'react';
 import {
     LogoutOutlined,
     SearchOutlined,
+    ShoppingCartOutlined,
     UserOutlined
 } from '@ant-design/icons';
 import { useUserInfo } from '@hooks/internal/useUserInfo';
-import { Dropdown, Input, Layout } from 'antd';
+import { Avatar, Badge, Dropdown, Input, Layout } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
     name?: string;
@@ -16,6 +18,7 @@ interface HeaderProps {
 }
 export const Header: React.FC<HeaderProps> = (props) => {
     const { name } = props;
+    const navigate = useNavigate();
     const user = useUserInfo();
 
     return (
@@ -33,6 +36,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                     width="30"
                     height="30"
                     alt="TH Book Store logo"
+                    onClick={() => navigate('/home')}
                 />
             </div>
             <div className="w-1/2">
@@ -49,7 +53,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                                 key: '1',
                                 icon: <UserOutlined />,
                                 label: (
-                                    <span onClick={() => {}}>
+                                    <span onClick={() => navigate('/profile')}>
                                         <p>Account</p>
                                     </span>
                                 )
@@ -67,9 +71,15 @@ export const Header: React.FC<HeaderProps> = (props) => {
                     }}
                 >
                     <div className="user-action flex items-center gap-2">
+                        <Badge count={1}>
+                            <Avatar
+                                shape="circle"
+                                icon={<ShoppingCartOutlined />}
+                            />
+                        </Badge>
                         <img
                             src={user?.avatar ?? ''}
-                            className="user-avator w-8 h-8"
+                            className="user-avator w-8 h-8 ml-4"
                         />
                         <a>{user?.lastname ?? 'Đăng nhập'}</a>
                     </div>

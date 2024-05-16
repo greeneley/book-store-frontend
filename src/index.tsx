@@ -13,7 +13,7 @@ import 'react-multi-carousel/lib/styles.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import { AuthProvider } from './contexts/AuthContextProvider';
-import { MainLayout } from './pages/MainLayout';
+import { Routes } from './routes';
 import configureAppStore, { getPreloadedState } from './store/configureStore';
 
 library.add(fas, faTwitter, faFontAwesome);
@@ -27,7 +27,7 @@ library.add(fas, faTwitter, faFontAwesome);
         <React.StrictMode>
             <ReduxProvider store={configureAppStore(preloadedState)}>
                 <AuthProvider>
-                    <MainLayout />
+                    <Routes />
                 </AuthProvider>
             </ReduxProvider>
         </React.StrictMode>

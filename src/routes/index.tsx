@@ -8,6 +8,7 @@ import { useAuth } from '../contexts/AuthContextProvider';
 import { BookDetail } from '../pages/BookDetail';
 import HomePage from '../pages/Home';
 import { Login } from '../pages/Login';
+import { MainLayout } from '../pages/MainLayout';
 import { NoPageFound } from '../pages/NoPageFound';
 import { UserProfile } from '../pages/UserProfile';
 import { ProtectedRoute } from './ProtectedRoute';
@@ -17,31 +18,41 @@ export const Routes = () => {
 
     const publicRoutes = [
         {
-            path: 'books',
-            element: <BookDetail />
-        },
-        {
-            path: '*',
-            element: <NoPageFound />
-        },
-        {
-            path: '/login',
-            element: <Login />
-        },
-        {
-            path: '/home',
-            element: <HomePage />
-        },
-        {
             path: '/',
-            element: <Navigate to={'/home'} />
+            element: <MainLayout />,
+            children: [
+                {
+                    path: '/books',
+                    element: <BookDetail />
+                },
+                {
+                    path: '*',
+                    element: <NoPageFound />
+                },
+                {
+                    path: '/login',
+                    element: <Login />
+                },
+                {
+                    path: '/home',
+                    element: <HomePage />
+                },
+                {
+                    path: '/',
+                    element: <Navigate to={'/home'} />
+                }
+            ]
         }
     ];
 
     const routesForAuthenticated = [
         {
             path: '/',
-            element: <ProtectedRoute />,
+            element: (
+                <MainLayout>
+                    <ProtectedRoute />
+                </MainLayout>
+            ),
             children: [
                 {
                     path: '/profile',
@@ -52,17 +63,6 @@ export const Routes = () => {
                     element: <div>Log out</div>
                 }
             ]
-        }
-    ];
-
-    const routesForNotAuthenticatedOnly = [
-        {
-            path: '/home',
-            element: <HomePage />
-        },
-        {
-            path: '/',
-            element: <Navigate to={'/home'} />
         }
     ];
 
