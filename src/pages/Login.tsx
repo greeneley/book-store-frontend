@@ -34,13 +34,17 @@ export const Login: React.FC = () => {
             const userInfo = await axios.post(
                 'http://localhost:8081/api/v1/user',
                 {
-                    id: response.data.user_id,
-                    token: response.data.accessToken
+                    id: response.data.user_id
+                },
+                {
+                    headers: {
+                        Authorization: 'Bearer ' + response.data.accessToken
+                    }
                 }
             );
 
             setUser(userInfo.data as User);
-            navigate('/');
+            navigate('/home');
         }
     };
 

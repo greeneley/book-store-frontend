@@ -1,26 +1,24 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Book } from '../../model';
+import React, { useState } from 'react';
 
 export const MainContent: React.FC = () => {
     const [urls, setUrls] = useState<Array<string>>([]);
-
-    useEffect(() => {
-        const config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: process.env.REACT_APP_SERVER_URL + '/book/favorite',
-            headers: {}
-        };
-        axios
-            .request(config)
-            .then((response) => {
-                setUrls(response.data.map((data: Book) => data.imageUrl));
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+    //
+    // useEffect(() => {
+    //     const config = {
+    //         method: 'get',
+    //         maxBodyLength: Infinity,
+    //         url: process.env.REACT_APP_SERVER_URL + '/book/favorite',
+    //         headers: {}
+    //     };
+    //     axios
+    //         .request(config)
+    //         .then((response) => {
+    //             setUrls(response.data.map((data: Book) => data.imageUrl));
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         });
+    // }, []);
 
     return (
         <></>

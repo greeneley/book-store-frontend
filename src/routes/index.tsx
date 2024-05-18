@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import {
     createBrowserRouter,
@@ -22,8 +23,20 @@ export const Routes = () => {
             element: <MainLayout />,
             children: [
                 {
-                    path: '/books',
-                    element: <BookDetail />
+                    path: '/book/:bookId',
+                    element: <BookDetail />,
+                    loader: async ({ params }: any) => {
+                        const response = await axios.get(
+                            `http://localhost:8081/api/v1/books/${params.bookId}`,
+                            {
+                                headers: {
+                                    Authorization: 'Bearer ' + token
+                                }
+                            }
+                        );
+
+                        return response.data;
+                    }
                 },
                 {
                     path: '*',

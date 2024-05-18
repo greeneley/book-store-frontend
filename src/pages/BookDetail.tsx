@@ -1,10 +1,42 @@
 import MinusOutlined from '@ant-design/icons/lib/icons/MinusOutlined';
 import PlusOutlined from '@ant-design/icons/lib/icons/PlusOutlined';
+import { convertToCurrency } from '@utils/helpers/convertToCurrency';
+import { Image } from 'antd';
 import Button from 'antd/es/button';
-import React from 'react';
-import Slider from 'react-slick';
+import Title from 'antd/es/typography/Title';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
+import { Book } from '../model';
 
 export const BookDetail = () => {
+    const result = useLoaderData() as Book;
+
+    const [bookId, setBookId] = useState(undefined);
+    const [name, setName] = useState(undefined);
+
+    const [price, setPrice] = useState(undefined);
+
+    const [description, setDescription] = useState(undefined);
+    const [imageUrl, setImageUrl] = useState(undefined);
+    const [favorite, setFavorite] = useState(undefined);
+    const [authors, setAuthors] = useState(undefined);
+
+    const originalPrice = useMemo(() => {
+        return price * 1.3;
+    }, [price]);
+
+    useEffect(() => {
+        if (result) {
+            setBookId(result.book_id);
+            setName(result.name);
+            setPrice(result.price);
+            setDescription(result.desc);
+            setImageUrl(result.imageUrl);
+            setFavorite(result.favorite);
+            setAuthors(result.author);
+        }
+    }, [result]);
+
     const settings = {
         dots: true,
         dotsClass: 'slick-dots slick-thumb',
@@ -24,42 +56,17 @@ export const BookDetail = () => {
         <>
             <div className="container text-center text-md-left py-3 grid grid-cols-3 gap-3">
                 <div className="col-span-2 grid grid-cols-1 lg:grid-cols-3 bg-white p-8 rounded-2xl">
-                    <div className="">
-                        <Slider {...settings}>
-                            {/*<div>*/}
-                            {/*    <Image*/}
-                            {/*        src={'public/asset/books/Midnight.svg'}*/}
-                            {/*        rounded*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            {/*<div>*/}
-                            {/*    <Image*/}
-                            {/*        src={'public/asset/books/Midnight.svg'}*/}
-                            {/*        rounded*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            {/*<div>*/}
-                            {/*    <Image*/}
-                            {/*        src={'public/asset/books/Midnight.svg'}*/}
-                            {/*        rounded*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            {/*<div>*/}
-                            {/*    <Image*/}
-                            {/*        src={'public/asset/books/Midnight.svg'}*/}
-                            {/*        rounded*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                        </Slider>
+                    <div className="w-full">
+                        <Image src={imageUrl} />
                     </div>
                     <div className="col-span-2">
-                        <h1 className="fw-bold text-xl ">
-                            Câu Chuyện Kinh Thánh (Tái bản 2024) - Vanlangbooks
-                        </h1>
+                        <Title level={3} className="fw-bold text-xl ">
+                            {name}
+                        </Title>
                         <form>
                             <div className="text-md-center">
                                 <span className="first_status mr-2">
-                                    Thương hiệu:{' '}
+                                    Tác giả:{' '}
                                     <span className="accent-blue-600">
                                         <a
                                             href="/collections/all?q=filter=(!(collectionid:product=0)&amp;&amp;(vendor:product contains Văn Lang))&amp;page=1&amp;view=grid"
@@ -67,7 +74,7 @@ export const BookDetail = () => {
                                             className="text-[#007bff]"
                                             title="Văn Lang"
                                         >
-                                            Văn Lang
+                                            {authors}
                                         </a>
                                     </span>
                                 </span>
@@ -84,12 +91,12 @@ export const BookDetail = () => {
                             <div className="flex items-center flex-wrap px-0 gap-4">
                                 <span className="special-price">
                                     <span className="text-xl text-red-500 font-bold">
-                                        118,300₫
+                                        {convertToCurrency(price)}
                                     </span>
                                 </span>
                                 <span className="old-price">
                                     <del className="text-[#979797] ml-2 font-normal text-lg">
-                                        169,000₫
+                                        {convertToCurrency(originalPrice)}
                                     </del>
                                 </span>
                                 <div className="rounded bg-red-500 text-white inline-flex justify-center items-center px-2 py-1 font-bold text-lg">
@@ -98,7 +105,9 @@ export const BookDetail = () => {
                                 <div className="text-sm w-auto">
                                     (Tiết kiệm:{' '}
                                     <span className="text-red-500">
-                                        50,700₫
+                                        {convertToCurrency(
+                                            originalPrice - price
+                                        )}
                                     </span>
                                     )
                                 </div>
@@ -165,7 +174,7 @@ export const BookDetail = () => {
                                     </span>
                                 </Button>
                                 <Button className="text-[#0A57A2] flex flex-col h-14 w-full items-center justify-center px-2 py-1 font-bold">
-                                    THÊM VÀO GIỎ
+                                    THÊM VÀO GIỎ HÀNG
                                 </Button>
                             </div>
                             <p className="mb-0 text-center">
@@ -220,41 +229,7 @@ export const BookDetail = () => {
                 <div className="container text-md-left py-3">
                     <div className="grid grid-cols-1 bg-white p-8 rounded-2xl">
                         <div id="content" className="content js-content">
-                            <p>I. GIỚI THIỆU SÁCH</p>
-                            <p>
-                                Khi Đức Jesus đến nhà Matthew và ngồi xuống dùng
-                                bữa, thì rất nhiều người cũng đến ngồi ăn với
-                                ngài và môn đệ của ngài. Phần lớn những người
-                                này là quan thu thuế và kẻ xấu. Người Pharisees,
-                                thấy vậy bèn hỏi các môn đệ của ngài, “ Tại sao
-                                thầy các ngươi ngồi chung với những kẻ xấu xa
-                                này?”. Đức Jesus nghe những lời này bèn nói,
-                                “Đâu phải người khỏe mạnh cần thuốc, mà chỉ có
-                                người bệnh thôi. Ta đến đây không phải cho người
-                                công chính, mà là vì kẻ có tội, bởi họ mới cần
-                                đến ta”.
-                                <br />
-                                Một công trình biên soạn dưới sự cố vấn của các
-                                nhà nghiên cứu tôn giáo, các học giả và các tu
-                                sĩ. Một món quà vô giá mà mọi gia đình Kitô hữu
-                                đặc biệt dành tặng cho con em mình để sống và
-                                trưởng thành theo gương Đức Jesus: tình yêu
-                                thương bao la và đức hy sinh cao cả, từ đó sớm
-                                nhận ra một chân lý mãi mãi trường tồn, đó là:
-                                lòng nhân ái luôn chiến thắng sự hung dữ; cái
-                                thiện luôn thắng cái ác...
-                            </p>
-                            <p>II. THÔNG TIN CHI TIẾT</p>
-                            <p>Mã hàng: 8935074133045</p>
-                            <p>Tác giả: Selina Hastings</p>
-                            <p>Kích thước: 14,5x20,5</p>
-                            <p>Số trang: 376</p>
-                            <p>Trọng lượng (gr): 500</p>
-                            <p>Hình thức: Bìa mềm</p>
-                            <p>Năm xuất bản 2024</p>
-                            <p>Nhà xuất bản Hồng Đức</p>
-                            <p>Nhà phát hành Văn Lang</p>
-                            <p>Ngôn ngữ: Tiếng Việt&nbsp;</p>
+                            {description}
                         </div>
                     </div>
                 </div>

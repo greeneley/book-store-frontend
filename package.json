@@ -22,12 +22,9 @@
     "url": "git+https://github.com/vannizhang/react-redux-boilerplate.git"
   },
   "keywords": [],
-  "author": "Jinnan Zhang",
+  "author": "Dinh Thanh Hai",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/vannizhang/react-redux-boilerplate/issues"
-  },
-  "homepage": "https://github.com/vannizhang/react-redux-boilerplate",
+  "homepage": "http://localhost:8082/",
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
