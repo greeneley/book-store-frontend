@@ -1,18 +1,17 @@
 import { convertToCurrency } from '@utils/helpers/convertToCurrency';
 import { Button, Image } from 'antd';
+import Title from 'antd/es/typography/Title';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface BookItemProps {
     url: string;
     title: string;
-    desc: string;
     price: number;
     bookId: number;
 }
 export const BookItem: React.FC<BookItemProps> = (props) => {
-    const { url, title, desc, price, bookId } = props;
-    console.log({ bookId });
+    const { url, title, price, bookId } = props;
     return (
         <>
             <div className="grid grid-cols-2 p-4 border-2 border-[#ebebf0] rounded-2xl mx-1 bg-white">
@@ -21,7 +20,9 @@ export const BookItem: React.FC<BookItemProps> = (props) => {
                 </div>
                 <div className="flex">
                     <div className="content justify-content-center p-2 flex flex-col">
-                        <h3 className="text-base font-normal">{title}</h3>
+                        <Title level={3} className="text-base font-normal">
+                            {title}
+                        </Title>
                         <div className="price flex gap-3">
                             <p className="font-medium">
                                 {convertToCurrency(price * 0.8)}

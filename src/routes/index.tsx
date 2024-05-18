@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContextProvider';
 import { BookDetail } from '../pages/BookDetail';
+import { Cart } from '../pages/Cart';
 import HomePage from '../pages/Home';
 import { Login } from '../pages/Login';
 import { MainLayout } from '../pages/MainLayout';
@@ -74,6 +75,10 @@ export const Routes = () => {
                 {
                     path: '/logout',
                     element: <div>Log out</div>
+                },
+                {
+                    path: '/cart',
+                    element: <Cart />
                 }
             ]
         }

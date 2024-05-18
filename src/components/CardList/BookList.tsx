@@ -14,7 +14,6 @@ export const BookList: React.FC = () => {
         });
     }, []);
 
-    console.log({ books });
     return (
         <>
             <div className="my-10 bg-white p-8 rounded-2xl">
@@ -31,7 +30,6 @@ export const BookList: React.FC = () => {
                                     url={book.imageUrl}
                                     price={book.price}
                                     title={book.name}
-                                    desc={book.desc}
                                     bookId={book.book_id}
                                 />
                             );
