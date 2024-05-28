@@ -78,7 +78,19 @@ export const Routes = () => {
                 },
                 {
                     path: '/cart',
-                    element: <Cart />
+                    element: <Cart />,
+                    loader: async () => {
+                        const response = await axios.get(
+                            `http://localhost:8081/api/v1/cart`,
+                            {
+                                headers: {
+                                    Authorization: 'Bearer ' + token
+                                }
+                            }
+                        );
+
+                        return response.data;
+                    }
                 }
             ]
         }

@@ -75,6 +75,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                             <Avatar
                                 shape="circle"
                                 icon={<ShoppingCartOutlined />}
+                                onClick={() => navigate('/cart')}
                             />
                         </Badge>
                         <img

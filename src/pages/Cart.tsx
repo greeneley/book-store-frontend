@@ -1,33 +1,31 @@
 import { convertToCurrency } from '@utils/helpers/convertToCurrency';
-import { Col, Image, Popconfirm, Row, Table, theme } from 'antd';
+import { Col, Image, Popconfirm, Row, Table } from 'antd';
 import Title from 'antd/es/typography/Title';
-import React from 'react';
+import axios from 'axios';
+import React, { useMemo } from 'react';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContextProvider';
+import { CartInfo } from '../model/internal/cart-info';
+import { CartItem } from '../model/internal/cart-item';
 
 export const Cart: React.FC = () => {
-    const {
-        token: { colorBgContainer, borderRadiusLG }
-    } = theme.useToken();
+    const { token } = useAuth();
+    const navigate = useNavigate();
 
-    const dataSource = [
-        {
-            key: '1',
-            imageUrl:
-                'https://salt.tikicdn.com/cache/750x750/ts/product/b4/f0/81/5d5e4a26cb029fdecd04e0c30cbef17a.jpg.webp',
-            name: 'Quyết định triệu đô',
-            price: 118000,
-            quantity: 1,
-            total: 118000.0
-        },
-        {
-            key: '2',
-            imageUrl:
-                'https://salt.tikicdn.com/cache/750x750/ts/product/13/4f/08/cec6bf075eb1724d3b5da6e073c1079b.jpg.webp',
-            name: 'Bạn đã nghĩ quá nhiều',
-            price: 108000.0,
-            quantity: 1,
-            total: 108000.0
-        }
-    ];
+    const cartInfo = useLoaderData() as CartInfo;
+
+    const dataSource = useMemo(() => {
+        return cartInfo.cart_items.map((cartItem: CartItem) => {
+            return {
+                key: cartItem.cart_item_id,
+                imageUrl: cartItem.book.imageUrl,
+                name: cartItem.book.name,
+                price: cartItem.book.price,
+                quantity: cartItem.quantity,
+                total: cartItem.subTotal
+            };
+        });
+    }, [cartInfo.cart_items]);
 
     const columns = [
         {
@@ -68,12 +66,26 @@ export const Cart: React.FC = () => {
         {
             title: 'operation',
             dataIndex: 'operation',
-            render: (_: any, record: any) =>
-                dataSource.length >= 1 ? (
-                    <Popconfirm title="Sure to delete?" onConfirm={() => {}}>
+            render: (_: any, record: any) => {
+                return dataSource.length >= 1 ? (
+                    <Popconfirm
+                        title="Sure to delete?"
+                        onConfirm={async () => {
+                            const response = await axios.get(
+                                `http://localhost:8081/api/v1/cart-item/delete/${record.key}`,
+                                {
+                                    headers: {
+                                        Authorization: 'Bearer ' + token
+                                    }
+                                }
+                            );
+                            navigate('.');
+                        }}
+                    >
                         <a>Xóa</a>
                     </Popconfirm>
-                ) : null
+                ) : null;
+            }
         }
     ];
 
@@ -92,7 +104,13 @@ export const Cart: React.FC = () => {
                         </div>
                     </Col>
                     <Col span={8}>
-                        <div className="w-full bg-blue-500">D</div>
+                        <Title level={3}>
+                            Tổng số sản phẩm: {cartInfo.cart_items.length}
+                        </Title>
+                        <Title level={4}>
+                            Tổng giá trị đơn hàng:{' '}
+                            {convertToCurrency(cartInfo.total)}
+                        </Title>
                     </Col>
                 </Row>
             </div>
