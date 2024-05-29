@@ -1,8 +1,10 @@
 import { convertToCurrency } from '@utils/helpers/convertToCurrency';
 import { Button, Image } from 'antd';
 import Title from 'antd/es/typography/Title';
+import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContextProvider';
 
 interface BookItemProps {
     url: string;
@@ -12,6 +14,22 @@ interface BookItemProps {
 }
 export const BookItem: React.FC<BookItemProps> = (props) => {
     const { url, title, price, bookId } = props;
+    const { token } = useAuth();
+
+    const onAddToCart = async () => {
+        await axios.post(
+            `http://localhost:8081/api/v1/cart-item/add`,
+            {
+                quantity: 1,
+                bookId: bookId
+            },
+            {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            }
+        );
+    };
     return (
         <>
             <div className="grid grid-cols-2 p-4 border-2 border-[#ebebf0] rounded-2xl mx-1 bg-white">
@@ -31,7 +49,7 @@ export const BookItem: React.FC<BookItemProps> = (props) => {
                                 {convertToCurrency(price)}
                             </p>
                         </div>
-                        <Button className="mt-auto">
+                        <Button className="mt-auto" onClick={onAddToCart}>
                             <div className="flex align-items-center gap-2">
                                 Thêm vào giỏ hàng
                             </div>
