@@ -13,6 +13,10 @@ class BookService {
             }
         });
     }
+
+    static getBookDetail(bookId: number) {
+        return axios.get(baseUrl + `/api/v1/books/${bookId}`);
+    }
 }
 
 export default BookService;

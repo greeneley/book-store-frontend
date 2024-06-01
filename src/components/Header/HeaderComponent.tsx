@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import {
     LogoutOutlined,
@@ -9,6 +9,7 @@ import {
 import { useUserInfo } from '@hooks/internal/useUserInfo';
 import { Avatar, Badge, Dropdown, Input, Layout } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../contexts/AppContextProvider';
 
 interface HeaderProps {
     name?: string;
@@ -18,6 +19,9 @@ interface HeaderProps {
 }
 export const Header: React.FC<HeaderProps> = (props) => {
     const { name } = props;
+
+    const { countBadge } = useContext(AppContext);
+
     const navigate = useNavigate();
     const user = useUserInfo();
 
@@ -71,7 +75,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                     }}
                 >
                     <div className="user-action flex items-center gap-2">
-                        <Badge count={1}>
+                        <Badge count={countBadge}>
                             <Avatar
                                 shape="circle"
                                 icon={<ShoppingCartOutlined />}

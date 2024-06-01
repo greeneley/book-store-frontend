@@ -28,12 +28,7 @@ export const Routes = () => {
                     element: <BookDetail />,
                     loader: async ({ params }: any) => {
                         const response = await axios.get(
-                            `http://localhost:8081/api/v1/books/${params.bookId}`,
-                            {
-                                headers: {
-                                    Authorization: 'Bearer ' + token
-                                }
-                            }
+                            `http://localhost:8081/api/v1/books/${params.bookId}`
                         );
 
                         return response.data;

@@ -1,24 +1,31 @@
+import { MinusCircleOutlined, PlusCircleFilled } from '@ant-design/icons';
+import { CartItemService } from '@services/CartItemService';
 import { convertToCurrency } from '@utils/helpers/convertToCurrency';
 import { Col, Image, Popconfirm, Row, Table } from 'antd';
 import Title from 'antd/es/typography/Title';
-import axios from 'axios';
-import React, { useMemo } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContextProvider';
+import { AppContext } from '../contexts/AppContextProvider';
 import { CartInfo } from '../model/internal/cart-info';
 import { CartItem } from '../model/internal/cart-item';
 
 export const Cart: React.FC = () => {
-    const { token } = useAuth();
     const navigate = useNavigate();
 
+    const { setCountBadge } = useContext(AppContext);
+
     const cartInfo = useLoaderData() as CartInfo;
+
+    useEffect(() => {
+        setCountBadge(cartInfo.cart_items.length);
+    }, [cartInfo.cart_items, cartInfo.cart_items.length, setCountBadge]);
 
     const dataSource = useMemo(() => {
         return cartInfo.cart_items.map((cartItem: CartItem) => {
             return {
                 key: cartItem.cart_item_id,
                 imageUrl: cartItem.book.imageUrl,
+                book_id: cartItem.book.book_id,
                 name: cartItem.book.name,
                 price: cartItem.book.price,
                 quantity: cartItem.quantity,
@@ -26,6 +33,28 @@ export const Cart: React.FC = () => {
             };
         });
     }, [cartInfo.cart_items]);
+
+    const increaseItem = useCallback(
+        (item: any) => {
+            CartItemService.updateQuantityItem(
+                item.quantity + 1,
+                item.book_id
+            ).then(() => navigate('.'));
+        },
+        [navigate]
+    );
+
+    const decreaseItem = useCallback(
+        (item: any) => {
+            if (item.quantity > 1) {
+                CartItemService.updateQuantityItem(
+                    item.quantity - 1,
+                    item.book_id
+                ).then(() => navigate('.'));
+            }
+        },
+        [navigate]
+    );
 
     const columns = [
         {
@@ -53,7 +82,22 @@ export const Cart: React.FC = () => {
         {
             title: 'Số lượng',
             dataIndex: 'quantity',
-            key: 'quantity'
+            key: 'quantity',
+            render: (quantity: number, item: CartInfo) => {
+                return (
+                    <span>
+                        <MinusCircleOutlined
+                            className="mr-8"
+                            onClick={() => decreaseItem(item)}
+                        />
+                        {quantity}
+                        <PlusCircleFilled
+                            className="ml-8"
+                            onClick={() => increaseItem(item)}
+                        />
+                    </span>
+                );
+            }
         },
         {
             title: 'Thành tiền',
@@ -71,15 +115,9 @@ export const Cart: React.FC = () => {
                     <Popconfirm
                         title="Sure to delete?"
                         onConfirm={async () => {
-                            const response = await axios.get(
-                                `http://localhost:8081/api/v1/cart-item/delete/${record.key}`,
-                                {
-                                    headers: {
-                                        Authorization: 'Bearer ' + token
-                                    }
-                                }
+                            CartItemService.removeCartItem(record.key).then(
+                                () => navigate('.')
                             );
-                            navigate('.');
                         }}
                     >
                         <a>Xóa</a>

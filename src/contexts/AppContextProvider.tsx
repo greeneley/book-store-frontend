@@ -1,7 +1,11 @@
-import React, { createContext, useState } from 'react';
+import { CartService } from '@services/CartService';
+import axios from 'axios';
+import React, { createContext, useEffect, useState } from 'react';
+import { useAuth } from './AuthContextProvider';
 
 type AppContextValue = {
-    darkMode: boolean;
+    countBadge: number;
+    setCountBadge: React.Dispatch<React.SetStateAction<number>>;
 };
 
 type AppContextProviderProps = {
@@ -10,29 +14,29 @@ type AppContextProviderProps = {
 
 export const AppContext = createContext<AppContextValue>(null);
 
-const AppContextProvider: React.FC<AppContextProviderProps> = ({
+export const AppContextProvider: React.FC<AppContextProviderProps> = ({
     children
 }: AppContextProviderProps) => {
-    const [value, setValue] = useState<AppContextValue>({
-        darkMode: false
-    });
+    const { token } = useAuth();
+    const [countBadge, setCountBadge] = useState(0);
 
-    // const init = async () => {
-    //     // const contextValue: AppContextValue = {
-    //     //     darkMode: false
-    //     // };
-    //     // setValue(contextValue);
-    // };
-    //
-    // React.useEffect(() => {
-    //     init();
-    // }, []);
+    const contextValue = {
+        countBadge,
+        setCountBadge
+    };
+
+    useEffect(() => {
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+            CartService.getCart().then((res) =>
+                setCountBadge(res.data.cart_items.length)
+            );
+        }
+    }, [token]);
 
     return (
-        <AppContext.Provider value={value}>
-            {value ? children : null}
+        <AppContext.Provider value={contextValue}>
+            {children}
         </AppContext.Provider>
     );
 };
-
-export default AppContextProvider;
