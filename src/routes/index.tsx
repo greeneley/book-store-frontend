@@ -8,6 +8,7 @@ import {
 import { useAuth } from '../contexts/AuthContextProvider';
 import { BookDetail } from '../pages/BookDetail';
 import { Cart } from '../pages/Cart';
+import { Checkout } from '../pages/Checkout';
 import HomePage from '../pages/Home';
 import { Login } from '../pages/Login';
 import { MainLayout } from '../pages/MainLayout';
@@ -86,6 +87,10 @@ export const Routes = () => {
 
                         return response.data;
                     }
+                },
+                {
+                    path: '/checkout',
+                    element: <Checkout />
                 }
             ]
         }

@@ -1,7 +1,7 @@
 import { MinusCircleOutlined, PlusCircleFilled } from '@ant-design/icons';
 import { CartItemService } from '@services/CartItemService';
 import { convertToCurrency } from '@utils/helpers/convertToCurrency';
-import { Col, Image, Popconfirm, Row, Table } from 'antd';
+import { Button, Col, Image, Popconfirm, Row, Table } from 'antd';
 import Title from 'antd/es/typography/Title';
 import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
@@ -149,6 +149,9 @@ export const Cart: React.FC = () => {
                             Tổng giá trị đơn hàng:{' '}
                             {convertToCurrency(cartInfo.total)}
                         </Title>
+                        <Button block onClick={() => navigate('/checkout')}>
+                            Thanh toán
+                        </Button>
                     </Col>
                 </Row>
             </div>
