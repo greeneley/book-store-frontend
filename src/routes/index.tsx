@@ -90,7 +90,19 @@ export const Routes = () => {
                 },
                 {
                     path: '/checkout',
-                    element: <Checkout />
+                    element: <Checkout />,
+                    loader: async () => {
+                        const response = await axios.get(
+                            `http://localhost:8081/api/v1/cart`,
+                            {
+                                headers: {
+                                    Authorization: 'Bearer ' + token
+                                }
+                            }
+                        );
+
+                        return response.data;
+                    }
                 }
             ]
         }
