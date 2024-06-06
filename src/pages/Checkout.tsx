@@ -14,7 +14,8 @@ import {
 } from 'antd';
 import Input from 'antd/es/input/Input';
 import Title from 'antd/es/typography/Title';
-import React, { useMemo, useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { CartInfo } from '../model/internal/cart-info';
 import { CartItem } from '../model/internal/cart-item';
@@ -28,10 +29,27 @@ interface DataType {
     total: number;
 }
 
+interface IProvince {
+    province_id: number;
+    province_name: string;
+    province_type: string;
+}
+
 export const Checkout: React.FC = (props) => {
     const [paymentMethod, setPaymentMethod] = useState(1);
+    const [provinces, setProvinces] = useState(null);
+    const [provinceId, setProvinceId] = useState<number | undefined>();
+    const [provinceName, setProvinceName] = useState();
+    const [districts, setDistricts] = useState(null);
+    const [districtId, setDistrictId] = useState<number | undefined>();
+    const [districtName, setDistrictName] = useState<string>();
+    const [wards, setWards] = useState<any>();
+    const [wardId, setWardId] = useState<number | undefined>();
+    const [wardName, setWardName] = useState<string>();
 
     const cartInfo = useLoaderData() as CartInfo;
+
+    const [form] = Form.useForm();
 
     const dataSource = useMemo(() => {
         return cartInfo.cart_items.map((cartItem: CartItem) => {
@@ -80,11 +98,67 @@ export const Checkout: React.FC = (props) => {
         setPaymentMethod(e.target.value);
     };
 
-    // useEffect(() => {
-    //     axios.get('https://esgoo.net/api-tinhthanh/1/0.htm').then((res) => {
-    //         console.log(res.data);
-    //     });
-    // }, []);
+    useEffect(() => {
+        axios
+            .get('https://vapi.vnappmob.com/api/province/')
+            .then(async (res) => {
+                const provinces = await res.data;
+                setProvinces(provinces.results);
+            });
+    }, []);
+
+    const onHandleProvince = (value: number, option: any) => {
+        setProvinceId(value);
+        setProvinceName(option?.label);
+    };
+
+    useEffect(() => {
+        try {
+            if (provinceId) {
+                axios
+                    .get(
+                        'https://vapi.vnappmob.com/api/province/district/' +
+                            provinceId
+                    )
+                    .then(async (res) => {
+                        const districts = await res.data;
+                        setDistricts(districts.results);
+                        setWards(undefined);
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [provinceId]);
+
+    const onHandleDistrict = (value: number, option: any) => {
+        setDistrictId(value);
+        setDistrictName(option?.label);
+    };
+
+    useEffect(() => {
+        try {
+            if (districtId) {
+                axios
+                    .get(
+                        'https://vapi.vnappmob.com/api/province/ward/' +
+                            districtId
+                    )
+                    .then(async (res) => {
+                        const wards = await res.data;
+                        setWards(wards.results);
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [districtId]);
+
+    const onHandleWard = (value: number, option: any) => {
+        setWardId(value);
+        setWardName(option?.label);
+    };
+
     return (
         <>
             <div className="my-10 p-8">
@@ -120,29 +194,98 @@ export const Checkout: React.FC = (props) => {
                                 </Form.Item>
                                 <Row gutter={10}>
                                     <Col span={8}>
+                                        <Form form={form}>
+                                            <Form.Item name="province">
+                                                <Select
+                                                    placeholder="Tỉnh/thành"
+                                                    onSelect={onHandleProvince}
+                                                    allowClear={true}
+                                                >
+                                                    {provinces
+                                                        ? provinces.map(
+                                                              (
+                                                                  province: IProvince
+                                                              ) => {
+                                                                  const {
+                                                                      province_id,
+                                                                      province_name
+                                                                  } = province;
+                                                                  return (
+                                                                      <Select.Option
+                                                                          key={
+                                                                              province_id
+                                                                          }
+                                                                          value={
+                                                                              province_id
+                                                                          }
+                                                                      >
+                                                                          {
+                                                                              province_name
+                                                                          }
+                                                                      </Select.Option>
+                                                                  );
+                                                              }
+                                                          )
+                                                        : null}
+                                                </Select>
+                                            </Form.Item>
+                                        </Form>
+                                    </Col>
+                                    <Col span={8}>
                                         <Form.Item>
-                                            <Select placeholder="Tỉnh/thành">
-                                                <Select.Option value="demo">
-                                                    Demo
-                                                </Select.Option>
+                                            <Select
+                                                placeholder="Quận/huyện"
+                                                onSelect={onHandleDistrict}
+                                                allowClear={true}
+                                            >
+                                                {districts
+                                                    ? districts.map(
+                                                          (district: any) => {
+                                                              const {
+                                                                  district_id,
+                                                                  district_name
+                                                              } = district;
+                                                              return (
+                                                                  <Select.Option
+                                                                      key={
+                                                                          district_id
+                                                                      }
+                                                                      value={
+                                                                          district_id
+                                                                      }
+                                                                  >
+                                                                      {
+                                                                          district_name
+                                                                      }
+                                                                  </Select.Option>
+                                                              );
+                                                          }
+                                                      )
+                                                    : null}
                                             </Select>
                                         </Form.Item>
                                     </Col>
                                     <Col span={8}>
                                         <Form.Item>
-                                            <Select placeholder="Quận/huyện">
-                                                <Select.Option value="demo">
-                                                    Demo
-                                                </Select.Option>
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={8}>
-                                        <Form.Item>
-                                            <Select placeholder="Phường/xã">
-                                                <Select.Option value="demo">
-                                                    Demo
-                                                </Select.Option>
+                                            <Select
+                                                placeholder="Phường/xã"
+                                                onSelect={onHandleWard}
+                                                allowClear={true}
+                                            >
+                                                {wards?.map((ward: any) => {
+                                                    const {
+                                                        ward_id,
+                                                        ward_name
+                                                    } = ward;
+                                                    return (
+                                                        <Select.Option
+                                                            key={ward_id}
+                                                            value={ward_id}
+                                                        >
+                                                            {ward_name}
+                                                        </Select.Option>
+                                                    );
+                                                })}
                                             </Select>
                                         </Form.Item>
                                     </Col>
