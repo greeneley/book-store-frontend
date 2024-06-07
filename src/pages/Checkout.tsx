@@ -36,7 +36,7 @@ interface IProvince {
 }
 
 export const Checkout: React.FC = (props) => {
-    const [paymentMethod, setPaymentMethod] = useState(1);
+    const [paymentMethod, setPaymentMethod] = useState('COD');
     const [provinces, setProvinces] = useState(null);
     const [provinceId, setProvinceId] = useState<number | undefined>();
     const [provinceName, setProvinceName] = useState();
@@ -98,6 +98,8 @@ export const Checkout: React.FC = (props) => {
         setPaymentMethod(e.target.value);
     };
 
+    console.log(paymentMethod);
+
     useEffect(() => {
         axios
             .get('https://vapi.vnappmob.com/api/province/')
@@ -110,53 +112,51 @@ export const Checkout: React.FC = (props) => {
     const onHandleProvince = (value: number, option: any) => {
         setProvinceId(value);
         setProvinceName(option?.label);
+        form.setFieldsValue({ district: undefined });
+        form.setFieldsValue({ ward: undefined });
     };
 
     useEffect(() => {
-        try {
-            if (provinceId) {
-                axios
-                    .get(
-                        'https://vapi.vnappmob.com/api/province/district/' +
-                            provinceId
-                    )
-                    .then(async (res) => {
-                        const districts = await res.data;
-                        setDistricts(districts.results);
-                        setWards(undefined);
-                    });
-            }
-        } catch (error) {
-            console.log(error);
+        if (provinceId) {
+            axios
+                .get(
+                    'https://vapi.vnappmob.com/api/province/district/' +
+                        provinceId
+                )
+                .then(async (res) => {
+                    const districts = await res.data;
+                    setDistricts(districts.results);
+                    setWards(undefined);
+                });
         }
     }, [provinceId]);
 
     const onHandleDistrict = (value: number, option: any) => {
         setDistrictId(value);
         setDistrictName(option?.label);
+        form.setFieldsValue({ ward: undefined });
     };
 
     useEffect(() => {
-        try {
-            if (districtId) {
-                axios
-                    .get(
-                        'https://vapi.vnappmob.com/api/province/ward/' +
-                            districtId
-                    )
-                    .then(async (res) => {
-                        const wards = await res.data;
-                        setWards(wards.results);
-                    });
-            }
-        } catch (error) {
-            console.log(error);
+        if (districtId) {
+            axios
+                .get(
+                    'https://vapi.vnappmob.com/api/province/ward/' + districtId
+                )
+                .then(async (res) => {
+                    const wards = await res.data;
+                    setWards(wards.results);
+                });
         }
     }, [districtId]);
 
     const onHandleWard = (value: number, option: any) => {
         setWardId(value);
         setWardName(option?.label);
+    };
+
+    const onFinish = (values: any) => {
+        console.log(values);
     };
 
     return (
@@ -166,73 +166,73 @@ export const Checkout: React.FC = (props) => {
                     Thông tin giao hàng
                 </Title>
                 <br />
-
                 <Row gutter={15}>
                     <Col span={12}>
-                        <div className="w-full">
-                            <Title level={4} className="font-light">
-                                Địa chỉ giao hàng
-                            </Title>
-                            <Form>
-                                <Form.Item>
+                        <Form form={form} onFinish={onFinish}>
+                            <div className="w-full">
+                                <Title level={4} className="font-light">
+                                    Địa chỉ giao hàng
+                                </Title>
+                                <Form.Item name="name">
                                     <Input placeholder="Họ và tên" />
                                 </Form.Item>
                                 <Row gutter={15}>
                                     <Col span={16}>
-                                        <Form.Item>
+                                        <Form.Item name="email">
                                             <Input placeholder="Email" />
                                         </Form.Item>
                                     </Col>
                                     <Col span={8}>
                                         <Form.Item>
-                                            <Input placeholder="Số điện thoại" />
+                                            <Input
+                                                name="mobile"
+                                                placeholder="Số điện thoại"
+                                            />
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Form.Item>
+                                <Form.Item name="address">
                                     <Input placeholder="Địa chỉ" />
                                 </Form.Item>
                                 <Row gutter={10}>
                                     <Col span={8}>
-                                        <Form form={form}>
-                                            <Form.Item name="province">
-                                                <Select
-                                                    placeholder="Tỉnh/thành"
-                                                    onSelect={onHandleProvince}
-                                                    allowClear={true}
-                                                >
-                                                    {provinces
-                                                        ? provinces.map(
-                                                              (
-                                                                  province: IProvince
-                                                              ) => {
-                                                                  const {
-                                                                      province_id,
-                                                                      province_name
-                                                                  } = province;
-                                                                  return (
-                                                                      <Select.Option
-                                                                          key={
-                                                                              province_id
-                                                                          }
-                                                                          value={
-                                                                              province_id
-                                                                          }
-                                                                      >
-                                                                          {
-                                                                              province_name
-                                                                          }
-                                                                      </Select.Option>
-                                                                  );
-                                                              }
-                                                          )
-                                                        : null}
-                                                </Select>
-                                            </Form.Item>
-                                        </Form>
+                                        <Form.Item name="province">
+                                            <Select
+                                                placeholder="Tỉnh/thành"
+                                                onSelect={onHandleProvince}
+                                                allowClear={true}
+                                            >
+                                                {provinces
+                                                    ? provinces.map(
+                                                          (
+                                                              province: IProvince
+                                                          ) => {
+                                                              const {
+                                                                  province_id,
+                                                                  province_name
+                                                              } = province;
+                                                              return (
+                                                                  <Select.Option
+                                                                      key={
+                                                                          province_id
+                                                                      }
+                                                                      value={
+                                                                          province_id
+                                                                      }
+                                                                  >
+                                                                      {
+                                                                          province_name
+                                                                      }
+                                                                  </Select.Option>
+                                                              );
+                                                          }
+                                                      )
+                                                    : null}
+                                            </Select>
+                                        </Form.Item>
                                     </Col>
                                     <Col span={8}>
-                                        <Form.Item>
+                                        <Form.Item name="district">
                                             <Select
                                                 placeholder="Quận/huyện"
                                                 onSelect={onHandleDistrict}
@@ -266,7 +266,7 @@ export const Checkout: React.FC = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col span={8}>
-                                        <Form.Item>
+                                        <Form.Item name="ward">
                                             <Select
                                                 placeholder="Phường/xã"
                                                 onSelect={onHandleWard}
@@ -290,34 +290,39 @@ export const Checkout: React.FC = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                            </Form>
-                            <Title level={4} className="font-light">
-                                Phương thức thanh toán
-                            </Title>
-                            <Radio.Group
-                                onChange={onChangePaymentMethod}
-                                value={paymentMethod}
-                            >
-                                <Space direction="vertical">
-                                    <Radio value={1}>
-                                        Thanh toán khi giao hàng (COD)
-                                    </Radio>
-                                    <Radio value={2}>
-                                        Chuyển khoản qua ngân hàng
-                                    </Radio>
-                                </Space>
-                            </Radio.Group>
-                            {paymentMethod === 2 && (
-                                <div>
-                                    <p>Dinh Thanh Hai</p>
-                                    <p>Số tài khoản: 999999999999</p>
-                                    <p>Ngân hàng: Vietcombank</p>
-                                </div>
-                            )}
-                        </div>
-                        <br />
-                        <Button block>Hoàn tất đơn hàng</Button>
+                                <Title level={4} className="font-light">
+                                    Phương thức thanh toán
+                                </Title>
+                                <Radio.Group
+                                    onChange={onChangePaymentMethod}
+                                    value={paymentMethod}
+                                >
+                                    <Space direction="vertical">
+                                        <Radio value={'COD'}>
+                                            Thanh toán khi giao hàng (COD)
+                                        </Radio>
+                                        <Radio value={'ATM'}>
+                                            Chuyển khoản qua ngân hàng
+                                        </Radio>
+                                    </Space>
+                                </Radio.Group>
+                                {paymentMethod === 'ATM' && (
+                                    <div>
+                                        <p>Dinh Thanh Hai</p>
+                                        <p>Số tài khoản: 999999999999</p>
+                                        <p>Ngân hàng: Vietcombank</p>
+                                    </div>
+                                )}
+                            </div>
+                            <br />
+                            <Form.Item>
+                                <Button block htmlType="submit">
+                                    Hoàn tất đơn hàng
+                                </Button>
+                            </Form.Item>
+                        </Form>
                     </Col>
+
                     <Col span={12}>
                         <Title level={4} className="font-light">
                             Danh sách sản phẩm
