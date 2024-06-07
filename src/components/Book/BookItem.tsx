@@ -4,6 +4,7 @@ import { convertToCurrency } from '@utils/helpers/convertToCurrency';
 import { Button, Image } from 'antd';
 import Title from 'antd/es/typography/Title';
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../contexts/AppContextProvider';
 
@@ -20,9 +21,10 @@ export const BookItem: React.FC<BookItemProps> = (props) => {
 
     const onAddToCart = () => {
         CartItemService.addCartItem(1, bookId).then(() => {
-            CartService.getCart().then((res) =>
-                setCountBadge(res.data.cart_items.length)
-            );
+            CartService.getCart().then((res) => {
+                setCountBadge(res.data.cart_items.length);
+                toast.success('Đã thêm sản phẩm vào giỏ hàng');
+            });
         });
     };
 

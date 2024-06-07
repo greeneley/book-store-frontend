@@ -2,6 +2,7 @@ import { BookItem } from '@components/Book/BookItem';
 import BookService from '@services/BookService';
 import Title from 'antd/es/typography/Title';
 import React, { useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { Book } from '../../model';
 
 export const BookList: React.FC = () => {
@@ -20,6 +21,7 @@ export const BookList: React.FC = () => {
                 <Title level={3} className="font-light">
                     Danh sách
                 </Title>
+                <Toaster />
                 <br />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {books &&
