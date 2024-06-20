@@ -1,4 +1,5 @@
 import { convertToCurrency } from '@utils/helpers/convertToCurrency';
+import { getDateStringFormat } from '@utils/helpers/getDateStringFormat';
 import {
     Button,
     Col,
@@ -98,8 +99,6 @@ export const Checkout: React.FC = (props) => {
         setPaymentMethod(e.target.value);
     };
 
-    console.log(paymentMethod);
-
     useEffect(() => {
         axios
             .get('https://vapi.vnappmob.com/api/province/')
@@ -157,6 +156,20 @@ export const Checkout: React.FC = (props) => {
 
     const onFinish = (values: any) => {
         console.log(values);
+        console.log(dataSource);
+
+        const order = {
+            address: {
+                province: values.province,
+                district: values.district,
+                ward: values.ward,
+                orderReceiverAddress: values.address,
+                receiverName: values.name,
+                receiverPhone: values.phone,
+                createdAt: getDateStringFormat(new Date())
+            }
+        };
+        console.log(order);
     };
 
     return (
@@ -183,7 +196,7 @@ export const Checkout: React.FC = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col span={8}>
-                                        <Form.Item>
+                                        <Form.Item name="phone">
                                             <Input
                                                 name="mobile"
                                                 placeholder="Số điện thoại"

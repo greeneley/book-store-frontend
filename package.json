@@ -1,7 +1,6 @@
 {
   "name": "TH Book Store",
   "version": "1.0.0",
-  "description": "Start React+Redux project with TypeScript in an easier and faster way",
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests",
