@@ -1,13 +1,12 @@
 import { API } from '@constants/index';
 import axios, { AxiosResponse } from 'axios';
-import { OrderRequest } from '../model/internal/request/order-request';
 
 const baseUrl = API.dev;
 
 export class OrderService {
-    static createOrder(order: OrderRequest): Promise<AxiosResponse<string>> {
+    static createOrder(order: any): Promise<AxiosResponse<string>> {
         return axios.post(baseUrl + '/api/v1/orders', {
-            order
+            ...order
         });
     }
 

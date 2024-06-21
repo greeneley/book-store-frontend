@@ -1,3 +1,4 @@
+import { OrderService } from '@services/OrderService';
 import { convertToCurrency } from '@utils/helpers/convertToCurrency';
 import { getDateStringFormat } from '@utils/helpers/getDateStringFormat';
 import {
@@ -17,9 +18,11 @@ import Input from 'antd/es/input/Input';
 import Title from 'antd/es/typography/Title';
 import axios from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { CartInfo } from '../model/internal/cart-info';
 import { CartItem } from '../model/internal/cart-item';
+import { OrderStatus } from '../model/internal/request/order-request';
 
 interface DataType {
     key: React.Key;
@@ -49,6 +52,7 @@ export const Checkout: React.FC = (props) => {
     const [wardName, setWardName] = useState<string>();
 
     const cartInfo = useLoaderData() as CartInfo;
+    const navigate = useNavigate();
 
     const [form] = Form.useForm();
 
@@ -167,13 +171,32 @@ export const Checkout: React.FC = (props) => {
                 receiverName: values.name,
                 receiverPhone: values.phone,
                 createdAt: getDateStringFormat(new Date())
-            }
+            },
+            orderStatus: OrderStatus[OrderStatus.ORDERED],
+            orderDate: getDateStringFormat(new Date()),
+            paymentMethod: paymentMethod,
+            total: cartInfo.total,
+            orderItems: dataSource.map((item) => {
+                return {
+                    bookId: item.book_id,
+                    quantity: item.quantity,
+                    priceAtPurchase: item.total
+                };
+            })
         };
-        console.log(order);
+
+        OrderService.createOrder(order).then(() => {
+            toast.success('Đã tạo đơn hàng thành công');
+
+            setTimeout(() => {
+                navigate('/home');
+            }, 3000);
+        });
     };
 
     return (
         <>
+            <Toaster />
             <div className="my-10 p-8">
                 <Title level={3} className="font-light">
                     Thông tin giao hàng
