@@ -96,6 +96,7 @@
     "antd": "^5.16.2",
     "antd-style": "^3.6.2",
     "axios": "^1.6.8",
+    "bootstrap": "^5.3.3",
     "classnames": "^2.2.6",
     "flowbite": "^2.3.0",
     "helper-toolkit-ts": "^1.1.13",

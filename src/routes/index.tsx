@@ -1,5 +1,6 @@
+import ScrollToTop from '@utils/helpers/scroll-top';
 import axios from 'axios';
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
     createBrowserRouter,
     Navigate,
@@ -22,7 +23,22 @@ export const Routes = () => {
     const publicRoutes = [
         {
             path: '/',
-            element: <MainLayout />,
+            element: (
+                <ScrollToTop>
+                    <Suspense
+                        fallback={
+                            <div className="flone-preloader-wrapper">
+                                <div className="flone-preloader">
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        }
+                    >
+                        <MainLayout />
+                    </Suspense>
+                </ScrollToTop>
+            ),
             children: [
                 {
                     path: '/book/:bookId',
@@ -76,32 +92,32 @@ export const Routes = () => {
                     path: '/cart',
                     element: <Cart />,
                     loader: async () => {
-                        const response = await axios.get(
-                            `http://localhost:8081/api/v1/cart`,
-                            {
-                                headers: {
-                                    Authorization: 'Bearer ' + token
-                                }
-                            }
-                        );
-
-                        return response.data;
+                        // const response = await axios.get(
+                        //     `http://localhost:8081/api/v1/cart`,
+                        //     {
+                        //         headers: {
+                        //             Authorization: 'Bearer ' + token
+                        //         }
+                        //     }
+                        // );
+                        //
+                        // return response.data;
                     }
                 },
                 {
                     path: '/checkout',
                     element: <Checkout />,
                     loader: async () => {
-                        const response = await axios.get(
-                            `http://localhost:8081/api/v1/cart`,
-                            {
-                                headers: {
-                                    Authorization: 'Bearer ' + token
-                                }
-                            }
-                        );
-
-                        return response.data;
+                        // const response = await axios.get(
+                        //     `http://localhost:8081/api/v1/cart`,
+                        //     {
+                        //         headers: {
+                        //             Authorization: 'Bearer ' + token
+                        //         }
+                        //     }
+                        // );
+                        //
+                        // return response.data;
                     }
                 }
             ]

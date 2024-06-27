@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
-        "allowJs": false,
+        "allowJs": true,
         "jsx": "react",
         "module": "commonjs",
         "noImplicitAny": true,

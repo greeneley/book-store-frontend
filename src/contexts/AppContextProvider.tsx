@@ -1,4 +1,3 @@
-import { CartService } from '@services/CartService';
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContextProvider';
@@ -28,9 +27,9 @@ export const AppContextProvider: React.FC<AppContextProviderProps> = ({
     useEffect(() => {
         if (token) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-            CartService.getCart().then((res) =>
-                setCountBadge(res.data.cart_items.length)
-            );
+            // CartService.getCart().then((res) =>
+            //     setCountBadge(res.data.cart_items.length)
+            // );
         }
     }, [token]);
 
