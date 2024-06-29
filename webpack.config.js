@@ -42,7 +42,8 @@ module.exports = (env, options) => {
                 '@services': path.resolve(__dirname, 'src/services/'),
                 '@store': path.resolve(__dirname, 'src/store/'),
                 '@styles': path.resolve(__dirname, 'src/styles/'),
-                '@utils': path.resolve(__dirname, 'src/utils/')
+                '@utils': path.resolve(__dirname, 'src/utils/'),
+                '@pages': path.resolve(__dirname, 'src/pages/')
             },
             fallback: { stream: false, buffer: false }
         },

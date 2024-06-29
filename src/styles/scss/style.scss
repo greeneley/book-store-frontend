@@ -2,12 +2,9 @@
 //// you can open the bootstrap.scss module and check any available variables.
 $primary: #FFCE1A;
 
-@import '~bootstrap/scss/bootstrap.scss';
-//@import "~react-modal-video/scss/modal-video.scss";
-@import "./css/icons.min.css";
-
-
-
+@import "~bootstrap/scss/bootstrap";
+@import "~react-modal-video/scss/modal-video.scss";
+@import "../css/icons.min.css";
 
 @tailwind base;
 @tailwind components;

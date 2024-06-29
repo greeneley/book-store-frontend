@@ -26,6 +26,7 @@
             "@styles/*": ["./src/styles/*"],
             "@typing/*": ["./src/types/*"],
             "@utils/*": ["./src/utils/*"],
+            "@pages/*": ["./src/pages/*"],
         }
     },
     "exclude": [

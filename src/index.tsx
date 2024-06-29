@@ -8,7 +8,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFontAwesome, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import '@styles/style.scss';
+import '@styles/scss/style.scss';
 import 'react-multi-carousel/lib/styles.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';

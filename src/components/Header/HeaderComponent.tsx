@@ -43,7 +43,8 @@ export const Header: React.FC<HeaderProps> = (props) => {
                     onClick={() => navigate('/home')}
                 />
             </div>
-            <div className="w-1/2">
+            <div className="test">Test</div>
+            <div className="w-1/2 ">
                 <Input
                     placeholder="Bạn cần tìm gì..."
                     prefix={<SearchOutlined />}

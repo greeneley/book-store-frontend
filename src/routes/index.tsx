@@ -1,6 +1,7 @@
+import { Cart } from '@pages/Cart';
 import ScrollToTop from '@utils/helpers/scroll-top';
 import axios from 'axios';
-import React, { Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import {
     createBrowserRouter,
     Navigate,
@@ -8,14 +9,14 @@ import {
 } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContextProvider';
 import { BookDetail } from '../pages/BookDetail';
-import { Cart } from '../pages/Cart';
 import { Checkout } from '../pages/Checkout';
 import HomePage from '../pages/Home';
 import { Login } from '../pages/Login';
 import { MainLayout } from '../pages/MainLayout';
-import { NoPageFound } from '../pages/NoPageFound';
 import { UserProfile } from '../pages/UserProfile';
 import { ProtectedRoute } from './ProtectedRoute';
+
+const NotFound = lazy(() => import('@pages/NotFound'));
 
 export const Routes = () => {
     const { token } = useAuth();
@@ -53,7 +54,7 @@ export const Routes = () => {
                 },
                 {
                     path: '*',
-                    element: <NoPageFound />
+                    element: <NotFound />
                 },
                 {
                     path: '/login',

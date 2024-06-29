@@ -3,7 +3,7 @@ import Result from 'antd/es/result';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const NoPageFound: React.FC = () => {
+const NotFound: React.FC = () => {
     const navigate = useNavigate();
 
     return (
@@ -21,3 +21,5 @@ export const NoPageFound: React.FC = () => {
         />
     );
 };
+
+export default NotFound;
