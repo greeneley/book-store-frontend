@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import FooterCopyright from '@components/footer/FooterCopyright';
@@ -8,14 +7,14 @@ import FooterNewsletter from '@components/footer/FooterNewsletter';
 import { Link } from 'react-router-dom';
 
 interface FooterOneProps {
-    backgroundColorClass: typeof PropTypes.string;
-    containerClass: typeof PropTypes.string;
-    extraFooterClass: typeof PropTypes.string;
-    sideMenu: typeof PropTypes.bool;
-    spaceBottomClass: typeof PropTypes.string;
-    spaceTopClass: typeof PropTypes.string;
-    spaceLeftClass: typeof PropTypes.string;
-    spaceRightClass: typeof PropTypes.string;
+    backgroundColorClass: string;
+    containerClass?: string;
+    extraFooterClass?: string;
+    sideMenu?: boolean;
+    spaceBottomClass?: string;
+    spaceTopClass?: string;
+    spaceLeftClass?: string;
+    spaceRightClass?: string;
 }
 const FooterOne: React.FC<FooterOneProps> = ({
     backgroundColorClass,

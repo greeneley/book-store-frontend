@@ -4,9 +4,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface FooterCopyrightProps {
-    footerLogo: typeof PropTypes.string;
-    spaceBottomClass: typeof PropTypes.string;
-    colorClass: typeof PropTypes.string;
+    footerLogo: string;
+    spaceBottomClass?: string;
+    colorClass?: typeof PropTypes.string;
 }
 
 const FooterCopyright: React.FC<FooterCopyrightProps> = ({

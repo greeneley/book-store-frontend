@@ -1,4 +1,4 @@
-import { Header } from '@components/Header/HeaderComponent';
+import { Header } from '@components/header/HeaderComponent';
 import { Layout } from 'antd';
 import Footer from 'rc-footer';
 import 'rc-footer/assets/index.css';

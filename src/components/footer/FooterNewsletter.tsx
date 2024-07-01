@@ -1,14 +1,14 @@
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import React from 'react';
+
 // import SubscribeEmail from './sub-components/SubscribeEmail';
 
 interface FooterNewsletterProps {
-    spaceBottomClass: typeof PropTypes.string;
-    spaceLeftClass: typeof PropTypes.string;
-    colorClass: typeof PropTypes.string;
-    sideMenu: boolean;
-    widgetColorClass: typeof PropTypes.string;
+    spaceBottomClass: string;
+    spaceLeftClass: string;
+    colorClass?: string;
+    sideMenu?: boolean;
+    widgetColorClass?: string;
 }
 const FooterNewsletter: React.FC<FooterNewsletterProps> = ({
     spaceBottomClass,

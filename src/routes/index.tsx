@@ -16,7 +16,7 @@ import { MainLayout } from '../pages/MainLayout';
 import { UserProfile } from '../pages/UserProfile';
 import { ProtectedRoute } from './ProtectedRoute';
 
-const NotFound = lazy(() => import('@pages/NotFound'));
+const NotFound = lazy(() => import('@pages/others/NotFound'));
 
 export const Routes = () => {
     const { token } = useAuth();
