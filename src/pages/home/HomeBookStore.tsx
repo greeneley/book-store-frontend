@@ -1,7 +1,7 @@
 import { BookList } from '@components/CardList/BookList';
 import React from 'react';
 
-const Home = () => {
+const HomeBookStore = () => {
     return (
         <>
             <BookList />
@@ -9,4 +9,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default HomeBookStore;

@@ -1,5 +1,6 @@
 import useScrollTop from '@hooks/internal/useScrollTop';
 import React from 'react';
+
 const ScrollToTop: React.FC = () => {
     const { stick, onClickHandler } = useScrollTop();
 

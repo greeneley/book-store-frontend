@@ -1,19 +1,17 @@
-import Logo from '@components/header/Logo';
+import HeaderTop from '@components/Header/HeaderTop';
+import IconGroup from '@components/Header/IconGroup';
+import Logo from '@components/Header/Logo';
+import NavMenu from '@components/Header/NavMenu';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 
-import HeaderTop from '@components/header/HeaderTop';
-import IconGroup from '@components/header/IconGroup';
-import MobileMenu from '@components/header/MobileMenu';
-import NavMenu from '@components/header/NavMenu';
-
 interface HeaderOneProps {
-    borderStyle: string;
-    headerPaddingClass: string;
-    headerPositionClass: string;
     layout: string;
     top: string;
-    headerBgClass: string;
+    headerPaddingClass: string;
+    headerPositionClass: string;
+    borderStyle?: string;
+    headerBgClass?: string;
 }
 const HeaderOne: React.FC<HeaderOneProps> = ({
     layout,
@@ -27,7 +25,7 @@ const HeaderOne: React.FC<HeaderOneProps> = ({
     const [headerTop, setHeaderTop] = useState(0);
 
     useEffect(() => {
-        const header = document.querySelector('.sticky-bar');
+        const header: any = document.querySelector('.sticky-bar');
 
         setHeaderTop(header.offsetTop);
         window.addEventListener('scroll', handleScroll);
@@ -98,7 +96,7 @@ const HeaderOne: React.FC<HeaderOneProps> = ({
                     </div>
                 </div>
                 {/* mobile menu */}
-                <MobileMenu />
+                {/*<MobileMenu />*/}
             </div>
         </header>
     );

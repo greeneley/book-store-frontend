@@ -1,9 +1,15 @@
-import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import ScrollToTop from '../components/scroll-to-top';
 import FooterOne from '../wrappers/footer/FooterOne';
 import HeaderOne from '../wrappers/header/HeaderOne';
 
+interface LayoutOneProps {
+    children?: React.ReactNode;
+    headerContainerClass?: string;
+    headerPaddingClass?: string;
+    headerPositionClass?: string;
+    headerTop?: string;
+}
 const LayoutOne: React.FC<LayoutOneProps> = ({
     children,
     headerContainerClass,
@@ -29,13 +35,5 @@ const LayoutOne: React.FC<LayoutOneProps> = ({
         </Fragment>
     );
 };
-
-interface LayoutOneProps {
-    children: React.ReactNode;
-    headerContainerClass: typeof PropTypes.string;
-    headerPaddingClass: typeof PropTypes.string;
-    headerPositionClass: typeof PropTypes.string;
-    headerTop: typeof PropTypes.string;
-}
 
 export default LayoutOne;
