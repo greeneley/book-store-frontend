@@ -1,5 +1,4 @@
 import { Cart } from '@pages/Cart';
-import HomeBookStore from '@pages/home/HomeBookStore';
 import ScrollToTop from '@utils/helpers/scroll-top';
 import axios from 'axios';
 import React, { lazy, Suspense } from 'react';
@@ -19,7 +18,7 @@ import { ProtectedRoute } from './ProtectedRoute';
 const NotFound = lazy(() => import('@pages/others/NotFound'));
 
 const LoginRegister = lazy(() => import('@pages/others/LoginRegister'));
-const HomeBookStore = lazy(() => import('@pages/others/HomeBookStore'));
+const HomeBookStore = lazy(() => import('@pages/home/HomeBookStore'));
 export const Routes = () => {
     const { token } = useAuth();
 

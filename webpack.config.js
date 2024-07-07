@@ -50,7 +50,7 @@ module.exports = (env, options) => {
         module: {
             rules: [
                 {
-                    test: /\.(ts|tsx)$/,
+                    test: /\.(js|jsx|ts|tsx)$/,
                     loader: 'babel-loader'
                 },
                 {

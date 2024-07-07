@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import React from 'react';
 
 interface LogoProps {
-    imageUrl: string;
-    logoClass: string;
+    imageUrl?: string;
+    logoClass?: string;
 }
 const Logo: React.FC<LogoProps> = ({ imageUrl, logoClass }) => {
     return (
