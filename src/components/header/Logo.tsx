@@ -8,7 +8,7 @@ interface LogoProps {
 const Logo: React.FC<LogoProps> = ({ imageUrl, logoClass }) => {
     return (
         <div className={clsx(logoClass)}>
-            <img src={process.env.PUBLIC_URL + imageUrl} alt="" />
+            <img src={imageUrl} alt="" />
         </div>
     );
 };

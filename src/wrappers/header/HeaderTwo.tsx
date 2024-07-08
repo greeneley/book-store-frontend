@@ -33,7 +33,7 @@ const HeaderTwo = () => {
                         <div className="col-lg-2 d-none d-lg-block text-center">
                             {/* header logo */}
                             <Logo
-                                imageUrl="/assets/img/logo/logo.png"
+                                imageUrl="/assets/img/logo/logo.svg"
                                 logoClass="logo-hm-9"
                             />
                         </div>

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import LayoutTwo from '../../layouts/LayoutTwo';
 import BlogFeatured from '../../wrappers/blog-featured/BlogFeatured';
 import BrandLogoSliderTwo from '../../wrappers/brand-logo/BrandLogoSliderTwo';
@@ -9,7 +9,7 @@ import SliderBanner from '../../wrappers/slider-banner/SliderBanner';
 
 const HomeBookStore = () => {
     return (
-        <Fragment>
+        <>
             <LayoutTwo>
                 {/* slider banner */}
                 <SliderBanner />
@@ -41,7 +41,7 @@ const HomeBookStore = () => {
                 {/* blog featured */}
                 <BlogFeatured spaceTopClass="pt-95" spaceBottomClass="pb-55" />
             </LayoutTwo>
-        </Fragment>
+        </>
     );
 };
 
