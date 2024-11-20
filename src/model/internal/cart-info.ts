@@ -1,6 +1,6 @@
-import { CartItem } from './cart-item';
+import { CartItem } from "./cart-item";
 
 export interface CartInfo {
-    total: number;
-    cart_items: Array<CartItem>;
+	total: number;
+	cart_items: Array<CartItem>;
 }

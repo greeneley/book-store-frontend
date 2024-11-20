@@ -1,5 +1,5 @@
 export interface OrderItemRequest {
-    bookId: number;
-    quantity: number;
-    priceAtPurchase: number;
+	bookId: number;
+	quantity: number;
+	priceAtPurchase: number;
 }

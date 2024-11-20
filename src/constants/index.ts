@@ -1,3 +1,3 @@
 export const API = {
-    dev: 'http://localhost:8081'
+	dev: "http://localhost:8081"
 };

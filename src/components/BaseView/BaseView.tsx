@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
 export const BaseView: React.FC = () => {
-    return <>DINH</>;
+	return <>DINH</>;
 };
