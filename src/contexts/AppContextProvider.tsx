@@ -1,4 +1,4 @@
-import { CartService } from "@services/CartService";
+import { CartService } from "@/services/CartService";
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthContextProvider";

@@ -1,6 +1,6 @@
+import { CartItemService } from "@/services/CartItemService";
+import { convertToCurrency } from "@/utils/helpers/convertToCurrency";
 import { MinusCircleOutlined, PlusCircleFilled } from "@ant-design/icons";
-import { CartItemService } from "@services/CartItemService";
-import { convertToCurrency } from "@utils/helpers/convertToCurrency";
 import { Button, Col, Image, Popconfirm, Row, Table } from "antd";
 import Title from "antd/es/typography/Title";
 import React, { useCallback, useContext, useEffect, useMemo } from "react";

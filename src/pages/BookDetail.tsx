@@ -1,6 +1,6 @@
+import { convertToCurrency } from "@/utils/helpers/convertToCurrency";
 import MinusOutlined from "@ant-design/icons/lib/icons/MinusOutlined";
 import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
-import { convertToCurrency } from "@utils/helpers/convertToCurrency";
 import { Image } from "antd";
 import Button from "antd/es/button";
 import Title from "antd/es/typography/Title";

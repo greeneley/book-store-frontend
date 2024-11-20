@@ -1,4 +1,4 @@
-import { BookList } from "@components/CardList/BookList";
+import { BookList } from "@/components/CardList/BookList";
 import React from "react";
 
 const Home = () => {

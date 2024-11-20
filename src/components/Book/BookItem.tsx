@@ -1,6 +1,6 @@
-import { CartItemService } from "@services/CartItemService";
-import { CartService } from "@services/CartService";
-import { convertToCurrency } from "@utils/helpers/convertToCurrency";
+import { CartItemService } from "@/services/CartItemService";
+import { CartService } from "@/services/CartService";
+import { convertToCurrency } from "@/utils/helpers/convertToCurrency";
 import { Button, Image } from "antd";
 import Title from "antd/es/typography/Title";
 import React, { useContext } from "react";

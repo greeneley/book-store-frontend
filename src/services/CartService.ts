@@ -1,6 +1,6 @@
-import { API } from "@constants/index";
+import { API } from "@/constants/index";
+import { CartInfo } from "@/model/internal/cart-info";
 import axios, { AxiosResponse } from "axios";
-import { CartInfo } from "../model/internal/cart-info";
 
 const baseUrl = API.dev;
 

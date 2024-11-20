@@ -1,6 +1,6 @@
-import { OrderService } from "@services/OrderService";
-import { convertToCurrency } from "@utils/helpers/convertToCurrency";
-import { getDateStringFormat } from "@utils/helpers/getDateStringFormat";
+import { OrderService } from "@/services/OrderService";
+import { convertToCurrency } from "@/utils/helpers/convertToCurrency";
+import { getDateStringFormat } from "@/utils/helpers/getDateStringFormat";
 import { Button, Col, Form, Image, Radio, RadioChangeEvent, Row, Select, Space, Table, TableColumnsType } from "antd";
 import Input from "antd/es/input/Input";
 import Title from "antd/es/typography/Title";

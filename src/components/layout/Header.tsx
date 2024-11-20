@@ -1,7 +1,8 @@
-import { BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { BookOpen, Menu, Search, ShoppingCart } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
-
 interface HeaderProps {
 	name?: string;
 	avatar?: string;
@@ -31,6 +32,26 @@ export const Header: React.FC<HeaderProps> = (props) => {
 						Contact
 					</Link>
 				</nav>
+				<div className="flex items-center space-x-2">
+					<form className="hidden md:flex items-center">
+						<Input type="search" placeholder="Search books..." className="w-64" />
+						<Button type="submit" size="sm" className="ml-2">
+							<Search className="h-4 w-4" />
+							<span className="sr-only">Search</span>
+						</Button>
+					</form>
+					<Button variant="outline" size="icon">
+						<ShoppingCart className="h-4 w-4" />
+						<span className="sr-only">Cart</span>
+					</Button>
+					<Button variant="ghost" size="sm">
+						Login
+					</Button>
+					<Button variant="ghost" size="icon" className="md:hidden">
+						<Menu className="h-6 w-6" />
+						<span className="sr-only">Menu</span>
+					</Button>
+				</div>
 			</div>
 		</header>
 	);

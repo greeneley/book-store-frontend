@@ -1,5 +1,5 @@
-import { BookItem } from "@components/Book/BookItem";
-import BookService from "@services/BookService";
+import { BookItem } from "@/components/Book/BookItem";
+import BookService from "@/services/BookService";
 import Title from "antd/es/typography/Title";
 import React, { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";

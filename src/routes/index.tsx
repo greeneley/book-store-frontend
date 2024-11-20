@@ -1,15 +1,15 @@
+import { useAuth } from "@/contexts/AuthContextProvider";
+import { BookDetail } from "@/pages/BookDetail";
+import { Cart } from "@/pages/Cart";
+import { Checkout } from "@/pages/Checkout";
+import HomePage from "@/pages/Home";
+import { Login } from "@/pages/Login";
+import { MainLayout } from "@/pages/MainLayout";
+import { NoPageFound } from "@/pages/NoPageFound";
+import { UserProfile } from "@/pages/UserProfile";
 import axios from "axios";
 import React from "react";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContextProvider";
-import { BookDetail } from "../pages/BookDetail";
-import { Cart } from "../pages/Cart";
-import { Checkout } from "../pages/Checkout";
-import HomePage from "../pages/Home";
-import { Login } from "../pages/Login";
-import { MainLayout } from "../pages/MainLayout";
-import { NoPageFound } from "../pages/NoPageFound";
-import { UserProfile } from "../pages/UserProfile";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 export const Routes = () => {

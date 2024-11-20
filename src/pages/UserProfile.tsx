@@ -1,4 +1,4 @@
-import { useUserInfo } from "@hooks/internal/useUserInfo";
+import { useUserInfo } from "@/hooks/internal/useUserInfo";
 import { Avatar, Button, Col, Form, Input, Row, theme } from "antd";
 import Title from "antd/es/typography/Title";
 import React, { useEffect } from "react";
