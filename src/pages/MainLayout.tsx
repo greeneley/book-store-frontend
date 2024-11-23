@@ -1,3 +1,4 @@
+import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { Layout } from "antd";
 import "rc-footer/assets/index.css";
@@ -14,9 +15,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 		<>
 			<Layout className="flex flex-col min-h-screen">
 				<Header />
-				{/*<Content style={{ padding: '0 48px' }}>*/}
-				{/*    <Outlet />*/}
-				{/*</Content>*/}
+				<main className="flex-grow">
+					<p>DINH</p>
+				</main>
+				<Footer />
 			</Layout>
 		</>
 	);
