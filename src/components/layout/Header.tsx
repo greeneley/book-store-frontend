@@ -45,7 +45,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
 						<span className="sr-only">Cart</span>
 					</Button>
 					<Button variant="ghost" size="sm">
-						Login
+						<Link to="/login">Login</Link>
 					</Button>
 					<Button variant="ghost" size="icon" className="md:hidden">
 						<Menu className="h-6 w-6" />
