@@ -7,10 +7,10 @@ import { Provider as ReduxProvider } from "react-redux";
 
 import { AppContextProvider } from "@/contexts/AppContextProvider";
 import { AuthProvider } from "@/contexts/AuthContextProvider";
+import "@/styles/style.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faFontAwesome, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import "@styles/style.scss";
 import { Routes } from "./routes";
 import configureAppStore, { getPreloadedState } from "./store/configureStore";
 

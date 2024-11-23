@@ -1,15 +1,7 @@
 import { useAuth } from "@/contexts/AuthContextProvider";
-import { BookDetail } from "@/pages/BookDetail";
-import { Cart } from "@/pages/Cart";
-import { Checkout } from "@/pages/Checkout";
-import HomePage from "@/pages/Home";
-import { Login } from "@/pages/Login";
 import { MainLayout } from "@/pages/MainLayout";
-import { NoPageFound } from "@/pages/NoPageFound";
-import { UserProfile } from "@/pages/UserProfile";
-import axios from "axios";
 import React from "react";
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 export const Routes = () => {
@@ -18,34 +10,7 @@ export const Routes = () => {
 	const publicRoutes = [
 		{
 			path: "/",
-			element: <MainLayout />,
-			children: [
-				{
-					path: "/book/:bookId",
-					element: <BookDetail />,
-					loader: async ({ params }: any) => {
-						const response = await axios.get(`http://localhost:8081/api/v1/books/${params.bookId}`);
-
-						return response.data;
-					}
-				},
-				{
-					path: "*",
-					element: <NoPageFound />
-				},
-				{
-					path: "/login",
-					element: <Login />
-				},
-				{
-					path: "/home",
-					element: <HomePage />
-				},
-				{
-					path: "/",
-					element: <Navigate to={"/home"} />
-				}
-			]
+			element: <MainLayout />
 		}
 	];
 
@@ -56,43 +21,7 @@ export const Routes = () => {
 				<MainLayout>
 					<ProtectedRoute />
 				</MainLayout>
-			),
-			children: [
-				{
-					path: "/profile",
-					element: <UserProfile />
-				},
-				{
-					path: "/logout",
-					element: <div>Log out</div>
-				},
-				{
-					path: "/cart",
-					element: <Cart />,
-					loader: async () => {
-						const response = await axios.get(`http://localhost:8081/api/v1/cart`, {
-							headers: {
-								Authorization: "Bearer " + token
-							}
-						});
-
-						return response.data;
-					}
-				},
-				{
-					path: "/checkout",
-					element: <Checkout />,
-					loader: async () => {
-						const response = await axios.get(`http://localhost:8081/api/v1/cart`, {
-							headers: {
-								Authorization: "Bearer " + token
-							}
-						});
-
-						return response.data;
-					}
-				}
-			]
+			)
 		}
 	];
 

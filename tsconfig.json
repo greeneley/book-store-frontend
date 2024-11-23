@@ -16,7 +16,15 @@
 		"lib": ["es2015", "dom"],
 		"paths": {
 			"@/*": ["src/*"],
-			"@/public/*": ["./public/*"]
+			"@/public/*": ["./public/*"],
+//			"@constants/*": ["./src/constants/*"],
+//			"@components/*": ["./src/components/*"],
+//			"@hooks/*": ["./src/hooks/*"],
+//			"@services/*": ["./src/services/*"],
+//			"@store/*": ["./src/store/*"],
+//			"@styles/*": ["./src/styles/*"],
+//			"@typing/*": ["./src/types/*"],
+//			"@utils/*": ["./src/utils/*"]
 		}
 	},
 	"exclude": ["**/node_modules", "**/.*/"],

@@ -1,5 +1,5 @@
+import API from "@/constants";
 import axios from "axios";
-import { API } from "../constants";
 
 const baseUrl = API.dev;
 

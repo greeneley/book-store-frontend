@@ -1,4 +1,4 @@
-import { API } from "@/constants/index";
+import API from "@/constants";
 import axios from "axios";
 
 const baseUrl = API.dev;
