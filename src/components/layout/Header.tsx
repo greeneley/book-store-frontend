@@ -1,6 +1,13 @@
 import { Button } from "@/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { BookOpen, Menu, Search, ShoppingCart } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContextProvider";
+import { BookOpen, LogOut, Menu, Search, ShoppingCart, User } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 interface HeaderProps {
@@ -11,6 +18,8 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = (props) => {
+	const { user } = useAuth();
+
 	return (
 		<header className="border-b">
 			<div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -44,9 +53,29 @@ export const Header: React.FC<HeaderProps> = (props) => {
 						<ShoppingCart className="h-4 w-4" />
 						<span className="sr-only">Cart</span>
 					</Button>
-					<Button variant="ghost" size="sm">
-						<Link to="/login">Login</Link>
-					</Button>
+					{user ? (
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button variant="ghost" size="sm">
+									<User className="h-4 w-4 mr-2" />
+									{user.firstName}
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="end">
+								<DropdownMenuItem onSelect={() => {}}>My Account</DropdownMenuItem>
+								<DropdownMenuItem onSelect={() => {}}>My Orders</DropdownMenuItem>
+								<DropdownMenuItem onSelect={() => {}}>
+									<LogOut className="h-4 w-4 mr-2" />
+									Logout
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
+					) : (
+						<Button variant="ghost" size="sm">
+							<Link to="/login">Login</Link>
+						</Button>
+					)}
+
 					<Button variant="ghost" size="icon" className="md:hidden">
 						<Menu className="h-6 w-6" />
 						<span className="sr-only">Menu</span>

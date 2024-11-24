@@ -1,4 +1,3 @@
-import { useAuth } from "@/contexts/AuthContextProvider";
 import { HomePage } from "@/pages/HomePage";
 import { Login } from "@/pages/Login";
 import { MainLayout } from "@/pages/MainLayout";
@@ -8,8 +7,6 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import { ProtectedRoute } from "./ProtectedRoute";
 
 export const Routes = () => {
-	const { token } = useAuth();
-
 	const publicRoutes = [
 		{
 			path: "/",

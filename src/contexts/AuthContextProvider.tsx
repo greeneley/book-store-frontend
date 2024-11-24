@@ -3,8 +3,10 @@ import React, { createContext, useContext, useState } from "react";
 import { User } from "../model/internal/user";
 
 type AuthContextValue = {
-	token: string;
-	setToken: React.Dispatch<React.SetStateAction<string>>;
+	accessToken: string;
+	setAccessToken: React.Dispatch<React.SetStateAction<string>>;
+	refreshToken: string;
+	setRefreshToken: React.Dispatch<React.SetStateAction<string>>;
 	user: User;
 	setUser: React.Dispatch<React.SetStateAction<User>>;
 };
@@ -16,18 +18,21 @@ type AuthProviderProps = {
 export const AuthContext = createContext<AuthContextValue>(null);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: AuthProviderProps) => {
-	const [token, setToken] = useState(localStorage.getItem("token"));
+	const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken"));
+	const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refreshToken"));
 	const [user, setUser] = useState<User>(null);
 
 	React.useEffect(() => {
-		if (token) {
-			axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-			localStorage.setItem("token", token);
+		if (accessToken && refreshToken) {
+			axios.defaults.headers.common["Authorization"] = "Bearer " + accessToken;
+			localStorage.setItem("accessToken", accessToken);
+			localStorage.setItem("refreshToken", refreshToken);
 		} else {
 			delete axios.defaults.headers.common["Authorization"];
-			localStorage.removeItem("token");
+			localStorage.removeItem("accessToken");
+			localStorage.removeItem("refreshToken");
 		}
-	}, [token]);
+	}, [accessToken, refreshToken]);
 
 	React.useEffect(() => {
 		if (user) {
@@ -36,8 +41,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: AuthProv
 	}, [user]);
 
 	const contextValue = {
-		token,
-		setToken,
+		accessToken,
+		setAccessToken,
+		refreshToken,
+		setRefreshToken,
 		user,
 		setUser
 	};
