@@ -1,14 +1,7 @@
-import { useEffect, useState } from "react";
-import { User } from "../../model/internal/user";
+import { useAuth } from "@/contexts/AuthContextProvider";
+import { User, isUser } from "@/model/internal/user";
 
-export const useUserInfo = (): User | undefined => {
-	const [user, setUser] = useState<User>();
-
-	useEffect(() => {
-		if (!user) {
-			setUser(JSON.parse(localStorage.getItem("user")));
-		}
-	}, [user]);
-
-	return user;
-};
+export function useUserInfo(): User | null {
+	const { user } = useAuth();
+	return isUser(user) ? user : null;
+}

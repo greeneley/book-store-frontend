@@ -37,7 +37,8 @@ export const Login: React.FC = () => {
 				username: result.username,
 				email: result.email,
 				firstName: result.firstName,
-				lastName: result.lastName
+				lastName: result.lastName,
+				_id: result._id
 			});
 			toast({
 				title: "Login successful",
