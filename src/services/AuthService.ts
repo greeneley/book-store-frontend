@@ -14,4 +14,13 @@ export class AuthService {
 			throw new Error("Login failed");
 		}
 	}
+
+	static async logout(id: number) {
+		try {
+			await axios.post(`${baseUrl}/api/v1/auth/logout`, { id });
+		} catch (error) {
+			console.error("Logout failed:", error);
+			throw error;
+		}
+	}
 }

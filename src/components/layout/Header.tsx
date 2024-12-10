@@ -7,10 +7,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContextProvider";
-import { User as UserModel } from "@/model/internal/user";
+import { AuthService } from "@/services/AuthService";
 import { BookOpen, LogOut, Menu, Search, ShoppingCart, User } from "lucide-react";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 interface HeaderProps {
 	name?: string;
@@ -20,8 +20,23 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = (props) => {
-	const { user } = useAuth();
-	console.log("HEADER:::", user);
+	const { user, setUser } = useAuth();
+	const navigate = useNavigate();
+
+	const onLogout = useCallback(async () => {
+		try {
+			localStorage.removeItem("accessToken");
+			localStorage.removeItem("refreshToken");
+			localStorage.removeItem("user");
+
+			await AuthService.logout(user._id);
+			setUser(null);
+			navigate("/login");
+		} catch (error) {
+			console.error("Logout error:", error);
+		}
+	}, [navigate, setUser, user]);
+
 	return (
 		<header className="border-b">
 			<div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -60,13 +75,13 @@ export const Header: React.FC<HeaderProps> = (props) => {
 							<DropdownMenuTrigger asChild>
 								<Button variant="ghost" size="sm">
 									<User className="h-4 w-4 mr-2" />
-									{(user as UserModel).firstName}
+									{user.firstName}
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end">
 								<DropdownMenuItem onSelect={() => {}}>My Account</DropdownMenuItem>
 								<DropdownMenuItem onSelect={() => {}}>My Orders</DropdownMenuItem>
-								<DropdownMenuItem onSelect={() => {}}>
+								<DropdownMenuItem onSelect={onLogout}>
 									<LogOut className="h-4 w-4 mr-2" />
 									Logout
 								</DropdownMenuItem>
