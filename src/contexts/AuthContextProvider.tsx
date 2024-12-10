@@ -1,13 +1,13 @@
+import { User } from "@/model/internal/user";
 import axios from "axios";
 import React, { createContext, useContext, useState } from "react";
-import { User } from "../model/internal/user";
 
 type AuthContextValue = {
 	accessToken: string;
 	setAccessToken: React.Dispatch<React.SetStateAction<string>>;
 	refreshToken: string;
 	setRefreshToken: React.Dispatch<React.SetStateAction<string>>;
-	user: User;
+	user: unknown;
 	setUser: React.Dispatch<React.SetStateAction<User>>;
 };
 
@@ -20,7 +20,7 @@ export const AuthContext = createContext<AuthContextValue>(null);
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: AuthProviderProps) => {
 	const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken"));
 	const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refreshToken"));
-	const [user, setUser] = useState<User>(null);
+	const [user, setUser] = useState<unknown>(JSON.parse(localStorage.getItem("user")));
 
 	React.useEffect(() => {
 		if (accessToken && refreshToken) {

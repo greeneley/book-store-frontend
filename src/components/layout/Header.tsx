@@ -7,9 +7,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContextProvider";
+import { User as UserModel } from "@/model/internal/user";
 import { BookOpen, LogOut, Menu, Search, ShoppingCart, User } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
+
 interface HeaderProps {
 	name?: string;
 	avatar?: string;
@@ -19,7 +21,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = (props) => {
 	const { user } = useAuth();
-
+	console.log("HEADER:::", user);
 	return (
 		<header className="border-b">
 			<div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -58,7 +60,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
 							<DropdownMenuTrigger asChild>
 								<Button variant="ghost" size="sm">
 									<User className="h-4 w-4 mr-2" />
-									{user.firstName}
+									{(user as UserModel).firstName}
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end">
