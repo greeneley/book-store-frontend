@@ -19,15 +19,18 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 export const Login: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 	const { setAccessToken, setRefreshToken, setUser } = useAuth();
 
 	const form = useForm<LoginFormValues>({
+		reValidateMode: "onSubmit",
 		resolver: zodResolver(loginSchema)
 	});
 
 	const onSubmit = async (data: LoginFormValues) => {
 		setIsLoading(true);
+		setError(null);
 
 		try {
 			const result = await AuthService.login(data.username, data.password);
@@ -46,7 +49,7 @@ export const Login: React.FC = () => {
 			});
 			navigate("/");
 		} catch (error) {
-			throw new Error("Login error");
+			setError(error.message);
 		} finally {
 			setIsLoading(false);
 		}
@@ -74,6 +77,7 @@ export const Login: React.FC = () => {
 								<p className="text-sm text-red-500">{form.formState.errors.password.message}</p>
 							)}
 						</div>
+						{error && <p className="text-sm text-red-500">{error}</p>}
 						<Button type="submit" className="w-full" disabled={isLoading}>
 							{isLoading ? "Logging in..." : "Login"}
 						</Button>

@@ -1,7 +1,7 @@
+import { Login } from "@/pages/Authentication/Login";
+import { SignUp } from "@/pages/Authentication/SignUp";
 import { HomePage } from "@/pages/HomePage";
-import { Login } from "@/pages/Login";
 import { MainLayout } from "@/pages/MainLayout";
-import { SignUp } from "@/pages/SignUp";
 import React from "react";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
