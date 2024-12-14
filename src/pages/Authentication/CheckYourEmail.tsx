@@ -9,7 +9,6 @@ export const CheckYourEmail: React.FC = () => {
 
 	const handleResendEmail = async () => {
 		setIsResending(true);
-		// Simulate API call to resend verification email
 		await new Promise((resolve) => setTimeout(resolve, 2000));
 		setIsResending(false);
 		toast({
