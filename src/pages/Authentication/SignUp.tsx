@@ -57,19 +57,11 @@ export const SignUp: React.FC = () => {
 		setIsLoading(true);
 		setError(null);
 
+		const { username, password, email, firstName, lastName, phone, birthday } = data;
+		const request = { username, password, email, firstName, lastName, phone, birthday };
+
 		try {
-			const request = {
-				username: data.username,
-				password: data.password,
-				email: data.email,
-				firstName: data.firstName,
-				lastName: data.lastName,
-				phone: data.phone,
-				birthday: data.birthday
-			};
-
-			const result = await AuthService.signup(request);
-
+			await AuthService.signup(request);
 			navigate("/check-email");
 		} catch (error) {
 			setError(error.message);
