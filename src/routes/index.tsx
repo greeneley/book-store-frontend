@@ -1,3 +1,5 @@
+import { CheckYourEmail } from "@/pages/Authentication/CheckYourEmail";
+import { EmailVerified } from "@/pages/Authentication/EmailVerified";
 import { Login } from "@/pages/Authentication/Login";
 import { SignUp } from "@/pages/Authentication/SignUp";
 import { HomePage } from "@/pages/HomePage";
@@ -27,6 +29,14 @@ export const Routes = () => {
 				{
 					path: "/",
 					element: <Navigate to={"/home"} />
+				},
+				{
+					path: "/check-email",
+					element: <CheckYourEmail />
+				},
+				{
+					path: "/verify",
+					element: <EmailVerified />
 				}
 			]
 		}

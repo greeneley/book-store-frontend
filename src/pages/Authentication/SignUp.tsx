@@ -2,10 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "@/hooks/use-toast";
+import { AuthService } from "@/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 const signupSchema = z
@@ -45,6 +46,7 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 export const SignUp: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const navigate = useNavigate();
 
 	const form = useForm<SignupFormValues>({
 		reValidateMode: "onSubmit",
@@ -55,14 +57,25 @@ export const SignUp: React.FC = () => {
 		setIsLoading(true);
 		setError(null);
 
-		await new Promise((resolve) => setTimeout(resolve, 2000));
+		try {
+			const request = {
+				username: data.username,
+				password: data.password,
+				email: data.email,
+				firstName: data.firstName,
+				lastName: data.lastName,
+				phone: data.phone,
+				birthday: data.birthday
+			};
 
-		setIsLoading(false);
+			const result = await AuthService.signup(request);
 
-		toast({
-			title: "Signup successful",
-			description: "Your account has been created successfully."
-		});
+			navigate("/check-email");
+		} catch (error) {
+			setError(error.message);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
