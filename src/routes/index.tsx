@@ -1,5 +1,6 @@
 import { CheckYourEmail } from "@/pages/Authentication/CheckYourEmail";
 import { EmailVerified } from "@/pages/Authentication/EmailVerified";
+import { ForgotPassword } from "@/pages/Authentication/ForgotPassword";
 import { Login } from "@/pages/Authentication/Login";
 import { SignUp } from "@/pages/Authentication/SignUp";
 import { HomePage } from "@/pages/HomePage";
@@ -37,6 +38,10 @@ export const Routes = () => {
 				{
 					path: "/verify",
 					element: <EmailVerified />
+				},
+				{
+					path: "/forgot-password",
+					element: <ForgotPassword />
 				}
 			]
 		}

@@ -6,9 +6,10 @@ import { useAuth } from "@/contexts/AuthContextProvider";
 import { toast } from "@/hooks/use-toast";
 import { AuthService } from "@/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { HttpStatusCode } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -49,13 +50,20 @@ export const Login: React.FC = () => {
 			});
 			navigate("/");
 		} catch (error) {
-			setError(error.message);
+			const status = error.response.status;
+			if (status === HttpStatusCode.Unauthorized) {
+				setError("Invalid email or password");
+			} else if (status === HttpStatusCode.Conflict) {
+				setError("Your account is currently inactive");
+			} else {
+				setError("An error occurred. Please try again.");
+			}
 		} finally {
 			setIsLoading(false);
 		}
 	};
 	return (
-		<div className="w-full flex items-center justify-center bg-gray-50">
+		<div className="w-full flex items-center justify-center bg-gray-50 py-5">
 			<Card className="w-[350px] md:w-[500px]">
 				<CardHeader>
 					<CardTitle>Login</CardTitle>
@@ -76,6 +84,11 @@ export const Login: React.FC = () => {
 							{form.formState.errors.password && (
 								<p className="text-sm text-red-500">{form.formState.errors.password.message}</p>
 							)}
+						</div>
+						<div className="text-sm text-right">
+							<Link to="/forgot-password" className="text-blue-500 hover:underline">
+								Forgot password?
+							</Link>
 						</div>
 						{error && <p className="text-sm text-red-500">{error}</p>}
 						<Button type="submit" className="w-full" disabled={isLoading}>

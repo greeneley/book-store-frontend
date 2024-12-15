@@ -19,7 +19,7 @@ export const CheckYourEmail: React.FC = () => {
 
 	return (
 		<>
-			<div className="w-full flex items-center justify-center bg-gray-50">
+			<div className="w-full flex items-center justify-center bg-gray-50 py-5">
 				<Card className="w-full max-w-md">
 					<CardHeader>
 						<CardTitle className="text-2xl font-bold text-center">Check Your Email</CardTitle>

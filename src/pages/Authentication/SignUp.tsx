@@ -64,14 +64,14 @@ export const SignUp: React.FC = () => {
 			await AuthService.signup(request);
 			navigate("/check-email");
 		} catch (error) {
-			setError(error.message);
+			setError(error.response.data.message);
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
 	return (
-		<div className="w-full flex items-center justify-center bg-gray-50">
+		<div className="w-full flex items-center justify-center bg-gray-50 py-5">
 			<Card className="w-[350px] md:w-[500px]">
 				<CardHeader>
 					<CardTitle>Sign Up</CardTitle>
