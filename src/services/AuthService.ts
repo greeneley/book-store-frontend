@@ -11,11 +11,7 @@ export class AuthService {
 			});
 			return response.data;
 		} catch (error) {
-			if (error.response.status === 401) {
-				throw new Error("Invalid email or password");
-			} else {
-				throw new Error("An error occurred. Please try again.");
-			}
+			throw error;
 		}
 	}
 
