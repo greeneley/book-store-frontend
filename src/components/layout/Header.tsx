@@ -79,7 +79,12 @@ export const Header: React.FC<HeaderProps> = (props) => {
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end">
-								<DropdownMenuItem onSelect={() => {}}>My Account</DropdownMenuItem>
+								<DropdownMenuItem
+									onSelect={() => {
+										navigate("/profile");
+									}}>
+									My Account
+								</DropdownMenuItem>
 								<DropdownMenuItem onSelect={() => {}}>My Orders</DropdownMenuItem>
 								<DropdownMenuItem onSelect={onLogout}>
 									<LogOut className="h-4 w-4 mr-2" />
