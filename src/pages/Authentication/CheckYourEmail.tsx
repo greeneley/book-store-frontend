@@ -1,20 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "@/hooks/use-toast";
+import { AuthService } from "@/services/AuthService";
 import { Mail } from "lucide-react";
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export const CheckYourEmail: React.FC = () => {
-	const [isResending, setIsResending] = useState(false);
+	const { state } = useLocation();
 
+	const [isResending, setIsResending] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+	const [resendEmail, setResendEmail] = useState(false);
 	const handleResendEmail = async () => {
 		setIsResending(true);
-		await new Promise((resolve) => setTimeout(resolve, 2000));
-		setIsResending(false);
-		toast({
-			title: "Verification email resent",
-			description: "Please check your inbox for the verification link."
-		});
+		setError(null);
+
+		try {
+			await AuthService.resend(state.email);
+			setResendEmail(true);
+		} catch (error) {
+			setError(error.response.data.message);
+		} finally {
+			setIsResending(false);
+		}
 	};
 
 	return (
@@ -37,6 +45,8 @@ export const CheckYourEmail: React.FC = () => {
 						</p>
 					</CardContent>
 					<CardFooter className="flex flex-col space-y-4">
+						{resendEmail && <p className="text-sm p-3 bg-green-200 text-center w-full">We have re-sent email!</p>}
+						{error && <p className="text-sm text-red-500">{error}</p>}
 						<Button onClick={handleResendEmail} disabled={isResending} className="w-full">
 							{isResending ? "Resending..." : "Resend Verification Email"}
 						</Button>

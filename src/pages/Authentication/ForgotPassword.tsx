@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "@/hooks/use-toast";
+import { AuthService } from "@/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Key } from "lucide-react";
 import React, { useState } from "react";
@@ -16,6 +16,8 @@ const forgotPasswordSchema = z.object({
 type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 export const ForgotPassword: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(false);
+	const [success, setSuccess] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 
 	const form = useForm<ForgotPasswordFormValues>({
 		resolver: zodResolver(forgotPasswordSchema)
@@ -23,19 +25,22 @@ export const ForgotPassword: React.FC = () => {
 
 	const onSubmit = async (data: ForgotPasswordFormValues) => {
 		setIsLoading(true);
-		// Simulate API call
-		await new Promise((resolve) => setTimeout(resolve, 2000));
-		console.log(data);
-		setIsLoading(false);
-		toast({
-			title: "Reset email sent",
-			description: "If an account exists with this email, you will receive password reset instructions."
-		});
+		setSuccess(false);
+		setError(null);
+
+		try {
+			await AuthService.forgotPassword(data.email);
+			setSuccess(true);
+		} catch (error) {
+			setError(error.response.data.message);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
 		<div className="w-full flex items-center justify-center bg-gray-50 py-5">
-			<Card className="w-[350px]">
+			<Card className="min-w-[450px]">
 				<CardHeader>
 					<div className="flex justify-center mb-4">
 						<Key className="h-12 w-12 text-blue-500" />
@@ -52,6 +57,8 @@ export const ForgotPassword: React.FC = () => {
 								<p className="text-sm text-red-500">{form.formState.errors.email.message}</p>
 							)}
 						</div>
+						{success && <p className="text-sm p-3 bg-green-200">We have e-mailed your password reset link!</p>}
+						{error && <p className="text-sm text-red-500">{error}</p>}
 						<Button type="submit" className="w-full" disabled={isLoading}>
 							{isLoading ? "Sending..." : "Send Reset Link"}
 						</Button>

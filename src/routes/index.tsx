@@ -2,6 +2,8 @@ import { CheckYourEmail } from "@/pages/Authentication/CheckYourEmail";
 import { EmailVerified } from "@/pages/Authentication/EmailVerified";
 import { ForgotPassword } from "@/pages/Authentication/ForgotPassword";
 import { Login } from "@/pages/Authentication/Login";
+import { PasswordUpdated } from "@/pages/Authentication/PasswordUpdated";
+import { ResetPassword } from "@/pages/Authentication/ResetPassword";
 import { SignUp } from "@/pages/Authentication/SignUp";
 import { HomePage } from "@/pages/HomePage";
 import { MainLayout } from "@/pages/MainLayout";
@@ -10,6 +12,29 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import { ProtectedRoute } from "./ProtectedRoute";
 
 export const Routes = () => {
+	const routesForAuthentication = [
+		{
+			path: "/check-email",
+			element: <CheckYourEmail />
+		},
+		{
+			path: "/verify",
+			element: <EmailVerified />
+		},
+		{
+			path: "/forgot-password",
+			element: <ForgotPassword />
+		},
+		{
+			path: "/reset-password",
+			element: <ResetPassword />
+		},
+		{
+			path: "/password-updated",
+			element: <PasswordUpdated />
+		}
+	];
+
 	const publicRoutes = [
 		{
 			path: "/",
@@ -31,18 +56,7 @@ export const Routes = () => {
 					path: "/",
 					element: <Navigate to={"/home"} />
 				},
-				{
-					path: "/check-email",
-					element: <CheckYourEmail />
-				},
-				{
-					path: "/verify",
-					element: <EmailVerified />
-				},
-				{
-					path: "/forgot-password",
-					element: <ForgotPassword />
-				}
+				...routesForAuthentication
 			]
 		}
 	];
