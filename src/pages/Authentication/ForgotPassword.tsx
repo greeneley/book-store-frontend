@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Key } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 import { z } from "zod";
 
 const forgotPasswordSchema = z.object({
@@ -18,7 +19,8 @@ export const ForgotPassword: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-
+	const location = useLocation();
+	console.log(location);
 	const form = useForm<ForgotPasswordFormValues>({
 		resolver: zodResolver(forgotPasswordSchema)
 	});

@@ -7,8 +7,9 @@ import { ResetPassword } from "@/pages/Authentication/ResetPassword";
 import { SignUp } from "@/pages/Authentication/SignUp";
 import { HomePage } from "@/pages/HomePage";
 import { MainLayout } from "@/pages/MainLayout";
+import { UserProfileLayout } from "@/pages/User/UserProfileLayout";
 import React from "react";
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 export const Routes = () => {
@@ -68,7 +69,17 @@ export const Routes = () => {
 				<MainLayout>
 					<ProtectedRoute />
 				</MainLayout>
-			)
+			),
+			children: [
+				{
+					path: "/profile",
+					element: (
+						<UserProfileLayout>
+							<p></p>
+						</UserProfileLayout>
+					)
+				}
+			]
 		}
 	];
 
