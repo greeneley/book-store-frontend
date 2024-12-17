@@ -62,7 +62,7 @@ export const SignUp: React.FC = () => {
 
 		try {
 			await AuthService.signup(request);
-			navigate("/check-email");
+			navigate("/check-email", { state: { email } });
 		} catch (error) {
 			setError(error.response.data.message);
 		} finally {
