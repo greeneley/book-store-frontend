@@ -20,7 +20,6 @@ export const Breadcrumb: React.FC = () => {
 				<BreadcrumbSeparator />
 				{paths.map((path, index) => {
 					const isLast = index === paths.length - 1;
-
 					return (
 						<>
 							<BreadcrumbItem key={path}>

@@ -7,6 +7,7 @@ import { ResetPassword } from "@/pages/Authentication/ResetPassword";
 import { SignUp } from "@/pages/Authentication/SignUp";
 import { HomePage } from "@/pages/HomePage";
 import { MainLayout } from "@/pages/MainLayout";
+import { ProfilePage } from "@/pages/User/ProfilePage";
 import { UserProfileLayout } from "@/pages/User/UserProfileLayout";
 import React from "react";
 import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -73,11 +74,13 @@ export const Routes = () => {
 			children: [
 				{
 					path: "/profile",
-					element: (
-						<UserProfileLayout>
-							<p></p>
-						</UserProfileLayout>
-					)
+					element: <UserProfileLayout />,
+					children: [
+						{
+							path: "", // Define the path for ProfilePage
+							element: <ProfilePage /> // Pass ProfilePage as a child
+						}
+					]
 				}
 			]
 		}
