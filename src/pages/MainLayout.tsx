@@ -12,7 +12,7 @@ export interface MainLayoutProps {
 	children?: React.ReactNode;
 }
 
-export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+export const MainLayout: React.FC<MainLayoutProps> = () => {
 	return (
 		<>
 			<Layout className="flex flex-col min-h-screen">

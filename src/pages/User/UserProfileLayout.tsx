@@ -1,8 +1,9 @@
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { useAuth } from "@/contexts/AuthContextProvider";
 import { cn } from "@/lib/utils";
 import { CreditCard, Heart, MapPin, Package, RefreshCcw, User, XCircle } from "lucide-react";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 const sections = [
 	{
@@ -55,10 +56,10 @@ function SidebarNav({ className, items, ...props }: SidebarNavProps) {
 	);
 }
 
-interface UserProfileLayoutProps {
-	children: React.ReactNode;
-}
-export const UserProfileLayout: React.FC<UserProfileLayoutProps> = ({ children }) => {
+interface UserProfileLayoutProps {}
+export const UserProfileLayout: React.FC<UserProfileLayoutProps> = () => {
+	const { user } = useAuth();
+
 	return (
 		<div className="container mx-auto py-10">
 			<Breadcrumb />
@@ -77,10 +78,12 @@ export const UserProfileLayout: React.FC<UserProfileLayoutProps> = ({ children }
 					<div className="flex items-center justify-between mb-4">
 						<h2 className="text-3xl font-bold tracking-tight">My Account</h2>
 						<p className="text-muted-foreground">
-							Welcome! <span className="text-primary font-medium">XXX</span>
+							Welcome! <span className="text-primary font-medium">{user.firstName}</span>
 						</p>
 					</div>
-					<div className="space-y-6">{children}</div>
+					<div className="space-y-6">
+						<Outlet />
+					</div>
 				</div>
 			</div>
 		</div>
