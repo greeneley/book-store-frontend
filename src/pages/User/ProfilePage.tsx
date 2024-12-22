@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +13,7 @@ import { Separator } from "@radix-ui/react-dropdown-menu";
 import { format } from "date-fns";
 import { CalendarIcon, Camera, Loader2 } from "lucide-react";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 
 const profileFormSchema = z
@@ -57,6 +58,8 @@ export const ProfilePage: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [avatarFile, setAvatarFile] = useState<File | null>(null);
 	const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+
 	const { user } = useAuth();
 
 	const form = useForm<ProfileFormValues>({
@@ -67,7 +70,7 @@ export const ProfilePage: React.FC = () => {
 			email: user.email,
 			phone: "+12345678",
 			address: "123 Street, City, Country",
-			birthday: new Date("1990-01-01")
+			birthday: new Date()
 		}
 	});
 
@@ -82,7 +85,7 @@ export const ProfilePage: React.FC = () => {
 			reader.readAsDataURL(file);
 		}
 	};
-
+	const birthday = useWatch({ control: form.control, name: "birthday" });
 	const onSubmit = async (data: ProfileFormValues) => {
 		setIsLoading(true);
 		// Simulate API call
@@ -156,29 +159,29 @@ export const ProfilePage: React.FC = () => {
 							</div>
 							<div className="space-y-2">
 								<Label>Birthday</Label>
-								<Popover>
+								<Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
 									<PopoverTrigger asChild>
 										<Button
 											variant="outline"
 											className={cn(
 												"w-full justify-start text-left font-normal",
-												!form.getValues("birthday") && "text-muted-foreground"
+												!birthday && "text-muted-foreground"
 											)}>
 											<CalendarIcon className="mr-2 h-4 w-4" />
-											{form.getValues("birthday") ? (
-												format(form.getValues("birthday"), "PPP")
-											) : (
-												<span>Pick a date</span>
-											)}
+											{birthday ? format(birthday, "PPP") : <span>Pick a date</span>}
 										</Button>
 									</PopoverTrigger>
 									<PopoverContent className="w-auto p-0" align="start">
-										{/*<Calendar*/}
-										{/*	mode="single"*/}
-										{/*	selected={form.getValues("birthday")}*/}
-										{/*	onSelect={(date) => form.setValue("birthday", date as Date)}*/}
-										{/*	disabled={(date) => date > new Date() || date < new Date("1900-01-01")}*/}
-										{/*	initialFocus></Calendar>*/}
+										<Calendar
+											mode="single"
+											selected={form.getValues("birthday")}
+											onSelect={(date) => {
+												form.setValue("birthday", date as Date);
+												setIsCalendarOpen(false);
+											}}
+											disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+											initialFocus
+										/>
 									</PopoverContent>
 								</Popover>
 							</div>
