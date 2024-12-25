@@ -20,14 +20,14 @@ module.exports = (env, options) => {
 
 	return {
 		mode: options.mode,
-		entry: path.resolve(__dirname, "./src/index.tsx"),
+		entry: path.resolve(__dirname, "./src/index.tsx"), // Điểm vào của ứng dụng, nơi Webpack bắt đầu quá trình xây dựng
 		output: {
 			path: path.resolve(__dirname, "./dist"),
 			filename: "[name].[contenthash].js",
 			chunkFilename: "[name].[contenthash].js",
 			clean: true,
 			publicPath: "/"
-		},
+		}, // Cấu hình đầu ra, bao gồm đường dẫn và tên tệp cho các tệp được xây dựng
 		devtool: "source-map",
 		devServer: {
 			port: 8082,
@@ -37,13 +37,6 @@ module.exports = (env, options) => {
 			extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
 			alias: {
 				"@": path.resolve(__dirname, "src")
-				// "@components": path.resolve(__dirname, "src/components/"),
-				// "@constants": path.resolve(__dirname, "src/constants/"),
-				// "@hooks": path.resolve(__dirname, "src/hooks/"),
-				// "@services": path.resolve(__dirname, "src/services/"),
-				// "@store": path.resolve(__dirname, "src/store/"),
-				// "@styles": path.resolve(__dirname, "src/styles/"),
-				// "@utils": path.resolve(__dirname, "src/utils/")
 			},
 			fallback: { stream: false, buffer: false }
 		},
@@ -104,7 +97,7 @@ module.exports = (env, options) => {
 				// both options are optional
 				filename: devMode ? "[name].css" : "[name].[contenthash].css",
 				chunkFilename: devMode ? "[name].css" : "[name].[contenthash].css"
-			}),
+			}), // Tách CSS ra khỏi JavaScript và tạo các tệp CSS riêng biệt. Điều này rất hữu ích cho việc tối ưu hóa tải trang
 			// copy static files from public folder to build directory
 			new CopyPlugin({
 				patterns: [
