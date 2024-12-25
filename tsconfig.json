@@ -1,17 +1,17 @@
 {
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
-		"allowJs": false,
+		"allowJs": false, // false -> tất cả file .js đều không được compiler, chỉ typescript được compile;
 		"jsx": "react",
 		"module": "commonjs",
-		"noImplicitAny": true,
+		"noImplicitAny": true, // Khi được đặt là true, TypeScript sẽ báo lỗi nếu không thể suy ra kiểu của một biến và mặc định là any.
 		"preserveConstEnums": true,
 		"removeComments": true,
-		"sourceMap": false,
+		"sourceMap": true, // Khi được đặt là true, tạo ra các tệp bản đồ nguồn để hỗ trợ gỡ lỗi.
 		"target": "es5",
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
-		"suppressImplicitAnyIndexErrors": true,
+		"ignoreDeprecations": "5.0",
 		"typeRoots": ["./src/types", "./node_modules/@types"],
 		"lib": ["es2015", "dom"],
 		"paths": {
@@ -27,6 +27,6 @@
 //			"@utils/*": ["./src/utils/*"]
 		}
 	},
-	"exclude": ["**/node_modules", "**/.*/", "/src/components/ui/**/*"],
+	"exclude": ["**/.*/", "/src/components/ui/**/*"],
 	"include": ["./src/**/**/*"]
 }

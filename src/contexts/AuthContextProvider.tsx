@@ -34,7 +34,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: AuthProv
 
 	React.useEffect(() => {
 		if (accessToken && refreshToken) {
-			axios.defaults.headers.common["Authorization"] = "Bearer " + accessToken;
+			axios.defaults.headers["Authorization"] = accessToken;
 			localStorage.setItem("accessToken", accessToken);
 			localStorage.setItem("refreshToken", refreshToken);
 		} else {
