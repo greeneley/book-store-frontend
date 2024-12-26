@@ -25,4 +25,14 @@ export class UserService {
 			throw error;
 		}
 	}
+
+	static async updateProfile(request: any) {
+		try {
+			const response = await axios.post(`${baseUrl}/api/v1/user/profile/update`, { ...request });
+			return response.data;
+		} catch (error) {
+			console.error("Update profile failed:", error);
+			throw error;
+		}
+	}
 }
