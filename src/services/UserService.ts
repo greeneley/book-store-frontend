@@ -1,17 +1,12 @@
 import API from "@/constants";
 import { ProfileUser } from "@/model/internal/profile-user";
-import axios from "axios";
+import apiService from "@/services/ApiService";
+import axios, { AxiosResponse } from "axios";
 
 const baseUrl = API.dev;
 export class UserService {
-	static async getProfileUser(): Promise<ProfileUser> {
-		// eslint-disable-next-line no-useless-catch
-		try {
-			const response = await axios.get(`${baseUrl}/api/v1/user/profile`);
-			return response.data;
-		} catch (error) {
-			throw error;
-		}
+	static async getProfileUser(): Promise<AxiosResponse<ProfileUser>> {
+		return await apiService.get("/api/v1/user/profile");
 	}
 
 	static async uploadAvatar(file: File) {
@@ -27,12 +22,6 @@ export class UserService {
 	}
 
 	static async updateProfile(request: any) {
-		try {
-			const response = await axios.post(`${baseUrl}/api/v1/user/profile/update`, { ...request });
-			return response.data;
-		} catch (error) {
-			console.error("Update profile failed:", error);
-			throw error;
-		}
+		return await apiService.post(`${baseUrl}/api/v1/user/profile/update`, { ...request });
 	}
 }
