@@ -15,7 +15,7 @@ export class TokenService {
 		localStorage.setItem("accessToken", token);
 	}
 
-	staticupdateLocalRefreshToken(token: string) {
+	static updateLocalRefreshToken(token: string) {
 		localStorage.setItem("refreshToken", token);
 	}
 }

@@ -65,12 +65,14 @@ export const ProfilePage: React.FC = () => {
 			return await UserService.getProfileUser();
 		}
 		fetchData().then((response) => {
-			form.setValue("firstName", response.firstName);
-			form.setValue("lastName", response.lastName);
-			form.setValue("email", response.email);
-			form.setValue("phone", response.phone);
-			form.setValue("birthday", parse(response.birthday, "yyyyMMdd", new Date()));
-			setAvatarPreview(response.photos);
+			const data = response.data;
+
+			form.setValue("firstName", data.firstName);
+			form.setValue("lastName", data.lastName);
+			form.setValue("email", data.email);
+			form.setValue("phone", data.phone);
+			form.setValue("birthday", parse(data.birthday, "yyyyMMdd", new Date()));
+			setAvatarPreview(data.photos);
 		});
 	}, [form]);
 
@@ -130,7 +132,7 @@ export const ProfilePage: React.FC = () => {
 					<div className="flex justify-center">
 						<div className="relative">
 							<Avatar className="w-32 h-32">
-								<AvatarImage src={avatarPreview || "/placeholder.svg"} />
+								<AvatarImage src={avatarPreview} />
 								<AvatarFallback></AvatarFallback>
 							</Avatar>
 							<div className="absolute bottom-0 right-0 bg-primary rounded-full p-2 cursor-pointer">
