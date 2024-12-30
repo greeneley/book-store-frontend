@@ -18,4 +18,16 @@ export class TokenService {
 	static updateLocalRefreshToken(token: string) {
 		localStorage.setItem("refreshToken", token);
 	}
+
+	static removeAccessToken() {
+		localStorage.removeItem("accessToken");
+	}
+
+	static removeRefreshToken() {
+		localStorage.removeItem("refreshToken");
+	}
+
+	static removeUser() {
+		localStorage.removeItem("user");
+	}
 }

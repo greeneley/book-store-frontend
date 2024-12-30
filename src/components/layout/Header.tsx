@@ -25,10 +25,6 @@ export const Header: React.FC<HeaderProps> = (props) => {
 
 	const onLogout = useCallback(async () => {
 		try {
-			localStorage.removeItem("accessToken");
-			localStorage.removeItem("refreshToken");
-			localStorage.removeItem("user");
-
 			await AuthService.logout(user._id);
 			setUser(null);
 			navigate("/login");
