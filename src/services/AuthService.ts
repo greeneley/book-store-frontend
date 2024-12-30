@@ -1,4 +1,5 @@
 import API from "@/constants";
+import { TokenService } from "@/services/TokenService";
 import axios from "axios";
 
 const baseUrl = API.dev;
@@ -41,6 +42,9 @@ export class AuthService {
 
 	static async logout(id: number) {
 		try {
+			await TokenService.removeAccessToken();
+			await TokenService.removeAccessToken();
+			await TokenService.removeUser();
 			await axios.post(`${baseUrl}/api/v1/auth/logout`, { id });
 		} catch (error) {
 			console.error("Logout failed:", error);
