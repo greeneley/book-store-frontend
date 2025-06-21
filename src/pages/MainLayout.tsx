@@ -17,7 +17,7 @@ export const MainLayout: React.FC<MainLayoutProps> = () => {
 		<>
 			<Layout className="flex flex-col min-h-screen">
 				<Header />
-				<main className="flex-grow flex">
+				<main className="flex-grow flex justify-center">
 					<Outlet />
 				</main>
 				<Toaster />
