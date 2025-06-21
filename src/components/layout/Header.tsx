@@ -42,16 +42,13 @@ export const Header: React.FC<HeaderProps> = (props) => {
 				</Link>
 				<nav className="hidden md:flex space-x-4">
 					<Link to="/" className="text-sm font-medium hover:underline">
-						Home
+						Trang chủ
 					</Link>
 					<Link to="/categories" className="text-sm font-medium hover:underline">
-						Categories
-					</Link>
-					<Link to="/about" className="text-sm font-medium hover:underline">
-						About
+						Tất cả sách
 					</Link>
 					<Link to="/contact" className="text-sm font-medium hover:underline">
-						Contact
+						Liên hệ
 					</Link>
 				</nav>
 				<div className="flex items-center space-x-2">
