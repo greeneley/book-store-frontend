@@ -7,6 +7,7 @@ import { ResetPassword } from "@/pages/Authentication/ResetPassword";
 import { SignUp } from "@/pages/Authentication/SignUp";
 import { HomePage } from "@/pages/HomePage";
 import { MainLayout } from "@/pages/MainLayout";
+import { NotFound } from "@/pages/NotFound";
 import { ProfilePage } from "@/pages/User/ProfilePage";
 import { UserProfileLayout } from "@/pages/User/UserProfileLayout";
 import React from "react";
@@ -86,7 +87,14 @@ export const Routes = () => {
 		}
 	];
 
-	const router = createBrowserRouter([...publicRoutes, ...routesForAuthenticated]);
+	const notFoundRoute = [
+		{
+			path: "*",
+			element: <NotFound />
+		}
+	];
+
+	const router = createBrowserRouter([...publicRoutes, ...routesForAuthenticated, ...notFoundRoute]);
 
 	return <RouterProvider router={router} />;
 };
