@@ -8,6 +8,7 @@ import { SignUp } from "@/pages/Authentication/SignUp";
 import { HomePage } from "@/pages/HomePage";
 import { MainLayout } from "@/pages/MainLayout";
 import { NotFound } from "@/pages/NotFound";
+import { ProductDetail } from "@/pages/Product/ProductDetail";
 import { ProfilePage } from "@/pages/User/ProfilePage";
 import { UserProfileLayout } from "@/pages/User/UserProfileLayout";
 import React from "react";
@@ -58,6 +59,10 @@ export const Routes = () => {
 				{
 					path: "/",
 					element: <Navigate to={"/home"} />
+				},
+				{
+					path: "/products/:slug",
+					element: <ProductDetail />
 				},
 				...routesForAuthentication
 			]

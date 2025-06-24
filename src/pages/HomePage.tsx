@@ -1,5 +1,5 @@
-import { HeroCarousel } from "@/components/hero-carousel/HeroCarousel";
-import { ImageCarousel } from "@/components/image-carousel/ImageCarousel";
+import { HeroCarousel } from "@/components/HeroCarousel/HeroCarousel";
+import { ImageCarousel } from "@/components/ImageCarousel/ImageCarousel";
 import React from "react";
 import "swiper/css";
 import "swiper/css/navigation";
