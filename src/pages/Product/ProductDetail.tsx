@@ -1,5 +1,7 @@
 import { Badge } from "@/components/ui/badge";
-import { Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ShoppingCart, Star } from "lucide-react";
 import React, { useState } from "react";
 
 export const ProductDetail: React.FC = () => {
@@ -79,7 +81,47 @@ export const ProductDetail: React.FC = () => {
 								</div>
 							</div>
 						</div>
+
+						<Button
+							size="lg"
+							className="w-full bg-blue-700 hover:bg-blue-500 text-white flex flex-col items-center h-fit py-2">
+							<p>MUA NGAY</p>
+							<span className="text-sm flex items-center">
+								<ShoppingCart className="w-4 h-4 mr-2" /> Giao hàng tận nơi, Freeship cho đơn hàng trên 299K
+							</span>
+						</Button>
+						<div className="flex gap-3">
+							<Button size="lg" className="flex-1 text-blue-700 hover:bg-blue-600 hover:text-white" variant="outline">
+								Thêm vào giỏ
+							</Button>
+						</div>
 					</div>
+				</div>
+
+				<div>
+					<h3 className="text-xl font-semibold mb-4">Book Description</h3>
+					<Card>
+						<CardContent className="p-6">
+							<div className="prose max-w-none text-gray-700 space-y-4">
+								<p>
+									"The Art of Mindful Living" is a transformative guide that explores the profound impact of mindfulness
+									on our daily lives. Through practical exercises, real-world examples, and scientific insights, author
+									Sarah Mitchell presents a comprehensive approach to cultivating awareness and presence in every
+									moment.
+								</p>
+								<p>
+									This book delves deep into the principles of mindful living, offering readers tools to reduce stress,
+									enhance creativity, and build stronger relationships. Mitchell's accessible writing style makes
+									complex concepts easy to understand and implement, making this an essential read for anyone seeking
+									greater fulfillment and peace.
+								</p>
+								<p>
+									Whether you're new to mindfulness or looking to deepen your practice, this book provides valuable
+									insights that will help you navigate life's challenges with greater clarity and compassion.
+								</p>
+							</div>
+						</CardContent>
+					</Card>
 				</div>
 			</div>
 		</div>
