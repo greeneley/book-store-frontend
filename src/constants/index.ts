@@ -1,5 +1,5 @@
 const API = {
-	dev: "http://localhost:8081"
+	dev: "" // Use relative URLs since we have proxy configured
 };
 
 export default API;
