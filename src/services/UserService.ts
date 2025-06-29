@@ -12,7 +12,7 @@ export class UserService {
 	static async uploadAvatar(file: File) {
 		const formData = new FormData();
 		formData.append("file", file, file.name);
-		return await apiService.post(`${baseUrl}/api/v1/user/avatar/upload`, formData, {
+		return await apiService.post("/api/v1/user/avatar/upload", formData, {
 			headers: {
 				"Content-Type": "multipart/form-data"
 			}
@@ -20,6 +20,6 @@ export class UserService {
 	}
 
 	static async updateProfile(request: any) {
-		return await apiService.post(`${baseUrl}/api/v1/user/profile/update`, { ...request });
+		return await apiService.post("/api/v1/user/profile/update", { ...request });
 	}
 }

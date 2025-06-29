@@ -94,26 +94,26 @@ instance.interceptors.response.use(
 	}
 );
 
-const ApiService = {
-	get<T>(url: string, params?: object) {
-		return instance.get<T>(url, { params });
-	},
+// const ApiService = {
+// 	get<T>(url: string, params?: object) {
+// 		return instance.get<T>(url, { params });
+// 	},
+//
+// 	post<T>(url: string, data: any, config?: object) {
+// 		return instance.post<T>(url, data, config);
+// 	},
+//
+// 	put<T>(url: string, data: any, config?: object) {
+// 		return instance.put<T>(url, data, config);
+// 	},
+//
+// 	patch<T>(url: string, data: any, config?: object) {
+// 		return instance.patch<T>(url, data, config);
+// 	},
+//
+// 	delete<T>(url: string, config?: object) {
+// 		return instance.delete<T>(url, config);
+// 	}
+// };
 
-	post<T>(url: string, data: any, config?: object) {
-		return instance.post<T>(url, data, config);
-	},
-
-	put<T>(url: string, data: any, config?: object) {
-		return instance.put<T>(url, data, config);
-	},
-
-	patch<T>(url: string, data: any, config?: object) {
-		return instance.patch<T>(url, data, config);
-	},
-
-	delete<T>(url: string, config?: object) {
-		return instance.delete<T>(url, config);
-	}
-};
-
-export default ApiService;
+export default instance;

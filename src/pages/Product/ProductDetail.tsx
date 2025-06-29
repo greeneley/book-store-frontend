@@ -1,13 +1,25 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Product } from "@/model/internal/product";
+import { ProductService } from "@/services/ProductService";
+import { convertToCurrency } from "@/utils/helpers/convertToCurrency";
 import { ShoppingCart } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 
+// Import Swiper styles
+import "swiper/css";
 export const ProductDetail: React.FC = () => {
+	const [product, setProduct] = useState<Product>();
 	const [selectedImage, setSelectedImage] = useState(0);
-	const [quantity, setQuantity] = useState(1);
 
+	const [activeThumb, setActiveThumb] = useState();
+
+	const [quantity, setQuantity] = useState(1);
+	const { slug } = useParams();
+	console.log({ slug });
+	console.log({ product });
 	const bookImages = [
 		"/assets/img/placeholder/placeholder.svg?height=400&width=600",
 		"/assets/img/placeholder/placeholder.svg?height=400&width=600",
@@ -15,23 +27,51 @@ export const ProductDetail: React.FC = () => {
 		"/assets/img/placeholder/placeholder.svg?height=400&width=600"
 	];
 
-	return (
+	useEffect(() => {
+		const productId = Number(slug.split("-")[0]);
+
+		async function fetchData(productId: number) {
+			return await ProductService.getProductById(productId);
+		}
+		fetchData(productId)
+			.then((response) => {
+				const data = response.data as Product;
+				setProduct(data);
+			})
+			.catch((error) => {
+				console.error("Error fetching product:", error);
+			});
+	}, [slug]);
+
+	const bookImageUrls = useMemo(() => {
+		return product
+			? product.productImages
+					.map((productImage) => {
+						return productImage.image.url;
+					})
+					.sort()
+			: [];
+	}, [product]);
+
+	const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
+	return product ? (
 		<div className="bg-gray-50">
 			<div className="max-w-7xl mx-auto px-4 py-8">
 				<div className="grid lg:grid-cols-2 gap-8 mb-12">
 					<div className="space-y-4">
 						<div className="max-w-md mx-auto relative overflow-hidden rounded-lg bg-white shadow-lg">
-							<img src="/assets/img/placeholder/placeholder.svg" className="object-cover" />
+							{bookImageUrls && bookImageUrls.length && <img src={bookImageUrls[0]} className="object-cover" />}
 						</div>
 						<div className="flex gap-2 overflow-x-auto pb-2">
-							{bookImages.map((image, index) => (
+							{bookImageUrls.map((url, index) => (
 								<button
 									key={index}
 									onClick={() => setSelectedImage(index)}
 									className={`flex-shrink-0 w-16 relative overflow-hidden rounded-md border-2 transition-colors ${
 										selectedImage === index ? "border-primary" : "border-gray-200"
 									}`}>
-									<img src="/assets/img/placeholder/placeholder.svg?height=400&width=600" className="object-cover" />
+									<img src={url} className="object-cover" />
 								</button>
 							))}
 						</div>
@@ -39,17 +79,14 @@ export const ProductDetail: React.FC = () => {
 
 					<div className="space-y-6">
 						<div>
-							<Badge variant="secondary" className="mb-2">
-								Fiction
-							</Badge>
-							<h1 className="text-3xl font-bold text-gray-900 mb-2">The Art of Mindful Living</h1>
-							<p className="text-lg text-gray-600 mb-4">by Sarah Mitchell</p>
+							<h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
+							<p className="text-lg text-gray-600 mb-4">Tác giả: {product.author}</p>
 						</div>
 						<div className="flex items-baseline gap-3 mb-6">
-							<span className="text-3xl font-bold text-gray-900">$24.99</span>
-							<span className="text-lg text-gray-500 line-through">$34.99</span>
+							<span className="text-3xl font-bold text-gray-900">{convertToCurrency(product.salePrice)}</span>
+							<span className="text-lg text-gray-500 line-through">{convertToCurrency(product.regularPrice)}</span>
 							<Badge variant="destructive" className="text-md px-2">
-								30% OFF
+								{(((product.regularPrice - product.salePrice) / product.regularPrice) * 100).toFixed(0)}% OFF
 							</Badge>
 						</div>
 						<div className="space-y-4">
@@ -91,60 +128,13 @@ export const ProductDetail: React.FC = () => {
 					<h3 className="text-xl font-semibold mb-4">Mô tả nội dung</h3>
 					<Card className="rounded-none">
 						<CardContent className="p-6">
-							<div className="prose max-w-none text-gray-700 space-y-4">
-								<p>
-									"The Art of Mindful Living" is a transformative guide that explores the profound impact of mindfulness
-									on our daily lives. Through practical exercises, real-world examples, and scientific insights, author
-									Sarah Mitchell presents a comprehensive approach to cultivating awareness and presence in every
-									moment.
-								</p>
-								<p>
-									This book delves deep into the principles of mindful living, offering readers tools to reduce stress,
-									enhance creativity, and build stronger relationships. Mitchell's accessible writing style makes
-									complex concepts easy to understand and implement, making this an essential read for anyone seeking
-									greater fulfillment and peace.
-								</p>
-								<p>
-									Whether you're new to mindfulness or looking to deepen your practice, this book provides valuable
-									insights that will help you navigate life's challenges with greater clarity and compassion.
-								</p>
-								<p>
-									"The Art of Mindful Living" is a transformative guide that explores the profound impact of mindfulness
-									on our daily lives. Through practical exercises, real-world examples, and scientific insights, author
-									Sarah Mitchell presents a comprehensive approach to cultivating awareness and presence in every
-									moment.
-								</p>
-								<p>
-									This book delves deep into the principles of mindful living, offering readers tools to reduce stress,
-									enhance creativity, and build stronger relationships. Mitchell's accessible writing style makes
-									complex concepts easy to understand and implement, making this an essential read for anyone seeking
-									greater fulfillment and peace.
-								</p>
-								<p>
-									Whether you're new to mindfulness or looking to deepen your practice, this book provides valuable
-									insights that will help you navigate life's challenges with greater clarity and compassion.
-								</p>
-								<p>
-									"The Art of Mindful Living" is a transformative guide that explores the profound impact of mindfulness
-									on our daily lives. Through practical exercises, real-world examples, and scientific insights, author
-									Sarah Mitchell presents a comprehensive approach to cultivating awareness and presence in every
-									moment.
-								</p>
-								<p>
-									This book delves deep into the principles of mindful living, offering readers tools to reduce stress,
-									enhance creativity, and build stronger relationships. Mitchell's accessible writing style makes
-									complex concepts easy to understand and implement, making this an essential read for anyone seeking
-									greater fulfillment and peace.
-								</p>
-								<p>
-									Whether you're new to mindfulness or looking to deepen your practice, this book provides valuable
-									insights that will help you navigate life's challenges with greater clarity and compassion.
-								</p>
-							</div>
+							{product && <div className="prose max-w-none text-gray-700 space-y-4">{product.description}</div>}
 						</CardContent>
 					</Card>
 				</div>
 			</div>
 		</div>
+	) : (
+		<></>
 	);
 };

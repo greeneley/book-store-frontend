@@ -13,6 +13,10 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 dotenv.config();
 
+const API = {
+	dev: "" // Use relative URLs since we have proxy configured
+};
+
 module.exports = (env, options) => {
 	const devMode = options.mode === "development" ? true : false;
 
@@ -31,7 +35,14 @@ module.exports = (env, options) => {
 		devtool: "source-map",
 		devServer: {
 			port: 8082,
-			historyApiFallback: true
+			historyApiFallback: true,
+			proxy: {
+				'/api': {
+					target: 'http://localhost:8081',
+					changeOrigin: true,
+					secure: false
+				}
+			}
 		},
 		resolve: {
 			extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
