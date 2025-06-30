@@ -1,31 +1,23 @@
+import { CarouselImages } from "@/components/commerce-ui/image-carousel-basic";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import Galery from "@/components/ui/galery";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "@/model/internal/product";
 import { ProductService } from "@/services/ProductService";
 import { convertToCurrency } from "@/utils/helpers/convertToCurrency";
 import { ShoppingCart } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-
 // Import Swiper styles
 import "swiper/css";
+
 export const ProductDetail: React.FC = () => {
 	const [product, setProduct] = useState<Product>();
-	const [selectedImage, setSelectedImage] = useState(0);
-
-	const [activeThumb, setActiveThumb] = useState();
 
 	const [quantity, setQuantity] = useState(1);
 	const { slug } = useParams();
-	console.log({ slug });
-	console.log({ product });
-	const bookImages = [
-		"/assets/img/placeholder/placeholder.svg?height=400&width=600",
-		"/assets/img/placeholder/placeholder.svg?height=400&width=600",
-		"/assets/img/placeholder/placeholder.svg?height=400&width=600",
-		"/assets/img/placeholder/placeholder.svg?height=400&width=600"
-	];
 
 	useEffect(() => {
 		const productId = Number(slug.split("-")[0]);
@@ -33,6 +25,7 @@ export const ProductDetail: React.FC = () => {
 		async function fetchData(productId: number) {
 			return await ProductService.getProductById(productId);
 		}
+
 		fetchData(productId)
 			.then((response) => {
 				const data = response.data as Product;
@@ -44,37 +37,72 @@ export const ProductDetail: React.FC = () => {
 	}, [slug]);
 
 	const bookImageUrls = useMemo(() => {
-		return product
+		return product?.productImages.length > 0
 			? product.productImages
 					.map((productImage) => {
 						return productImage.image.url;
 					})
 					.sort()
-			: [];
+			: ["/assets/img/placeholder/placeholder.svg?height=400&width=600"];
 	}, [product]);
 
-	const [thumbsSwiper, setThumbsSwiper] = useState(null);
+	const images: CarouselImages = bookImageUrls.map((url, idx) => ({
+		url
+	}));
 
-	return product ? (
+	if (!product) {
+		return (
+			<div className="bg-gray-50">
+				<div className="max-w-7xl mx-auto px-4 py-8">
+					<div className="grid lg:grid-cols-2 gap-8 mb-12">
+						<div className="space-y-4">
+							<Skeleton className="aspect-square w-full rounded-lg" />
+							<div className="flex gap-2 overflow-x-auto pb-2">
+								<Skeleton className="h-16 w-16 rounded-md" />
+								<Skeleton className="h-16 w-16 rounded-md" />
+								<Skeleton className="h-16 w-16 rounded-md" />
+								<Skeleton className="h-16 w-16 rounded-md" />
+							</div>
+						</div>
+
+						<div className="space-y-6">
+							<div className="space-y-2">
+								<Skeleton className="h-8 w-3/4" />
+								<Skeleton className="h-6 w-1/2" />
+							</div>
+							<div className="space-y-2">
+								<Skeleton className="h-8 w-1/4" />
+								<Skeleton className="h-6 w-1/3" />
+							</div>
+
+							<div className="space-y-4">
+								<Skeleton className="h-12 w-full" />
+								<Skeleton className="h-12 w-full" />
+							</div>
+						</div>
+					</div>
+
+					<div>
+						<Skeleton className="h-8 w-48 mb-4" />
+						<Card className="rounded-none">
+							<CardContent className="p-6 space-y-4">
+								<Skeleton className="h-4 w-full" />
+								<Skeleton className="h-4 w-full" />
+								<Skeleton className="h-4 w-5/6" />
+							</CardContent>
+						</Card>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	return (
 		<div className="bg-gray-50">
 			<div className="max-w-7xl mx-auto px-4 py-8">
 				<div className="grid lg:grid-cols-2 gap-8 mb-12">
 					<div className="space-y-4">
-						<div className="max-w-md mx-auto relative overflow-hidden rounded-lg bg-white shadow-lg">
-							{bookImageUrls && bookImageUrls.length && <img src={bookImageUrls[0]} className="object-cover" />}
-						</div>
-						<div className="flex gap-2 overflow-x-auto pb-2">
-							{bookImageUrls.map((url, index) => (
-								<button
-									key={index}
-									onClick={() => setSelectedImage(index)}
-									className={`flex-shrink-0 w-16 relative overflow-hidden rounded-md border-2 transition-colors ${
-										selectedImage === index ? "border-primary" : "border-gray-200"
-									}`}>
-									<img src={url} className="object-cover" />
-								</button>
-							))}
-						</div>
+						<Galery images={images} />
 					</div>
 
 					<div className="space-y-6">
@@ -134,7 +162,5 @@ export const ProductDetail: React.FC = () => {
 				</div>
 			</div>
 		</div>
-	) : (
-		<></>
 	);
 };
