@@ -9,6 +9,7 @@ import { HomePage } from "@/pages/HomePage";
 import { MainLayout } from "@/pages/MainLayout";
 import { NotFound } from "@/pages/NotFound";
 import { ProductDetail } from "@/pages/Product/ProductDetail";
+import { Cart } from "@/pages/User/Cart";
 import { ProfilePage } from "@/pages/User/ProfilePage";
 import { UserProfileLayout } from "@/pages/User/UserProfileLayout";
 import React from "react";
@@ -87,6 +88,10 @@ export const Routes = () => {
 							element: <ProfilePage /> // Pass ProfilePage as a child
 						}
 					]
+				},
+				{
+					path: "/cart",
+					element: <Cart />
 				}
 			]
 		}

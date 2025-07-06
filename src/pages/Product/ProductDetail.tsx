@@ -8,9 +8,13 @@ import { Product } from "@/model/internal/product";
 import { ProductService } from "@/services/ProductService";
 import { convertToCurrency } from "@/utils/helpers/convertToCurrency";
 import { ShoppingCart } from "lucide-react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 // Import Swiper styles
+import { AppContext } from "@/contexts/AppContextProvider";
+import { CartItemService } from "@/services/CartItemService";
+import { CartService } from "@/services/CartService";
+import toast from "react-hot-toast";
 import "swiper/css";
 
 export const ProductDetail: React.FC = () => {
@@ -18,6 +22,7 @@ export const ProductDetail: React.FC = () => {
 
 	const [quantity, setQuantity] = useState(1);
 	const { slug } = useParams();
+	const { setCountBadge } = useContext(AppContext);
 
 	useEffect(() => {
 		const productId = Number(slug.split("-")[0]);
@@ -97,6 +102,15 @@ export const ProductDetail: React.FC = () => {
 		);
 	}
 
+	const onAddToCart = () => {
+		CartItemService.addCartItem(1, product.id).then(() => {
+			CartService.getCart().then((res) => {
+				setCountBadge(res.data.cart_items.length);
+				toast.success("Đã thêm sản phẩm vào giỏ hàng");
+			});
+		});
+	};
+
 	return (
 		<div className="bg-gray-50">
 			<div className="max-w-7xl mx-auto px-4 py-8">
@@ -145,7 +159,11 @@ export const ProductDetail: React.FC = () => {
 							</span>
 						</Button>
 						<div className="flex gap-3">
-							<Button size="lg" className="flex-1 text-blue-700 hover:bg-blue-600 hover:text-white" variant="outline">
+							<Button
+								size="lg"
+								className="flex-1 text-blue-700 hover:bg-blue-600 hover:text-white"
+								variant="outline"
+								onClick={onAddToCart}>
 								Thêm vào giỏ
 							</Button>
 						</div>
