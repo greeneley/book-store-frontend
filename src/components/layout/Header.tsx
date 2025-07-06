@@ -6,10 +6,11 @@ import {
 	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { AppContext } from "@/contexts/AppContextProvider";
 import { useAuth } from "@/contexts/AuthContextProvider";
 import { AuthService } from "@/services/AuthService";
 import { BookOpen, LogOut, Menu, Search, ShoppingCart, User } from "lucide-react";
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface HeaderProps {
@@ -22,6 +23,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = (props) => {
 	const { user, setUser } = useAuth();
 	const navigate = useNavigate();
+	const { countBadge } = useContext(AppContext);
 
 	const onLogout = useCallback(async () => {
 		try {
@@ -59,9 +61,18 @@ export const Header: React.FC<HeaderProps> = (props) => {
 							<span className="sr-only">Search</span>
 						</Button>
 					</form>
-					<Button variant="outline" size="icon">
-						<ShoppingCart className="h-4 w-4" />
-						<span className="sr-only">Cart</span>
+
+					<Button
+						variant="ghost"
+						size="icon"
+						className="relative p-2"
+						onClick={() => {
+							navigate("/cart");
+						}}>
+						<ShoppingCart />
+						<span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+							{countBadge}
+						</span>
 					</Button>
 					{user ? (
 						<DropdownMenu>
