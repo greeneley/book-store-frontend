@@ -5,7 +5,7 @@ import API from "../constants";
 const baseUrl = API.dev;
 
 export class CartService {
-	static getCart(): Promise<AxiosResponse<CartInfo>> {
-		return axios.get(baseUrl + "/api/v1/cart");
+	static async getCart(): Promise<AxiosResponse<CartInfo>> {
+		return await axios.get(baseUrl + "/api/v1/cart");
 	}
 }

@@ -4,8 +4,8 @@ import axios from "axios";
 const baseUrl = API.dev;
 
 export class CartItemService {
-	static addCartItem(quantity: number, productId: number) {
-		return axios.post(baseUrl + "/api/v1/cart-items/add", {
+	static async addCartItem(quantity: number, productId: number) {
+		return await axios.post(baseUrl + "/api/v1/cart-items/add", {
 			quantity,
 			productId
 		});
