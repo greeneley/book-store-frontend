@@ -6,7 +6,7 @@ import Galery from "@/components/ui/galery";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "@/model/internal/product";
 import { ProductService } from "@/services/ProductService";
-import { convertToCurrency } from "@/utils/helpers/convertToCurrency";
+import { formatPrice } from "@/utils/helpers/formatPrice";
 import { ShoppingCart } from "lucide-react";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -105,7 +105,7 @@ export const ProductDetail: React.FC = () => {
 	const onAddToCart = () => {
 		CartItemService.addCartItem(1, product.id).then(() => {
 			CartService.getCart().then((res) => {
-				setCountBadge(res.data.cart_items.length);
+				setCountBadge(res.data.items.length);
 				toast.success("Đã thêm sản phẩm vào giỏ hàng");
 			});
 		});
@@ -125,8 +125,8 @@ export const ProductDetail: React.FC = () => {
 							<p className="text-lg text-gray-600 mb-4">Tác giả: {product.author}</p>
 						</div>
 						<div className="flex items-baseline gap-3 mb-6">
-							<span className="text-3xl font-bold text-gray-900">{convertToCurrency(product.salePrice)}</span>
-							<span className="text-lg text-gray-500 line-through">{convertToCurrency(product.regularPrice)}</span>
+							<span className="text-3xl font-bold text-gray-900">{formatPrice(product.salePrice)}</span>
+							<span className="text-lg text-gray-500 line-through">{formatPrice(product.regularPrice)}</span>
 							<Badge variant="destructive" className="text-md px-2">
 								{(((product.regularPrice - product.salePrice) / product.regularPrice) * 100).toFixed(0)}% OFF
 							</Badge>

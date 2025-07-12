@@ -1,10 +1,7 @@
-import { CartItemService } from "@/services/CartItemService";
-import { CartService } from "@/services/CartService";
-import { convertToCurrency } from "@/utils/helpers/convertToCurrency";
+import { formatPrice } from "@/utils/helpers/formatPrice";
 import { Button, Image } from "antd";
 import Title from "antd/es/typography/Title";
 import React, { useContext } from "react";
-import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContextProvider";
 
@@ -19,14 +16,14 @@ export const BookItem: React.FC<BookItemProps> = (props) => {
 
 	const { setCountBadge } = useContext(AppContext);
 
-	const onAddToCart = () => {
-		CartItemService.addCartItem(1, bookId).then(() => {
-			CartService.getCart().then((res) => {
-				setCountBadge(res.data.cart_items.length);
-				toast.success("Đã thêm sản phẩm vào giỏ hàng");
-			});
-		});
-	};
+	// const onAddToCart = () => {
+	// 	CartItemService.addCartItem(1, bookId).then(() => {
+	// 		CartService.getCart().then((res) => {
+	// 			setCountBadge(res.data.cart_items.length);
+	// 			toast.success("Đã thêm sản phẩm vào giỏ hàng");
+	// 		});
+	// 	});
+	// };
 
 	return (
 		<>
@@ -40,10 +37,10 @@ export const BookItem: React.FC<BookItemProps> = (props) => {
 							{title}
 						</Title>
 						<div className="price flex gap-3">
-							<p className="font-medium">{convertToCurrency(price * 0.8)}</p>
-							<p className="font-light text-decoration-line-through">{convertToCurrency(price)}</p>
+							<p className="font-medium">{formatPrice(price * 0.8)}</p>
+							<p className="font-light text-decoration-line-through">{formatPrice(price)}</p>
 						</div>
-						<Button className="mt-auto" onClick={onAddToCart}>
+						<Button className="mt-auto">
 							<div className="flex align-items-center gap-2">Thêm vào giỏ hàng</div>
 						</Button>
 						<Link to={`/book/${bookId}`}>Xem chi tiết</Link>
