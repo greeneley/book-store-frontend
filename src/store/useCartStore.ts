@@ -83,17 +83,9 @@ export const useCartStore = create<State & Action>((set, get) => ({
 	removeFromCart: async (productId: number) => {
 		try {
 			set({ isLoading: true, error: null });
-			const cartData = await CartService.removeFromCart(productId);
-
-			// Chuyển đổi ProductCartResponse[] thành CartItemInterface[]
-			const convertedCart =
-				cartData.items?.map((item: ProductCartResponse) => CartServiceClass.convertToCartItemInterface(item)) || [];
-
-			set({
-				cart: convertedCart,
-				totalAmount: cartData.totalAmount || 0,
-				isLoading: false
-			});
+			await CartService.removeFromCart(productId);
+			await get().fetchCart();
+			set({ isLoading: false });
 		} catch (error) {
 			console.error("Error removing from cart:", error);
 			set({
@@ -105,30 +97,32 @@ export const useCartStore = create<State & Action>((set, get) => ({
 
 	updateQuantity: async (productId: number, quantity: number) => {
 		if (quantity <= 0) {
-			// Nếu quantity <= 0, xóa item khỏi cart
-			await get().removeFromCart(productId);
+			// await get().removeFromCart(productId);
 			return;
 		}
 
+		const prevCart = get().cart;
+
+		// Optimistic update: cập nhật UI ngay
+		const optimisticCart = prevCart.map((item) => (item.cartItemId === productId ? { ...item, quantity } : item));
+		set({ cart: optimisticCart, error: null });
+
 		try {
-			set({ isLoading: true, error: null });
-			const cartData = await CartService.updateCartItem(productId, quantity);
+			// Gửi request lên backend, nhận về cart item đã update (có quantity thực tế)
+			const updatedCartItem = await CartService.updateCartItem(productId, quantity);
 
-			// Chuyển đổi ProductCartResponse[] thành CartItemInterface[]
-			const convertedCart =
-				cartData.items?.map((item: ProductCartResponse) => CartServiceClass.convertToCartItemInterface(item)) || [];
-
-			set({
-				cart: convertedCart,
-				totalAmount: cartData.totalAmount || 0,
-				isLoading: false
-			});
+			// Cập nhật lại cart với giá trị thực tế từ backend
+			const updatedCart = get().cart.map((item) =>
+				item.cartItemId === productId ? { ...item, quantity: updatedCartItem.quantity } : item
+			);
+			set({ cart: updatedCart });
 		} catch (error) {
-			console.error("Error updating cart item:", error);
+			// Nếu lỗi, rollback lại cart cũ và báo lỗi
 			set({
-				error: "Không thể cập nhật số lượng sản phẩm",
-				isLoading: false
+				cart: prevCart,
+				error: "Không thể cập nhật số lượng sản phẩm"
 			});
+			console.error("Error updating cart item:", error);
 		}
 	},
 
@@ -136,11 +130,7 @@ export const useCartStore = create<State & Action>((set, get) => ({
 		try {
 			set({ isLoading: true, error: null });
 			await CartService.clearCart();
-			set({
-				cart: [],
-				totalAmount: 0,
-				isLoading: false
-			});
+			set({ isLoading: false });
 		} catch (error) {
 			console.error("Error clearing cart:", error);
 			set({
