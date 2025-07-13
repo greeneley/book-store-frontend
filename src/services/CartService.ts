@@ -46,13 +46,13 @@ class CartService {
 	}
 
 	// Cập nhật số lượng sản phẩm trong giỏ hàng (sử dụng productId)
-	async updateCartItem(productId: number, quantity: number): Promise<CartResponse> {
+	async updateCartItem(productId: number, quantity: number): Promise<ProductCartResponse> {
 		try {
 			const requestData: ProductCartRequest = {
 				productId,
 				quantity
 			};
-			const response = await ApiService.put<CartResponse>("/api/v1/cart-items/update", requestData);
+			const response = await ApiService.put<ProductCartResponse>("/api/v1/cart-items/update", requestData);
 			return response.data;
 		} catch (error) {
 			console.error("Error updating cart item:", error);
@@ -78,7 +78,7 @@ class CartService {
 
 		return {
 			id: product.id,
-			cartItemId: cartItem.id, // Giả sử ProductCartResponse có id field
+			cartItemId: cartItem.id,
 			title: product.name,
 			price: parseFloat(product.salePrice) || 0,
 			quantity: cartItem.quantity,

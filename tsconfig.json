@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"baseUrl": ".",
 		"allowSyntheticDefaultImports": true,
 		"allowJs": false, // false -> tất cả file .js đều không được compiler, chỉ typescript được compile;
 		"jsx": "react",

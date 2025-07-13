@@ -36,11 +36,21 @@ module.exports = (env, options) => {
 		devServer: {
 			port: 8082,
 			historyApiFallback: true,
+			headers: {
+				"Access-Control-Allow-Origin": "*",
+				"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+				"Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+			},
 			proxy: {
 				'/api': {
 					target: 'http://localhost:8081',
 					changeOrigin: true,
-					secure: false
+					secure: false,
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+						"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+						"Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+					}
 				}
 			}
 		},
