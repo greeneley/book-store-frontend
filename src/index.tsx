@@ -5,6 +5,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider as ReduxProvider } from "react-redux";
 
+import { CartSync } from "@/components/CartSync";
 import { AppContextProvider } from "@/contexts/AppContextProvider";
 import { AuthProvider } from "@/contexts/AuthContextProvider";
 import "@/styles/style.scss";
@@ -26,6 +27,7 @@ library.add(fas, faTwitter, faFontAwesome);
 			<ReduxProvider store={configureAppStore(preloadedState)}>
 				<AuthProvider>
 					<AppContextProvider>
+						<CartSync />
 						<Routes />
 					</AppContextProvider>
 				</AuthProvider>

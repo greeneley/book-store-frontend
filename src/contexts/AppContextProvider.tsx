@@ -1,5 +1,7 @@
-import React, { createContext, useState } from "react";
+import { useCartStore } from "@/store/useCartStore";
+import React, { createContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthContextProvider";
+import { CartProvider } from "./CartContextProvider";
 
 type AppContextValue = {
 	countBadge: number;
@@ -14,19 +16,22 @@ export const AppContext = createContext<AppContextValue>(null);
 
 export const AppContextProvider: React.FC<AppContextProviderProps> = ({ children }: AppContextProviderProps) => {
 	const { accessToken } = useAuth();
+	const { cart } = useCartStore();
 	const [countBadge, setCountBadge] = useState(0);
+
+	// Tự động cập nhật countBadge từ cart
+	useEffect(() => {
+		setCountBadge(cart.length);
+	}, [cart]);
 
 	const contextValue = {
 		countBadge,
 		setCountBadge
 	};
 
-	// useEffect(() => {
-	// 	if (accessToken) {
-	// 		axios.defaults.headers.common["Authorization"] = "Bearer " + accessToken;
-	// 		CartService.getCart().then((res) => setCountBadge(res.data.cart_items.length));
-	// 	}
-	// }, [accessToken]);
-
-	return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;
+	return (
+		<AppContext.Provider value={contextValue}>
+			<CartProvider>{children}</CartProvider>
+		</AppContext.Provider>
+	);
 };

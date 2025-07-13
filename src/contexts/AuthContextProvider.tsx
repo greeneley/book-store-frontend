@@ -3,10 +3,10 @@ import axios from "axios";
 import React, { createContext, useContext, useState } from "react";
 
 type AuthContextValue = {
-	accessToken: string;
-	setAccessToken: React.Dispatch<React.SetStateAction<string>>;
-	refreshToken: string;
-	setRefreshToken: React.Dispatch<React.SetStateAction<string>>;
+	accessToken: string | null;
+	setAccessToken: React.Dispatch<React.SetStateAction<string | null>>;
+	refreshToken: string | null;
+	setRefreshToken: React.Dispatch<React.SetStateAction<string | null>>;
 	user: User | null;
 	setUser: React.Dispatch<React.SetStateAction<User | null>>;
 };
@@ -15,11 +15,11 @@ type AuthProviderProps = {
 	children?: React.ReactNode;
 };
 
-export const AuthContext = createContext<AuthContextValue>(null);
+export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: AuthProviderProps) => {
-	const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken"));
-	const [refreshToken, setRefreshToken] = useState(localStorage.getItem("refreshToken"));
+	const [accessToken, setAccessToken] = useState<string | null>(localStorage.getItem("accessToken"));
+	const [refreshToken, setRefreshToken] = useState<string | null>(localStorage.getItem("refreshToken"));
 	const [user, setUser] = useState<User | null>(() => {
 		const storedUser = localStorage.getItem("user");
 		if (!storedUser) return null;
@@ -50,7 +50,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: AuthProv
 		}
 	}, [user]);
 
-	const contextValue = {
+	const contextValue: AuthContextValue = {
 		accessToken,
 		setAccessToken,
 		refreshToken,
@@ -63,5 +63,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: AuthProv
 };
 
 export const useAuth = () => {
-	return useContext(AuthContext);
+	const context = useContext(AuthContext);
+	if (!context) {
+		throw new Error("useAuth must be used within an AuthProvider");
+	}
+	return context;
 };

@@ -12,17 +12,16 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 // Import Swiper styles
 import { AppContext } from "@/contexts/AppContextProvider";
-import { CartItemService } from "@/services/CartItemService";
-import { CartService } from "@/services/CartService";
+import { useCartStore } from "@/store/useCartStore";
 import toast from "react-hot-toast";
 import "swiper/css";
 
 export const ProductDetail: React.FC = () => {
 	const [product, setProduct] = useState<Product>();
-
 	const [quantity, setQuantity] = useState(1);
 	const { slug } = useParams();
 	const { setCountBadge } = useContext(AppContext);
+	const { addToCart, cart, isLoading } = useCartStore();
 
 	useEffect(() => {
 		const productId = Number(slug.split("-")[0]);
@@ -40,6 +39,11 @@ export const ProductDetail: React.FC = () => {
 				console.error("Error fetching product:", error);
 			});
 	}, [slug]);
+
+	// Cập nhật count badge khi cart thay đổi
+	useEffect(() => {
+		setCountBadge(cart.length);
+	}, [cart, setCountBadge]);
 
 	const bookImageUrls = useMemo(() => {
 		return product?.productImages.length > 0
@@ -102,13 +106,13 @@ export const ProductDetail: React.FC = () => {
 		);
 	}
 
-	const onAddToCart = () => {
-		CartItemService.addCartItem(1, product.id).then(() => {
-			CartService.getCart().then((res) => {
-				setCountBadge(res.data.items.length);
-				toast.success("Đã thêm sản phẩm vào giỏ hàng");
-			});
-		});
+	const onAddToCart = async () => {
+		try {
+			await addToCart(product.id, quantity);
+			toast.success("Đã thêm sản phẩm vào giỏ hàng");
+		} catch (error) {
+			toast.error("Không thể thêm sản phẩm vào giỏ hàng");
+		}
 	};
 
 	return (
@@ -163,8 +167,9 @@ export const ProductDetail: React.FC = () => {
 								size="lg"
 								className="flex-1 text-blue-700 hover:bg-blue-600 hover:text-white"
 								variant="outline"
-								onClick={onAddToCart}>
-								Thêm vào giỏ
+								onClick={onAddToCart}
+								disabled={isLoading}>
+								{isLoading ? "Đang thêm..." : "Thêm vào giỏ"}
 							</Button>
 						</div>
 					</div>

@@ -26,6 +26,8 @@ export const Header: React.FC<HeaderProps> = (props) => {
 	const { countBadge } = useContext(AppContext);
 
 	const onLogout = useCallback(async () => {
+		if (!user) return;
+
 		try {
 			await AuthService.logout(user._id);
 			setUser(null);
