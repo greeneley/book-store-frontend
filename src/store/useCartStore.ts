@@ -1,76 +1,172 @@
+import { CartItemInterface, CartResponse, ProductCartResponse } from "@/model/internal/cart-item-interface";
+import CartService, { CartService as CartServiceClass } from "@/services/CartService";
 import { create } from "zustand";
-
-import { CartItemInterface } from "@/model/internal/cart-item-interface";
 
 interface State {
 	cart: CartItemInterface[];
+	isLoading: boolean;
+	error: string | null;
+	totalAmount: number;
 }
 
 interface Action {
-	addToCart: (item: CartItemInterface) => void;
-	removeFromCart: (itemId: number) => void;
-	updateQuantity: (productId: number, quantity: number) => void;
-	clearCart: () => void;
+	// API actions
+	fetchCart: () => Promise<void>;
+	addToCart: (productId: number, quantity?: number) => Promise<void>;
+	removeFromCart: (productId: number) => Promise<void>;
+	updateQuantity: (productId: number, quantity: number) => Promise<void>;
+	clearCart: () => Promise<void>;
+
+	// Local state actions
+	setLoading: (loading: boolean) => void;
+	setError: (error: string | null) => void;
+	setCart: (cartData: CartResponse) => void;
 }
 
 const INITIAL_STATE: State = {
-	cart: [
-		{
-			id: 1,
-			title: "Cải Cách Kinh Tế Trung Quốc Qua Các Thời Đại - Vanlangbooks",
-			price: 296400,
-			quantity: 4,
-			image: "/assets/img/placeholder/placeholder.svg?height=400&width=600"
-		},
-		{
-			id: 2,
-			title: "Kiếm Tiền Cùng ChatGPT - Vào Nghề ChatGPT Chỉ Trong 5 Giờ Học - Vanlangbooks",
-			price: 169150,
-			quantity: 1,
-			image: "/assets/img/placeholder/placeholder.svg?height=400&width=600"
-		},
-		{
-			id: 3,
-			title: "Kiếm Tiền Cùng ChatGPT - Vào Nghề Đồ Họa AI - Vanlangbooks",
-			price: 293250,
-			quantity: 1,
-			image: "/assets/img/placeholder/placeholder.svg?height=400&width=600"
-		}
-	]
+	cart: [],
+	isLoading: false,
+	error: null,
+	totalAmount: 0
 };
 
 export const useCartStore = create<State & Action>((set, get) => ({
-	cart: INITIAL_STATE.cart,
-	addToCart: (product: CartItemInterface) => {
-		const cart = get().cart;
-		const cartItem = cart.find((item) => item.id === product.id);
+	...INITIAL_STATE,
 
-		if (cartItem) {
-			const updatedCart = cart.map((item) =>
-				item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-			);
-			set({ cart: updatedCart });
-		} else {
-			const updatedCart = [...cart, { ...product, quantity: 1 }];
+	// API actions
+	fetchCart: async () => {
+		try {
+			set({ isLoading: true, error: null });
+			const cartData = await CartService.getCart();
 
-			set((state) => ({
-				cart: updatedCart
-			}));
+			// Chuyển đổi ProductCartResponse[] thành CartItemInterface[]
+			const convertedCart =
+				cartData.items?.map((item: ProductCartResponse) => CartServiceClass.convertToCartItemInterface(item)) || [];
+
+			set({
+				cart: convertedCart,
+				totalAmount: cartData.totalAmount || 0,
+				isLoading: false
+			});
+		} catch (error) {
+			console.error("Error fetching cart:", error);
+			set({
+				error: "Không thể tải giỏ hàng",
+				isLoading: false
+			});
 		}
 	},
-	removeFromCart: (itemId: number) => {
-		set((state) => ({
-			cart: state.cart.filter((item) => item.id !== itemId)
-		}));
-	},
-	updateQuantity: (productId: number, quantity: number) => {
-		if (quantity > 0) {
-			set((state) => ({
-				cart: state.cart.map((item) => (item.id === productId ? { ...item, quantity } : item))
-			}));
+
+	addToCart: async (productId: number, quantity: number = 1) => {
+		try {
+			set({ isLoading: true, error: null });
+			const cartData = await CartService.addToCart(productId, quantity);
+
+			// Chuyển đổi ProductCartResponse[] thành CartItemInterface[]
+			const convertedCart =
+				cartData.items?.map((item: ProductCartResponse) => CartServiceClass.convertToCartItemInterface(item)) || [];
+
+			set({
+				cart: convertedCart,
+				totalAmount: cartData.totalAmount || 0,
+				isLoading: false
+			});
+		} catch (error) {
+			console.error("Error adding to cart:", error);
+			set({
+				error: "Không thể thêm sản phẩm vào giỏ hàng",
+				isLoading: false
+			});
 		}
 	},
-	clearCart: () => {
-		set({ cart: [] });
+
+	removeFromCart: async (productId: number) => {
+		try {
+			set({ isLoading: true, error: null });
+			const cartData = await CartService.removeFromCart(productId);
+
+			// Chuyển đổi ProductCartResponse[] thành CartItemInterface[]
+			const convertedCart =
+				cartData.items?.map((item: ProductCartResponse) => CartServiceClass.convertToCartItemInterface(item)) || [];
+
+			set({
+				cart: convertedCart,
+				totalAmount: cartData.totalAmount || 0,
+				isLoading: false
+			});
+		} catch (error) {
+			console.error("Error removing from cart:", error);
+			set({
+				error: "Không thể xóa sản phẩm khỏi giỏ hàng",
+				isLoading: false
+			});
+		}
+	},
+
+	updateQuantity: async (productId: number, quantity: number) => {
+		if (quantity <= 0) {
+			// Nếu quantity <= 0, xóa item khỏi cart
+			await get().removeFromCart(productId);
+			return;
+		}
+
+		try {
+			set({ isLoading: true, error: null });
+			const cartData = await CartService.updateCartItem(productId, quantity);
+
+			// Chuyển đổi ProductCartResponse[] thành CartItemInterface[]
+			const convertedCart =
+				cartData.items?.map((item: ProductCartResponse) => CartServiceClass.convertToCartItemInterface(item)) || [];
+
+			set({
+				cart: convertedCart,
+				totalAmount: cartData.totalAmount || 0,
+				isLoading: false
+			});
+		} catch (error) {
+			console.error("Error updating cart item:", error);
+			set({
+				error: "Không thể cập nhật số lượng sản phẩm",
+				isLoading: false
+			});
+		}
+	},
+
+	clearCart: async () => {
+		try {
+			set({ isLoading: true, error: null });
+			await CartService.clearCart();
+			set({
+				cart: [],
+				totalAmount: 0,
+				isLoading: false
+			});
+		} catch (error) {
+			console.error("Error clearing cart:", error);
+			set({
+				error: "Không thể xóa giỏ hàng",
+				isLoading: false
+			});
+		}
+	},
+
+	// Local state actions
+	setLoading: (loading: boolean) => {
+		set({ isLoading: loading });
+	},
+
+	setError: (error: string | null) => {
+		set({ error });
+	},
+
+	setCart: (cartData: CartResponse) => {
+		// Chuyển đổi ProductCartResponse[] thành CartItemInterface[]
+		const convertedCart =
+			cartData.items?.map((item: ProductCartResponse) => CartServiceClass.convertToCartItemInterface(item)) || [];
+
+		set({
+			cart: convertedCart,
+			totalAmount: cartData.totalAmount || 0
+		});
 	}
 }));

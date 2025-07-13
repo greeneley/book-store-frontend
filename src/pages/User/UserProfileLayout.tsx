@@ -60,6 +60,11 @@ interface UserProfileLayoutProps {}
 export const UserProfileLayout: React.FC<UserProfileLayoutProps> = () => {
 	const { user } = useAuth();
 
+	// If no user, redirect or show error
+	if (!user) {
+		return <div>Please log in to access your profile.</div>;
+	}
+
 	return (
 		<div className="container mx-auto py-10">
 			<Breadcrumb />

@@ -3,17 +3,58 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCartStore } from "@/store/useCartStore";
 import { formatPrice } from "@/utils/helpers/formatPrice";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartItem } from "./CartItem";
 
 export default function Cart() {
-	const { cart } = useCartStore();
+	const { cart, totalAmount, isLoading, error, fetchCart } = useCartStore();
 	const navigate = useNavigate();
 
 	const [orderNotes, setOrderNotes] = useState("");
 
-	const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+	// Fetch cart khi component mount
+	useEffect(() => {
+		fetchCart();
+	}, [fetchCart]);
+
+	// Hiển thị loading
+	if (isLoading) {
+		return (
+			<div className="w-[1000px] mx-auto my-5 p-6 bg-white">
+				<div className="flex items-center justify-center py-16">
+					<div className="text-center">
+						<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+						<p className="text-gray-600">Đang tải giỏ hàng...</p>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	// Hiển thị error
+	if (error) {
+		return (
+			<div className="w-[1000px] mx-auto my-5 p-6 bg-white">
+				<div className="flex flex-col items-center justify-center py-16 text-center">
+					<div className="text-red-500 mb-4">
+						<svg className="w-16 h-16 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								fillRule="evenodd"
+								d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+								clipRule="evenodd"
+							/>
+						</svg>
+					</div>
+					<h2 className="text-xl font-semibold text-gray-800 mb-2">Có lỗi xảy ra</h2>
+					<p className="text-gray-600 mb-4">{error}</p>
+					<Button onClick={() => fetchCart()} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded">
+						Thử lại
+					</Button>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="w-[1000px] mx-auto my-5 p-6 bg-white">
@@ -67,8 +108,10 @@ export default function Cart() {
 								</div>
 								<p className="text-sm text-gray-600">(Đã bao gồm VAT nếu có)</p>
 							</div>
-							<Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-medium mb-6">
-								Thanh Toán
+							<Button
+								className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-medium mb-6"
+								disabled={isLoading}>
+								{isLoading ? "Đang xử lý..." : "Thanh Toán"}
 							</Button>
 						</div>
 					</div>
