@@ -31,7 +31,10 @@ instance.interceptors.request.use(
 	(config) => {
 		const token = TokenService.getLocalAccessToken();
 		if (token) {
-			config.headers["Authorization"] = token;
+			config.headers["Authorization"] = `Bearer ${token}`;
+			console.log("Request with token:", `Bearer ${token.substring(0, 20)}...`);
+		} else {
+			console.log("No token found for request:", config.url);
 		}
 		return config;
 	},
@@ -94,26 +97,26 @@ instance.interceptors.response.use(
 	}
 );
 
-// const ApiService = {
-// 	get<T>(url: string, params?: object) {
-// 		return instance.get<T>(url, { params });
-// 	},
-//
-// 	post<T>(url: string, data: any, config?: object) {
-// 		return instance.post<T>(url, data, config);
-// 	},
-//
-// 	put<T>(url: string, data: any, config?: object) {
-// 		return instance.put<T>(url, data, config);
-// 	},
-//
-// 	patch<T>(url: string, data: any, config?: object) {
-// 		return instance.patch<T>(url, data, config);
-// 	},
-//
-// 	delete<T>(url: string, config?: object) {
-// 		return instance.delete<T>(url, config);
-// 	}
-// };
+const ApiService = {
+	get<T>(url: string, params?: object) {
+		return instance.get<T>(url, { params });
+	},
 
-export default instance;
+	post<T>(url: string, data: any, config?: object) {
+		return instance.post<T>(url, data, config);
+	},
+
+	put<T>(url: string, data: any, config?: object) {
+		return instance.put<T>(url, data, config);
+	},
+
+	patch<T>(url: string, data: any, config?: object) {
+		return instance.patch<T>(url, data, config);
+	},
+
+	delete<T>(url: string, config?: object) {
+		return instance.delete<T>(url, config);
+	}
+};
+
+export default ApiService;
