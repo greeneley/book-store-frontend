@@ -1,9 +1,10 @@
+import { CartSkeleton } from "@/components/Cart/CartSkeleton";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCartStore } from "@/store/useCartStore";
 import { formatPrice } from "@/utils/helpers/formatPrice";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartItem } from "./CartItem";
 
@@ -12,25 +13,6 @@ export default function Cart() {
 	const navigate = useNavigate();
 
 	const [orderNotes, setOrderNotes] = useState("");
-
-	// Fetch cart khi component mount
-	useEffect(() => {
-		fetchCart();
-	}, [fetchCart]);
-
-	// Hiển thị loading
-	if (isLoading) {
-		return (
-			<div className="w-[1000px] mx-auto my-5 p-6 bg-white">
-				<div className="flex items-center justify-center py-16">
-					<div className="text-center">
-						<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-						<p className="text-gray-600">Đang tải giỏ hàng...</p>
-					</div>
-				</div>
-			</div>
-		);
-	}
 
 	// Hiển thị error
 	if (error) {
@@ -54,6 +36,10 @@ export default function Cart() {
 				</div>
 			</div>
 		);
+	}
+
+	if (isLoading) {
+		return <CartSkeleton />;
 	}
 
 	return (
@@ -81,7 +67,7 @@ export default function Cart() {
 
 						<div className="space-y-6">
 							{cart.map((item) => (
-								<CartItem key={item.id} product={item} />
+								<CartItem key={item.productId} product={item} />
 							))}
 						</div>
 

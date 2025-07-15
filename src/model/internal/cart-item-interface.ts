@@ -1,8 +1,8 @@
 export interface CartItemInterface {
-	id: number;
-	cartItemId?: number; // ID của cart item từ backend
+	productId: number;
 	title: string;
-	price: number;
+	salePrice: number;
+	regularPrice: number;
 	quantity: number;
 	image: string;
 }
@@ -39,7 +39,7 @@ export interface CartResponse {
 	id: number;
 	userId: number;
 	items: ProductCartResponse[];
-	totalAmount: number;
+	total: number;
 	createdAt: string;
 	updatedAt: string;
 }

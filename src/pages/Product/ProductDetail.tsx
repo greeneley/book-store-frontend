@@ -8,10 +8,9 @@ import { Product } from "@/model/internal/product";
 import { ProductService } from "@/services/ProductService";
 import { formatPrice } from "@/utils/helpers/formatPrice";
 import { ShoppingCart } from "lucide-react";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 // Import Swiper styles
-import { AppContext } from "@/contexts/AppContextProvider";
 import { useCartStore } from "@/store/useCartStore";
 import toast from "react-hot-toast";
 import "swiper/css";
@@ -20,8 +19,7 @@ export const ProductDetail: React.FC = () => {
 	const [product, setProduct] = useState<Product>();
 	const [quantity, setQuantity] = useState(1);
 	const { slug } = useParams();
-	const { setCountBadge } = useContext(AppContext);
-	const { addToCart, cart, isLoading } = useCartStore();
+	const { addToCart, isLoading } = useCartStore();
 
 	useEffect(() => {
 		const productId = Number(slug.split("-")[0]);
@@ -39,11 +37,6 @@ export const ProductDetail: React.FC = () => {
 				console.error("Error fetching product:", error);
 			});
 	}, [slug]);
-
-	// Cập nhật count badge khi cart thay đổi
-	useEffect(() => {
-		setCountBadge(cart.length);
-	}, [cart, setCountBadge]);
 
 	const bookImageUrls = useMemo(() => {
 		return product?.productImages.length > 0
