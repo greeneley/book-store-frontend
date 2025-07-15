@@ -10,8 +10,7 @@ interface CartItemProps {
 export const CartItem: React.FC<CartItemProps> = ({ product }) => {
 	const { updateQuantity, removeFromCart, isLoading } = useCartStore();
 
-	// Sử dụng product.id cho các operations
-	const productId = product.id;
+	const productId = product.productId;
 
 	return (
 		<div className="flex items-center gap-5 p-7 border-b">
@@ -34,7 +33,10 @@ export const CartItem: React.FC<CartItemProps> = ({ product }) => {
 			<div className="flex-1">
 				<h3 className="font-medium text-gray-900 mb-2">{product.title}</h3>
 				<div className="flex items-center justify-between">
-					<span className="text-red-500 font-semibold">{formatPrice(product.price)}</span>
+					<div className="flex item-center gap-2">
+						<span className="text-red-500 font-semibold">{formatPrice(product.salePrice)}</span>
+						<span className="text-gray-600 font-semibold line-through">{formatPrice(product.regularPrice)}</span>
+					</div>
 
 					<div className="flex items-center gap-3">
 						<button

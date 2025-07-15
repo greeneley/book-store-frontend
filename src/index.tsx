@@ -7,7 +7,6 @@ import { Provider as ReduxProvider } from "react-redux";
 
 import { CartSync } from "@/components/CartSync";
 import { AppContextProvider } from "@/contexts/AppContextProvider";
-import { AuthProvider } from "@/contexts/AuthContextProvider";
 import "@/styles/style.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faFontAwesome, faTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -25,12 +24,10 @@ library.add(fas, faTwitter, faFontAwesome);
 	root.render(
 		<React.StrictMode>
 			<ReduxProvider store={configureAppStore(preloadedState)}>
-				<AuthProvider>
-					<AppContextProvider>
-						<CartSync />
-						<Routes />
-					</AppContextProvider>
-				</AuthProvider>
+				<AppContextProvider>
+					<CartSync />
+					<Routes />
+				</AppContextProvider>
 			</ReduxProvider>
 		</React.StrictMode>
 	);

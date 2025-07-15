@@ -1,5 +1,5 @@
 import { useCartStore } from "@/store/useCartStore";
-import React, { createContext, useContext, useEffect } from "react";
+import React, { createContext, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "./AuthContextProvider";
 
@@ -27,15 +27,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		}
 	}, [error]);
 
-	// Fetch cart khi component mount và user đã login
-	useEffect(() => {
-		if (accessToken && user) {
-			fetchCart().catch(() => {
-				// Error đã được xử lý trong store
-			});
-		}
-	}, [accessToken, user, fetchCart]);
-
 	const clearError = () => {
 		setError(null);
 	};
@@ -47,12 +38,4 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 	};
 
 	return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;
-};
-
-export const useCartContext = () => {
-	const context = useContext(CartContext);
-	if (!context) {
-		throw new Error("useCartContext must be used within a CartProvider");
-	}
-	return context;
 };

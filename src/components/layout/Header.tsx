@@ -6,11 +6,11 @@ import {
 	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { AppContext } from "@/contexts/AppContextProvider";
 import { useAuth } from "@/contexts/AuthContextProvider";
 import { AuthService } from "@/services/AuthService";
+import { useCartStore } from "@/store/useCartStore";
 import { BookOpen, LogOut, Menu, Search, ShoppingCart, User } from "lucide-react";
-import React, { useCallback, useContext } from "react";
+import React, { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface HeaderProps {
@@ -23,7 +23,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = (props) => {
 	const { user, setUser } = useAuth();
 	const navigate = useNavigate();
-	const { countBadge } = useContext(AppContext);
+	const { cart } = useCartStore();
 
 	const onLogout = useCallback(async () => {
 		if (!user) return;
@@ -73,7 +73,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
 						}}>
 						<ShoppingCart />
 						<span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-							{countBadge}
+							{cart.length}
 						</span>
 					</Button>
 					{user ? (

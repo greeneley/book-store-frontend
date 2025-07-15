@@ -1,14 +1,12 @@
 import { CartItemInterface, CartResponse, ProductCartResponse } from "@/model/internal/cart-item-interface";
 import ApiService from "./ApiService";
 
-// Interface cho request add và update cart item
 export interface ProductCartRequest {
 	productId: number;
 	quantity: number;
 }
 
 class CartService {
-	// Lấy thông tin giỏ hàng của user
 	async getCart(): Promise<CartResponse> {
 		try {
 			const response = await ApiService.get<CartResponse>("/api/v1/cart");
@@ -19,7 +17,6 @@ class CartService {
 		}
 	}
 
-	// Thêm sản phẩm vào giỏ hàng
 	async addToCart(productId: number, quantity: number = 1): Promise<CartResponse> {
 		try {
 			const requestData: ProductCartRequest = {
@@ -34,7 +31,6 @@ class CartService {
 		}
 	}
 
-	// Xóa sản phẩm khỏi giỏ hàng (sử dụng productId)
 	async removeFromCart(productId: number): Promise<CartResponse> {
 		try {
 			const response = await ApiService.delete<CartResponse>(`/api/v1/cart-items/${productId}`);
@@ -45,7 +41,6 @@ class CartService {
 		}
 	}
 
-	// Cập nhật số lượng sản phẩm trong giỏ hàng (sử dụng productId)
 	async updateCartItem(productId: number, quantity: number): Promise<ProductCartResponse> {
 		try {
 			const requestData: ProductCartRequest = {
@@ -60,7 +55,6 @@ class CartService {
 		}
 	}
 
-	// Xóa toàn bộ giỏ hàng
 	async clearCart(): Promise<void> {
 		try {
 			await ApiService.delete("/api/v1/cart");
@@ -70,17 +64,16 @@ class CartService {
 		}
 	}
 
-	// Helper function để chuyển đổi ProductCartResponse thành CartItemInterface
 	static convertToCartItemInterface(cartItem: ProductCartResponse): CartItemInterface {
 		const product = cartItem.product;
 		const firstImage =
 			product.productImages?.[0]?.image?.url || "/assets/img/placeholder/placeholder.svg?height=400&width=600";
 
 		return {
-			id: product.id,
-			cartItemId: cartItem.id,
+			productId: product.id,
 			title: product.name,
-			price: parseFloat(product.salePrice) || 0,
+			salePrice: parseFloat(product.salePrice) || 0,
+			regularPrice: parseFloat(product.regularPrice) || 0,
 			quantity: cartItem.quantity,
 			image: firstImage
 		};

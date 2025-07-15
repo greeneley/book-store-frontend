@@ -1,3 +1,4 @@
+import { Loading } from "@/components/Loading";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { Layout } from "antd";
@@ -21,6 +22,7 @@ export const MainLayout: React.FC<MainLayoutProps> = () => {
 					<Outlet />
 				</main>
 				<Toaster position="top-right" reverseOrder={true} />
+				<Loading />
 				<Footer />
 			</Layout>
 		</>
