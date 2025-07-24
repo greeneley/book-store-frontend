@@ -13,7 +13,7 @@ const CartContext = createContext<CartContextValue | null>(null);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const { accessToken, user } = useAuth();
-	const { isLoading, error, setError, fetchCart } = useCartStore();
+	const { isLoading, error, setError } = useCartStore();
 
 	// Clear error khi user thay đổi
 	useEffect(() => {

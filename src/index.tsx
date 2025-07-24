@@ -6,6 +6,7 @@ import { createRoot } from "react-dom/client";
 import { Provider as ReduxProvider } from "react-redux";
 
 import { CartSync } from "@/components/CartSync";
+import { CategorySync } from "@/components/CategorySync";
 import { AppContextProvider } from "@/contexts/AppContextProvider";
 import "@/styles/style.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -26,6 +27,7 @@ library.add(fas, faTwitter, faFontAwesome);
 			<ReduxProvider store={configureAppStore(preloadedState)}>
 				<AppContextProvider>
 					<CartSync />
+					<CategorySync />
 					<Routes />
 				</AppContextProvider>
 			</ReduxProvider>

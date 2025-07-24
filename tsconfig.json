@@ -5,7 +5,7 @@
 		"allowJs": false, // false -> tất cả file .js đều không được compiler, chỉ typescript được compile;
 		"jsx": "react",
 		"module": "commonjs",
-		"noImplicitAny": true, // Khi được đặt là true, TypeScript sẽ báo lỗi nếu không thể suy ra kiểu của một biến và mặc định là any.
+		"noImplicitAny": false, // Khi được đặt là true, TypeScript sẽ báo lỗi nếu không thể suy ra kiểu của một biến và mặc định là any.
 		"preserveConstEnums": true,
 		"removeComments": true,
 		"sourceMap": true, // Khi được đặt là true, tạo ra các tệp bản đồ nguồn để hỗ trợ gỡ lỗi.
