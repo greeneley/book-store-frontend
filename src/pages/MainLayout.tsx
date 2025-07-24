@@ -7,8 +7,6 @@ import React from "react";
 import { Toaster } from "react-hot-toast";
 import { Outlet } from "react-router-dom";
 
-const { Content } = Layout;
-
 export interface MainLayoutProps {
 	children?: React.ReactNode;
 }
