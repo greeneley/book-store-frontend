@@ -17,7 +17,7 @@ export const ProductCardList: React.FC<{ product: any }> = ({ product }) => {
 	return (
 		<div className="bg-slate-100 p-4">
 			<div className="max-w-7xl mx-auto">
-				<h1>{product.name}</h1>
+				<h1 className="text-xl md:text-2xl lg:text-3xl text-gray-800 mb-8 font-bold text-center">{product.name}</h1>
 				<Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
 					<TabsList className="flex justify-end mb-8 gap-5">
 						{subCategories.map((category: any, index: number) => (

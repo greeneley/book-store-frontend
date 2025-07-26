@@ -27,7 +27,7 @@ const ProductCard: React.FC<{ product: any }> = (props) => {
 			</div>
 			{/* Product Info */}
 			<div className="p-4 pt-0">
-				<h3 className="text-sm font-bold text-gray-800 mb-3 line-clamp-2 leading-tight min-h-[2.5rem]">
+				<h3 className="text-sm text-center font-bold text-gray-800 mb-3 line-clamp-2 leading-tight min-h-[2.5rem]">
 					<Link to={`/products/${product.id}`} className="line-clamp-2 text-ellipsis">
 						{product.name}
 					</Link>
