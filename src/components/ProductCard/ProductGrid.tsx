@@ -21,17 +21,16 @@ const ProductCard: React.FC<{ product: any }> = (props) => {
 			{/* Book Cover */}
 			<div className="relative p-4 mb-2">
 				<img
-					src={product.image || "/assets/img/placeholder/placeholder.svg?height=400&width=600"}
-					className="mx-auto mb-3 md:h-72 object-cover group-hover:scale-110 transition-transform duration-500 object-cover rounded"
+					src={product.url || "/assets/img/placeholder/placeholder.svg?height=400&width=600"}
+					className="mx-auto mb-3 md:h-72 group-hover:scale-110 transition-transform duration-500 object-cover rounded"
 				/>
 			</div>
 			{/* Product Info */}
 			<div className="p-4 pt-0">
-				<h3 className="text-lg font-bold text-gray-800 mb-3 line-clamp-2 leading-tight min-h-[2.5rem]">
+				<h3 className="text-sm font-bold text-gray-800 mb-3 line-clamp-2 leading-tight min-h-[2.5rem]">
 					<Link to={`/products/${product.id}`} className="line-clamp-2 text-ellipsis">
 						{product.name}
 					</Link>
-					{/*<span className="line-clamp-2 text-ellipsis">{product.name}</span>*/}
 				</h3>
 				{/* Price Section */}
 				<div className="flex items-center justify-between">
@@ -40,11 +39,6 @@ const ProductCard: React.FC<{ product: any }> = (props) => {
 						{product.salePrice && (
 							<div className="flex items-center gap-2">
 								<span className="text-gray-400 text-sm line-through">{product.salePrice}₫</span>
-								{/*{product.discount && (*/}
-								{/*	<Badge variant="destructive" className="text-xs px-1 py-0">*/}
-								{/*		{product.discount}*/}
-								{/*	</Badge>*/}
-								{/*)}*/}
 							</div>
 						)}
 					</div>

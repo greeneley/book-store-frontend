@@ -11,7 +11,7 @@ interface State {
 
 interface Action {
 	// API actions
-	fetchCart: () => Promise<void>;
+	fetchCart: () => Promise<any>;
 	addToCart: (productId: number, quantity?: number) => Promise<void>;
 	removeFromCart: (productId: number) => Promise<void>;
 	updateQuantity: (productId: number, quantity: number) => Promise<void>;
@@ -47,12 +47,14 @@ export const useCartStore = create<State & Action>((set, get) => ({
 				totalAmount: cartData.total || 0,
 				isLoading: false
 			});
+			return convertedCart;
 		} catch (error) {
 			console.error("Error fetching cart:", error);
 			set({
 				error: "Không thể tải giỏ hàng",
 				isLoading: false
 			});
+			throw error;
 		}
 	},
 

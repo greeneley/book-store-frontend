@@ -6,7 +6,7 @@ interface State {
 }
 
 interface Action {
-	fetchData: () => Promise<void>;
+	fetchCategory: () => Promise<any>;
 }
 
 const INITIAL_STATE: State = {
@@ -14,13 +14,16 @@ const INITIAL_STATE: State = {
 };
 export const useCategoryStore = create<State & Action>((set, get) => ({
 	...INITIAL_STATE,
-	fetchData: async () => {
+	fetchCategory: async () => {
 		try {
 			const data = await CategoryService.getCategoryAll();
 
 			set({ category: data });
+
+			return data;
 		} catch (error) {
 			console.error("Error fetching data: ", error);
+			throw error;
 		}
 	}
 }));
