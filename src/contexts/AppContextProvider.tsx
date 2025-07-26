@@ -1,4 +1,5 @@
 import { AuthProvider } from "@/contexts/AuthContextProvider";
+import { ReactQueryProvider } from "@/contexts/ReactQueryProvider";
 import React from "react";
 import { CartProvider } from "./CartContextProvider";
 
@@ -10,7 +11,9 @@ export const AppContextProvider: React.FC<AppContextProviderProps> = ({ children
 	return (
 		<>
 			<AuthProvider>
-				<CartProvider>{children}</CartProvider>
+				<ReactQueryProvider>
+					<CartProvider>{children}</CartProvider>
+				</ReactQueryProvider>
 			</AuthProvider>
 		</>
 	);

@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 export const ProductCardList: React.FC<{ product: any }> = ({ product }) => {
 	const [activeTab, setActiveTab] = useState(() => product.children.length > 0 && product.children[0].slug);
-	console.log(activeTab);
+
 	const subCategories = product.children.map((item) => {
 		return {
 			slug: item.slug,
