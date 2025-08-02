@@ -131,7 +131,7 @@ export const useCartStore = create<State & Action>((set, get) => ({
 		try {
 			set({ isLoading: true, error: null });
 			await CartService.clearCart();
-			set({ isLoading: false });
+			set({ isLoading: false, cart: [] });
 		} catch (error) {
 			console.error("Error clearing cart:", error);
 			set({

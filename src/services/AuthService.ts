@@ -42,9 +42,9 @@ export class AuthService {
 
 	static async logout(id: number) {
 		try {
-			await TokenService.removeAccessToken();
-			await TokenService.removeAccessToken();
-			await TokenService.removeUser();
+			TokenService.removeAccessToken();
+			TokenService.removeRefreshToken();
+			TokenService.removeUser();
 			await axios.post(`${baseUrl}/api/v1/auth/logout`, { id });
 		} catch (error) {
 			console.error("Logout failed:", error);
