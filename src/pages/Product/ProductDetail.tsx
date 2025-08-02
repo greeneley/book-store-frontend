@@ -1,4 +1,3 @@
-import { CarouselImages } from "@/components/commerce-ui/image-carousel-basic";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,15 +10,15 @@ import { ShoppingCart } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 // Import Swiper styles
-import { useCartStore } from "@/store/useCartStore";
-import toast from "react-hot-toast";
+import { CarouselImages } from "@/components/commerce-ui/image-carousel-basic";
+import { useAddToCart } from "@/hooks/useAddToCart";
 import "swiper/css";
 
 export const ProductDetail: React.FC = () => {
 	const [product, setProduct] = useState<Product>();
 	const [quantity, setQuantity] = useState(1);
 	const { slug } = useParams();
-	const { addToCart, isLoading } = useCartStore();
+	const { onAddToCart } = useAddToCart();
 
 	useEffect(() => {
 		const productId = Number(slug.split("-")[0]);
@@ -38,19 +37,17 @@ export const ProductDetail: React.FC = () => {
 			});
 	}, [slug]);
 
-	const bookImageUrls = useMemo(() => {
-		return product?.productImages.length > 0
-			? product.productImages
-					.map((productImage) => {
-						return productImage.image.url;
-					})
-					.sort()
-			: ["/assets/img/placeholder/placeholder.svg?height=400&width=600"];
-	}, [product]);
+	const bookImageUrls: CarouselImages = useMemo(() => {
+		const placeholder = { url: "/assets/img/placeholder/placeholder.svg?height=400&width=600" };
 
-	const images: CarouselImages = bookImageUrls.map((url, idx) => ({
-		url
-	}));
+		if (!product) return [placeholder];
+
+		const images = [product.thumbnail, ...(product.productImages ?? [])]
+			.filter(Boolean)
+			.map((image) => ({ url: image.url }));
+
+		return images.length > 0 ? images : [placeholder];
+	}, [product]);
 
 	if (!product) {
 		return (
@@ -99,21 +96,12 @@ export const ProductDetail: React.FC = () => {
 		);
 	}
 
-	const onAddToCart = async () => {
-		try {
-			await addToCart(product.id, quantity);
-			toast.success("Đã thêm sản phẩm vào giỏ hàng");
-		} catch (error) {
-			toast.error("Không thể thêm sản phẩm vào giỏ hàng");
-		}
-	};
-
 	return (
 		<div className="bg-gray-50">
 			<div className="max-w-7xl mx-auto px-4 py-8">
 				<div className="grid lg:grid-cols-2 gap-8 mb-12">
 					<div className="space-y-4">
-						<Galery images={images} />
+						<Galery images={bookImageUrls} />
 					</div>
 
 					<div className="space-y-6">
@@ -160,9 +148,8 @@ export const ProductDetail: React.FC = () => {
 								size="lg"
 								className="flex-1 text-blue-700 hover:bg-blue-600 hover:text-white"
 								variant="outline"
-								onClick={onAddToCart}
-								disabled={isLoading}>
-								{isLoading ? "Đang thêm..." : "Thêm vào giỏ"}
+								onClick={() => onAddToCart(product.id)}>
+								Thêm vào giỏ
 							</Button>
 						</div>
 					</div>

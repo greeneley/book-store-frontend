@@ -32,16 +32,13 @@ export interface ProductVariant {
 	updtDt: string | null;
 }
 
-export interface ProductImage {
-	image: Image;
-}
-
 export interface Image {
 	id: number;
 	title: string;
 	url: string;
 	altText: string | null;
 	description: string | null;
+	isThumbnail: boolean;
 	crtId: number | null;
 	crtDt: string | null;
 	updtId: number | null;
@@ -66,5 +63,6 @@ export interface Product {
 	productCategories: ProductCategory[];
 	productAttributes: ProductAttribute[];
 	productVariants: ProductVariant[];
-	productImages: ProductImage[];
+	thumbnail: Image;
+	productImages: Image[];
 }

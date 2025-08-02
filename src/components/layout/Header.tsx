@@ -23,7 +23,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = (props) => {
 	const { user, setUser } = useAuth();
 	const navigate = useNavigate();
-	const { cart } = useCartStore();
+	const { cart, clearCart } = useCartStore();
 
 	const onLogout = useCallback(async () => {
 		if (!user) return;
@@ -31,11 +31,12 @@ export const Header: React.FC<HeaderProps> = (props) => {
 		try {
 			await AuthService.logout(user._id);
 			setUser(null);
+			await clearCart();
 			navigate("/login");
 		} catch (error) {
 			console.error("Logout error:", error);
 		}
-	}, [navigate, setUser, user]);
+	}, [clearCart, navigate, setUser, user]);
 
 	return (
 		<header className="border-b">

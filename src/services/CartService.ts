@@ -56,12 +56,12 @@ class CartService {
 	}
 
 	async clearCart(): Promise<void> {
-		try {
-			await ApiService.delete("/api/v1/cart");
-		} catch (error) {
-			console.error("Error clearing cart:", error);
-			throw error;
-		}
+		// try {
+		// 	await ApiService.delete("/api/v1/cart");
+		// } catch (error) {
+		// 	console.error("Error clearing cart:", error);
+		// 	throw error;
+		// }
 	}
 
 	static convertToCartItemInterface(cartItem: ProductCartResponse): CartItemInterface {
