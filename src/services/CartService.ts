@@ -66,8 +66,11 @@ class CartService {
 
 	static convertToCartItemInterface(cartItem: ProductCartResponse): CartItemInterface {
 		const product = cartItem.product;
+		// productImages in the cart response is still the old structure (from CartController)
 		const firstImage =
-			product.productImages?.[0]?.image?.url || "/assets/img/placeholder/placeholder.svg?height=400&width=600";
+			product.productImages?.[0]?.image?.url ||
+			(product as any).thumbnail?.url ||
+			"/assets/img/placeholder/placeholder.svg?height=400&width=600";
 
 		return {
 			productId: product.id,

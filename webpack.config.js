@@ -42,8 +42,8 @@ module.exports = (env, options) => {
 				"Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
 			},
 			proxy: {
-				'/api': {
-					target: 'http://localhost:8083',
+				"/api": {
+					target: "http://localhost:8083",
 					changeOrigin: true,
 					secure: false,
 					headers: {
