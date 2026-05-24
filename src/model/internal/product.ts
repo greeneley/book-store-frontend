@@ -9,6 +9,7 @@ export interface Category {
 	id: number;
 	name: string;
 }
+
 export interface ProductAttribute {
 	id: number;
 	attribute: Attribute;
@@ -33,7 +34,17 @@ export interface ProductVariant {
 }
 
 export interface ProductImage {
-	image: Image;
+	// Kept for backward compatibility — same shape as Image (API returns flat ImageDto)
+	id: number;
+	title: string;
+	url: string;
+	altText: string | null;
+	description: string | null;
+	crtId: number | null;
+	crtDt: string | null;
+	updtId: number | null;
+	updtDt: string | null;
+	isThumbnail?: boolean;
 }
 
 export interface Image {
@@ -46,6 +57,7 @@ export interface Image {
 	crtDt: string | null;
 	updtId: number | null;
 	updtDt: string | null;
+	isThumbnail?: boolean;
 }
 
 export interface Product {
@@ -53,7 +65,7 @@ export interface Product {
 	name: string;
 	description: string;
 	stock: number;
-	rating: number;
+	rating: number | null;
 	isPublish: boolean;
 	crtId: number | null;
 	crtDt: string | null;
@@ -61,10 +73,51 @@ export interface Product {
 	updtDt: string | null;
 	regularPrice: number;
 	salePrice: number;
-	author: string;
+	author: string | null;
 	user: User;
 	productCategories: ProductCategory[];
 	productAttributes: ProductAttribute[];
 	productVariants: ProductVariant[];
-	productImages: ProductImage[];
+	/** Non-thumbnail gallery images — renamed from productImages in the API */
+	galleryImages: ProductImage[];
+	/** Main cover image (isThumbnail = true) */
+	thumbnail: Image | null;
+}
+
+// ─── Review Types ────────────────────────────────────────────────
+
+export interface ReviewUser {
+	id: number;
+	username: string;
+	firstName: string;
+	lastName: string;
+	photos: string | null;
+}
+
+export interface ReviewResponse {
+	id: number;
+	rating: number;
+	title: string | null;
+	body: string;
+	verifiedPurchase: boolean;
+	crtDt: string;
+	user: ReviewUser;
+}
+
+export interface ReviewRequest {
+	productId: number;
+	rating: number;
+	title?: string;
+	body: string;
+}
+
+// ─── Related / Summary Types ─────────────────────────────────────
+
+export interface ProductSummaryDTO {
+	id: number;
+	name: string;
+	description: string;
+	regularPrice: number;
+	salePrice: number;
+	thumbnailUrl: string | null;
 }
