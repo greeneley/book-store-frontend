@@ -7,6 +7,8 @@ interface State {
 	isLoading: boolean;
 	error: string | null;
 	totalAmount: number;
+	/** Set of productIds currently being synced with server (silent, no global spinner) */
+	syncingIds: Set<number>;
 }
 
 interface Action {
@@ -27,7 +29,8 @@ const INITIAL_STATE: State = {
 	cart: [],
 	isLoading: false,
 	error: null,
-	totalAmount: 0
+	totalAmount: 0,
+	syncingIds: new Set()
 };
 
 export const useCartStore = create<State & Action>((set, get) => ({
@@ -94,36 +97,32 @@ export const useCartStore = create<State & Action>((set, get) => ({
 	},
 
 	updateQuantity: async (productId: number, quantity: number) => {
-		if (quantity <= 0) {
-			return;
-		}
+		if (quantity <= 0) return;
 
-		set({ isLoading: true });
-
+		// 1. Snapshot for rollback
 		const prevCart = get().cart;
+		const prevTotal = get().totalAmount;
 
+		// 2. Optimistic update — instant UI, no global spinner
 		const optimisticCart = prevCart.map((item) => (item.productId === productId ? { ...item, quantity } : item));
-		set({ cart: optimisticCart, error: null });
+		const optimisticTotal = optimisticCart.reduce((sum, item) => sum + item.salePrice * item.quantity, 0);
+		set({ cart: optimisticCart, totalAmount: optimisticTotal, error: null });
+
+		// 3. Mark as syncing (for optional per-item indicator)
+		set((s) => ({ syncingIds: new Set(s.syncingIds).add(productId) }));
 
 		try {
-			const updatedCartItem = await CartService.updateCartItem(productId, quantity);
-			let updatedTotal = 0;
-			const updatedCart = get().cart.map((item) => {
-				if (item.productId === productId) {
-					updatedTotal += item.salePrice * updatedCartItem.quantity;
-					return { ...item, quantity: updatedCartItem.quantity };
-				} else {
-					updatedTotal += item.salePrice * item.quantity;
-					return item;
-				}
-			});
-			set({ cart: updatedCart, totalAmount: updatedTotal, isLoading: false });
+			await CartService.updateCartItem(productId, quantity);
 		} catch (error) {
-			set({
-				cart: prevCart,
-				error: "Không thể cập nhật số lượng sản phẩm"
-			});
+			// 4. Rollback on failure
+			set({ cart: prevCart, totalAmount: prevTotal, error: "Không thể cập nhật số lượng sản phẩm" });
 			console.error("Error updating cart item:", error);
+		} finally {
+			set((s) => {
+				const next = new Set(s.syncingIds);
+				next.delete(productId);
+				return { syncingIds: next };
+			});
 		}
 	},
 

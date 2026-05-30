@@ -66,10 +66,10 @@ class CartService {
 
 	static convertToCartItemInterface(cartItem: ProductCartResponse): CartItemInterface {
 		const product = cartItem.product;
-		// productImages in the cart response is still the old structure (from CartController)
+		// Ưu tiên thumbnailUrl (field mới từ BE), fallback về productImages, rồi placeholder
 		const firstImage =
+			(product as any).thumbnailUrl ||
 			product.productImages?.[0]?.image?.url ||
-			(product as any).thumbnail?.url ||
 			"/assets/img/placeholder/placeholder.svg?height=400&width=600";
 
 		return {

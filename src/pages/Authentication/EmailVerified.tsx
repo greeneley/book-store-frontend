@@ -1,12 +1,13 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { AuthService } from "@/services/AuthService";
-import { AlertTriangle, CheckCircle, LoaderCircle, XCircle } from "lucide-react";
+import { AlertTriangle, CheckCircle, Loader2, XCircle } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { NavigateFunction, useNavigate, useSearchParams } from "react-router-dom";
+import { AuthLayout } from "./AuthLayout";
 
 type VerificationState = "loading" | "success" | "error" | "verified";
+
 const useVerification = (navigate: NavigateFunction, searchParams: URLSearchParams) => {
 	const [verificationState, setVerificationState] = useState<VerificationState>("loading");
 	const [countdown, setCountdown] = useState(5);
@@ -23,12 +24,12 @@ const useVerification = (navigate: NavigateFunction, searchParams: URLSearchPara
 				if (response.data === "success") {
 					setVerificationState("success");
 					const timer = setInterval(() => {
-						setCountdown((preCount) => {
-							if (preCount <= 1) {
+						setCountdown((prev) => {
+							if (prev <= 1) {
 								clearInterval(timer);
 								navigate("/login");
 							}
-							return preCount - 1;
+							return prev - 1;
 						});
 					}, 1000);
 				} else if (response.data === "verified") {
@@ -36,7 +37,7 @@ const useVerification = (navigate: NavigateFunction, searchParams: URLSearchPara
 				} else {
 					throw new Error("Verification failed");
 				}
-			} catch (error) {
+			} catch {
 				setVerificationState("error");
 			}
 		};
@@ -58,60 +59,73 @@ export const EmailVerified: React.FC = () => {
 		navigate(0);
 	}, [navigate, setVerificationState]);
 
+	const iconMap = {
+		loading: <Loader2 className="w-7 h-7 text-gray-500 animate-spin" />,
+		success: <CheckCircle className="w-7 h-7 text-green-600" />,
+		error: <XCircle className="w-7 h-7 text-red-500" />,
+		verified: <CheckCircle className="w-7 h-7 text-green-600" />
+	};
+
+	const titleMap = {
+		loading: "Đang xác minh email…",
+		success: "Xác minh thành công",
+		error: "Xác minh thất bại",
+		verified: "Đã xác minh trước đó"
+	};
+
+	const descMap = {
+		loading: "Vui lòng chờ trong khi chúng tôi xác minh địa chỉ email của bạn.",
+		success: "Tài khoản của bạn đã được kích hoạt.",
+		error: "Chúng tôi không thể xác minh email của bạn. Vui lòng thử lại hoặc liên hệ hỗ trợ.",
+		verified: "Email của bạn đã được xác minh trước đó. Bạn có thể đăng nhập."
+	};
+
 	return (
-		<div className="w-full flex items-center justify-center bg-gray-50 py-5">
-			<Card className="w-full max-w-md">
-				<CardHeader>
-					<CardTitle className="text-2xl font-bold text-center">Email Verified</CardTitle>
-					<CardDescription className="text-center">
-						{verificationState === "loading" && "We're verifying your email..."}
-						{verificationState === "success" && "Your email has been successfully verified."}
-						{verificationState === "error" && "There was an error verifying your email."}
-					</CardDescription>
-				</CardHeader>
-				<CardContent className="space-y-2">
-					<div className="flex justify-center">
-						{verificationState === "loading" && <LoaderCircle className="h-16 w-16 text-blue-500 animate-spin" />}
-						{verificationState === "success" && <CheckCircle className="h-16 w-16 text-green-500" />}
-						{verificationState === "error" && <XCircle className="h-16 w-16 text-red-500" />}
+		<AuthLayout>
+			<div className="space-y-8 text-center">
+				<div className="flex flex-col items-center space-y-4">
+					<div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
+						{iconMap[verificationState]}
 					</div>
-					<p className="text-center text-sm text-gray-600">
-						{verificationState === "loading" && "Please wait while we verify your email address."}
-						{(verificationState === "success" || verificationState === "verified") && "Your account is now active."}
-						{verificationState === "error" &&
-							"We couldn't verify your email address. Please try again or contact support if the problem persists."}
+					<div className="space-y-1">
+						<h1 className="text-2xl font-semibold tracking-tight text-gray-900">{titleMap[verificationState]}</h1>
+						<p className="text-sm text-gray-500">{descMap[verificationState]}</p>
+					</div>
+				</div>
+
+				{verificationState === "success" && (
+					<p className="text-sm text-gray-500">
+						Chuyển hướng đến trang đăng nhập sau <span className="font-semibold text-gray-900">{countdown}</span> giây…
 					</p>
-					{verificationState === "success" && (
-						<>
-							<p className="text-center text-sm text-gray-600">Please log in again to access your account.</p>
-							<p className="text-center text-sm font-semibold">
-								Redirecting to login page in <span className="text-red-600">{countdown}</span> seconds...
-							</p>
-						</>
-					)}
-					{verificationState === "verified" && (
-						<>
-							<Alert>
-								<AlertTriangle className="h-4 w-4" />
-								<AlertTitle>Already Verified</AlertTitle>
-								<AlertDescription>This email has already been verified. You can proceed to login.</AlertDescription>
-							</Alert>
-						</>
-					)}
-				</CardContent>
-				<CardFooter>
+				)}
+
+				{verificationState === "verified" && (
+					<Alert className="text-left border-amber-200 bg-amber-50">
+						<AlertTriangle className="h-4 w-4 text-amber-600" />
+						<AlertTitle className="text-amber-800">Đã xác minh rồi</AlertTitle>
+						<AlertDescription className="text-amber-700">
+							Link này đã được sử dụng. Vui lòng tiến hành đăng nhập.
+						</AlertDescription>
+					</Alert>
+				)}
+
+				<div>
 					{(verificationState === "success" || verificationState === "verified") && (
-						<Button onClick={handleContinue} className="w-full">
-							Click here to log in now
+						<Button
+							onClick={handleContinue}
+							className="w-full h-11 bg-gray-900 hover:bg-gray-700 text-white font-medium transition-colors">
+							Đến trang đăng nhập
 						</Button>
 					)}
 					{verificationState === "error" && (
-						<Button onClick={handleTryAgain} className="w-full">
-							Try Again
+						<Button
+							onClick={handleTryAgain}
+							className="w-full h-11 bg-gray-900 hover:bg-gray-700 text-white font-medium transition-colors">
+							Thử lại
 						</Button>
 					)}
-				</CardFooter>
-			</Card>
-		</div>
+				</div>
+			</div>
+		</AuthLayout>
 	);
 };

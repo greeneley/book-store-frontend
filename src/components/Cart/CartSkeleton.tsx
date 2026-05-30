@@ -3,56 +3,54 @@ import React from "react";
 
 export const CartSkeleton: React.FC = () => {
 	return (
-		<>
-			<div className="w-[1000px] mx-auto my-5 p-6 bg-white">
-				<div className="grid grid-cols-3 gap-8">
-					{/* Left Column */}
-					<div className="col-span-2">
-						<Skeleton className="h-8 w-32 mb-6" />
-						{/* Skeleton for Cart Items */}
-						<div className="space-y-6">
-							{[1, 2, 3].map((_, index) => (
-								<div key={index} className="flex items-center gap-5 p-7 border-b">
-									<Skeleton className="w-4 h-4" />
-									<Skeleton className="w-16 h-20 rounded" />
-									<div className="flex-1">
-										<Skeleton className="h-5 w-3/4 mb-2" />
-										<div className="flex items-center justify-between">
-											<div className="flex items-center gap-2">
-												<Skeleton className="h-4 w-20" />
-												<Skeleton className="h-4 w-16" />
-											</div>
-											<div className="flex items-center gap-3">
-												<Skeleton className="w-8 h-8 rounded" />
-												<Skeleton className="w-8 h-4" />
-												<Skeleton className="w-8 h-8 rounded" />
-											</div>
-										</div>
+		<div className="w-full max-w-5xl mx-auto px-4 py-8">
+			<div className="flex flex-col lg:flex-row gap-8">
+				{/* Left */}
+				<div className="flex-1 min-w-0">
+					<Skeleton className="h-7 w-32 mb-6" />
+					<div className="space-y-0">
+						{[1, 2, 3].map((i) => (
+							<div key={i} className="flex gap-4 py-5 border-b border-border">
+								<Skeleton className="w-[72px] h-24 rounded-md flex-shrink-0" />
+								<div className="flex-1 flex flex-col gap-3">
+									<Skeleton className="h-4 w-3/4" />
+									<Skeleton className="h-3 w-1/2" />
+									<div className="flex items-center justify-between mt-auto">
+										<Skeleton className="h-4 w-24" />
+										<Skeleton className="h-8 w-28 rounded-md" />
 									</div>
 								</div>
-							))}
-						</div>
-						{/* Skeleton for Order Notes */}
-						<div className="mt-8">
-							<Skeleton className="h-5 w-32 mb-3" />
-							<Skeleton className="h-[100px] w-full" />
-						</div>
-					</div>
-					{/* Right Column */}
-					<div className="col-span-1">
-						<div className="bg-gray-50 p-6 rounded-lg sticky top-6">
-							<div className="pt-4 mb-6">
-								<div className="flex justify-between items-center mb-2">
-									<Skeleton className="h-5 w-24" />
-									<Skeleton className="h-6 w-20" />
-								</div>
-								<Skeleton className="h-4 w-32" />
 							</div>
-							<Skeleton className="h-12 w-full rounded" />
+						))}
+					</div>
+					<div className="mt-6">
+						<Skeleton className="h-4 w-28 mb-2" />
+						<Skeleton className="h-24 w-full rounded-md" />
+					</div>
+				</div>
+				{/* Right */}
+				<div className="w-full lg:w-80 flex-shrink-0">
+					<div className="rounded-xl border border-border p-6 space-y-4">
+						<Skeleton className="h-5 w-32" />
+						<div className="space-y-2">
+							<div className="flex justify-between">
+								<Skeleton className="h-4 w-24" />
+								<Skeleton className="h-4 w-20" />
+							</div>
+							<div className="flex justify-between">
+								<Skeleton className="h-4 w-20" />
+								<Skeleton className="h-4 w-16" />
+							</div>
 						</div>
+						<Skeleton className="h-px w-full" />
+						<div className="flex justify-between">
+							<Skeleton className="h-5 w-24" />
+							<Skeleton className="h-5 w-24" />
+						</div>
+						<Skeleton className="h-11 w-full rounded-md" />
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
